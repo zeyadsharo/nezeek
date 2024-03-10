@@ -1,0 +1,18 @@
+
+[
+    {
+        "arabic_title": "بغداد",
+        "english_title": "Baghdad",
+        "parent": "root",
+        "latitude": 33.3152,
+        "longitude": 44.3661
+    },
+    {
+        
+        "arabic_title": "الكرادة",
+        "english_title": "Al-Karrada",
+        "parent": "Baghdad",
+        "latitude": 33.3152,
+        "longitude": 44.3661
+    }
+]
