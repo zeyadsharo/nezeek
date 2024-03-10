@@ -30,9 +30,13 @@ class AreaResource extends Resource
                 Select::make('parent_id')
                     ->options(fn () => Area::pluck('arabic_title', 'id')->toArray())
                     ->label(__('Parent Area'))
-                    ->required(),
-                TextInput::make('latitude')->required(),
-                TextInput::make('longitude')->required(),
+                    ->nullable(),
+                TextInput::make('latitude')
+                    ->required()
+                    ->rules('numeric'),
+                TextInput::make('longitude')
+                    ->required()
+                    ->rules('numeric'),
             ]);
     }
 

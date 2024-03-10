@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->string('kurdish_title');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('areas')->onDelete('cascade');
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 13, 9);
+            $table->decimal('longitude', 13, 9);
             $table->timestamps();
         });
     }
