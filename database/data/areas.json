@@ -1,0 +1,210 @@
+ 
+[
+    {
+        "AreaID": 1,
+        "ArabicTitle": "موصل",
+        "KurdishTitle": "ميسل",
+        "Parent": null,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 2,
+        "ArabicTitle": "مركز موصل",
+        "KurdishTitle": "ميسل سنتر",
+        "Parent": 1,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 3,
+        "ArabicTitle": "سنجار",
+        "KurdishTitle": "شنگال",
+        "Parent": 1,
+        "Latitude": 36.3167,
+        "Longitude": 41.875
+    },
+    {
+        "AreaID": 4,
+        "ArabicTitle": "بعاج",
+        "KurdishTitle": "بعاج",
+        "Parent": 1,
+        "Latitude": 36.3167,
+        "Longitude": 41.875
+    },
+    {
+        "AreaID": 5,
+        "ArabicTitle": "مركز سنجار",
+        "KurdishTitle": "شنگال سنتر",
+        "Parent": 3,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 6,
+        "ArabicTitle": "ناحيةالشمال",
+        "KurdishTitle": "سنونى",
+        "Parent": 3,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 7,
+        "ArabicTitle": "تل قصب",
+        "KurdishTitle": "تلقەسب",
+        "Parent": 3,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 8,
+        "ArabicTitle": "تل بنات",
+        "KurdishTitle": "تل بنات",
+        "Parent": 3,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 9,
+        "ArabicTitle": " حي الشهداء",
+        "KurdishTitle": "تاخى شهيدا",
+        "Parent": 5,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 10,
+        "ArabicTitle": " حي الجزيرة",
+        "KurdishTitle": "تاخى جزيرا",
+        "Parent": 5,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 11,
+        "ArabicTitle": "مجمع التاميم",
+        "KurdishTitle": "خانصور",
+        "Parent": 6,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 12,
+        "ArabicTitle": "مجمع الحطين",
+        "KurdishTitle": "دكورى",
+        "Parent": 6,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },{
+        "AreaID": 13,
+        "ArabicTitle": "مجمع القادسية",
+        "KurdishTitle": "بورك",
+        "Parent": 6,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+
+ 
+
+
+
+
+    {
+        "AreaID": 14,
+        "ArabicTitle": "دهوك",
+        "KurdishTitle": "دهوك",
+        "Parent": null,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 15,
+        "ArabicTitle": "مركز دهوك",
+        "KurdishTitle": "دهوك سنتر",
+        "Parent": 14,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 16,
+        "ArabicTitle": "زاخو",
+        "KurdishTitle": "زاخو",
+        "Parent": 14,
+        "Latitude": 36.3167,
+        "Longitude": 41.875
+    },
+    {
+        "AreaID": 17,
+        "ArabicTitle": "سميل",
+        "KurdishTitle": "سيميل",
+        "Parent": 14,
+        "Latitude": 36.3167,
+        "Longitude": 41.875
+    },
+    {
+        "AreaID": 18,
+        "ArabicTitle": "مركز زاخو",
+        "KurdishTitle": "زاخو سنتر",
+        "Parent": 16,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 19,
+        "ArabicTitle": "ناحية ديربون",
+        "KurdishTitle": "ديربوون",
+        "Parent": 16,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 20,
+        "ArabicTitle": "ناحية بيرسف ",
+        "KurdishTitle": "بيرسفكى",
+        "Parent": 16,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 21,
+        "ArabicTitle": " قرية بيتاسي",
+        "KurdishTitle": "كوندى بيتاسى ",
+        "Parent": 16,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 22,
+        "ArabicTitle": " حي بيدار",
+        "KurdishTitle": "تاخى بيدارى",
+        "Parent": 18,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 23,
+        "ArabicTitle": " حي العباسي",
+        "KurdishTitle": "تاخى عباسيكى",
+        "Parent": 18,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 24,
+        "ArabicTitle": "براهيم خليل ",
+        "KurdishTitle": "براهيم خليل",
+        "Parent": 19,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    },
+    {
+        "AreaID": 25,
+        "ArabicTitle": "فيشخابور ",
+        "KurdishTitle": "فيشخابور",
+        "Parent": 19,
+        "Latitude": 36.3544,
+        "Longitude": 43.1432
+    } 
+]
+
+ 

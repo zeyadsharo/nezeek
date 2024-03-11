@@ -1,0 +1,57 @@
+ 
+  
+[
+    {
+        "SectorID": 1,
+        "ArabicTitle": "قاعات افراح",
+        "KurdishTitle": "هوليين شاهيانا",
+        "Description": "", 
+        "DisplayOrder": 1,
+        "DisplayState": 1,
+        "Icon": "1.svg",
+        "ActivationState": 1
+    },
+
+    {
+        "SectorID": 2,
+        "ArabicTitle": "مطاعم",
+        "KurdishTitle": "خارنكەه",
+        "Description": "", 
+        "DisplayOrder": 1,
+        "DisplayState": 1,
+        "Icon": "2.svg",
+        "ActivationState": 1
+    },
+
+    {
+        "SectorID": 3,
+        "ArabicTitle": "معارض",
+        "KurdishTitle": "معرز",
+        "Description": "", 
+        "DisplayOrder": 1,
+        "DisplayState": 1,
+        "Icon": "3.svg",
+        "ActivationState": 1
+    },
+    {
+        "SectorID": 4,
+        "ArabicTitle": "اطباء",
+        "KurdishTitle": "تەختور",
+        "Description": "", 
+        "DisplayOrder": 1,
+        "DisplayState": 1,
+        "Icon": "4.svg",
+        "ActivationState": 1
+    },
+    {
+        "SectorID": 5,
+        "ArabicTitle": "محلات تجارية",
+        "KurdishTitle": "اسواق",
+        "Description": "", 
+        "DisplayOrder": 1,
+        "DisplayState": 1,
+        "Icon": "5.svg",
+        "ActivationState": 1
+    }
+
+]

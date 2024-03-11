@@ -1,0 +1,24 @@
+[     
+
+    {
+        "CategoryID": 1,
+        "ArabicTitle": "الكترونيات",
+        "KurdishTitle": "الكترونيك", 
+        "DisplayOrder": 1, 
+        "Icon": "1.svg"
+    },
+    {
+        "CategoryID": 2,
+        "ArabicTitle": "ادوات كهربائية",
+        "KurdishTitle": " تشتى كهربى", 
+        "DisplayOrder": 1, 
+        "Icon": "2.svg" 
+    },
+    {
+        "CategoryID": 3,
+        "ArabicTitle": "سيارات",
+        "KurdishTitle": "ئوتومبيل", 
+        "DisplayOrder": 1, 
+        "Icon": "1.svg" 
+    }
+]

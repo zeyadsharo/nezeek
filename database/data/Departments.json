@@ -1,0 +1,80 @@
+[     
+ 
+    {
+        "DepartmentID": 1,
+        "ArabicTitle": "هواتف ذكية",
+        "KurdishTitle": "موبايل", 
+        "DisplayOrder": 1, 
+        "CategoryID": 1,
+        "Icon": "1.svg"
+    },
+    {
+        "DepartmentID": 2,
+        "ArabicTitle": "لابتوب",
+        "KurdishTitle": "لابتوب", 
+        "DisplayOrder": 1,         
+        "CategoryID": 1,
+        "Icon": "2.svg" 
+    },
+    {
+        "DepartmentID": 3,
+        "ArabicTitle": "اي باد",
+        "KurdishTitle": "اي باد", 
+        "DisplayOrder": 1,         
+        "CategoryID": 1,
+        "Icon": "3.svg" 
+    },
+
+
+    
+    {
+        "DepartmentID": 1,
+        "ArabicTitle": "ثلاجات",
+        "KurdishTitle": "تلاجا", 
+        "DisplayOrder": 1, 
+        "CategoryID": 2,
+        "Icon": "1.svg"
+    },
+    {
+        "DepartmentID": 2,
+        "ArabicTitle": "غسالات",
+        "KurdishTitle": "غسالا", 
+        "DisplayOrder": 1,         
+        "CategoryID": 2,
+        "Icon": "2.svg" 
+    },
+    {
+        "DepartmentID": 3,
+        "ArabicTitle": "مايكور ويف",
+        "KurdishTitle": "مايكرو ويف", 
+        "DisplayOrder": 1,         
+        "CategoryID": 2,
+        "Icon": "3.svg" 
+    },
+
+    
+    {
+        "DepartmentID": 1,
+        "ArabicTitle": "كورولا",
+        "KurdishTitle": "كوريلا", 
+        "DisplayOrder": 1, 
+        "CategoryID": 3,
+        "Icon": "1.svg"
+    },
+    {
+        "DepartmentID": 2,
+        "ArabicTitle": "تويوتا",
+        "KurdishTitle": " تويوتا ", 
+        "DisplayOrder": 1,         
+        "CategoryID": 3,
+        "Icon": "2.svg" 
+    },
+    {
+        "DepartmentID": 3,
+        "ArabicTitle": "كامري",
+        "KurdishTitle": "كامري", 
+        "DisplayOrder": 1,         
+        "CategoryID": 3,
+        "Icon": "3.svg" 
+    }
+]
