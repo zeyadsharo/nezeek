@@ -47,11 +47,8 @@ class AreaResource extends Resource
                  Tables\Columns\TextColumn::make('arabic_title')->searchable()->sortable(),
                Tables\Columns\TextColumn::make('kurdish_title')->searchable()->sortable(),
                
-                Tables\Columns\SelectColumn::make('parent_id')
-                    ->options(fn () => Area::pluck('arabic_title', 'id')->toArray())
-                    ->label(__('Parent Area'))
-                    ->searchable()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('parentArea.arabic_title')
+                    ->label(__('Parent Area')),
                 Tables\Columns\TextColumn::make('latitude')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('longitude')->searchable()->sortable(),
             ])
