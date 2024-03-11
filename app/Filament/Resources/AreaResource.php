@@ -80,4 +80,13 @@ class AreaResource extends Resource
             'edit' => Pages\EditArea::route('/{record}/edit'),
         ];
     }
+  public static function getLabel(): string
+    {
+        return __('Area.ModelLabel');
+    }
+    //PluralModelLabel
+    public static function getPluralLabel(): string
+    {
+        return __('Area.PluralModelLabel');
+    }
 }
