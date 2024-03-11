@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AreaResource\Pages;
 use App\Filament\Resources\AreaResource\RelationManagers;
 use App\Models\Area;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -27,10 +28,18 @@ class AreaResource extends Resource
             ->schema([
                 TextInput::make('arabic_title')->required(),
                 TextInput::make('kurdish_title')->required(),
-                Select::make('parent_id')
-                    ->options(fn () => Area::pluck('arabic_title', 'id')->toArray())
-                    ->label(__('Parent Area'))
-                    ->nullable(),
+              
+                SelectTree::make('parentArea')
+                     ->relationship('parentArea', 'arabic_title', 'parent_id')
+                     ->placeholder(__('Please select a Area'))
+                ->withCount()
+                ->direction('buttom')
+                     ->label(__('Parent Area'))->nullable(),
+
+
+
+
+
                 TextInput::make('latitude')
                     ->required()
                     ->rules('numeric'),
