@@ -8,7 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-     protected $fillable = ['arabic_title', 'kurdish_title', 'description', 'about', 'contact_info', 'display_order', 'slug', 'activation_state', 'logo', 'latitude', 'longitude', 'next_payment', 'area_id', 'sector_id'];
+     protected $fillable = ['arabic_title', 
+     'kurdish_title', 'description', 
+     'about',
+      'contact_info', 
+      'display_order',
+       'slug', 
+       'activation_state', 
+       'logo', 
+       'latitude', 
+       'longitude', 
+       'next_payment', 
+       'area_id',
+       'sector_id'];
 
     public function area()
     {
