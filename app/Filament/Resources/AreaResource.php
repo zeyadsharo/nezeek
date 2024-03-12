@@ -29,17 +29,12 @@ class AreaResource extends Resource
                 TextInput::make('arabic_title')->required(),
                 TextInput::make('kurdish_title')->required(),
               
-                SelectTree::make('parentArea')
+                SelectTree::make('parent_id')
                      ->relationship('parentArea', 'arabic_title', 'parent_id')
                      ->placeholder(__('Please select a Area'))
                 ->withCount()
                 ->direction('buttom')
                      ->label(__('Parent Area'))->nullable(),
-
-
-
-
-
                 TextInput::make('latitude')
                     ->required()
                     ->rules('numeric'),
