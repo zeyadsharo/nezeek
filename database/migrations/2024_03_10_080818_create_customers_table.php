@@ -35,13 +35,9 @@ return new class extends Migration
         });
 
         // povit table for user and customer
-        Schema::create('customer_user', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('user_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
@@ -51,6 +47,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('customers');
-        Schema::dropIfExists('customer_user');
+         Schema::dropIfExists('users');
     }
 };

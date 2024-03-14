@@ -54,8 +54,10 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])->tenant(Customer::class,ownershipRelationship:'customer')
-            ->tenantRegistration(RegisterTeam::class)
-            ->tenantProfile(EditTeamProfile::class);
+            ]);
+            
+            // ->tenant(Customer::class,ownershipRelationship:'customer')
+            // ->tenantRegistration(RegisterTeam::class)
+            // ->tenantProfile(EditTeamProfile::class);
     }
 }

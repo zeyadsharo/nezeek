@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-class User extends Authenticatable implements HasTenants
+class User extends Authenticatable 
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -50,20 +50,20 @@ class User extends Authenticatable implements HasTenants
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function getTenants(Panel $panel): Collection
-    {
-        return $this->teams;
-    }
+    // public function getTenants(Panel $panel): Collection
+    // {
+    //     return $this->teams;
+    // }
     
-    public function teams(): BelongsToMany
-    {
-        return $this->belongsToMany(Customer::class);
-    }
+    // public function teams(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Customer::class);
+    // }
  
-    public function canAccessTenant(Model $tenant): bool
-    {
-        return $this->teams->contains($tenant);
-    }
+    // public function canAccessTenant(Model $tenant): bool
+    // {
+    //     return $this->teams->contains($tenant);
+    // }
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
