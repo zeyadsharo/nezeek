@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Team extends Model
 {
     use HasFactory;
      protected $fillable = [
-    'arabic_title', 
-     'kurdish_title', 
-     'description', 
+    'arabic_title',
+     'kurdish_title',
+     'description',
      'about',
-      'contact_info', 
+      'contact_info',
       'display_order',
-       'slug', 
-       'activation_state', 
-       'logo', 
-       'latitude', 
-       'longitude', 
-       'next_payment', 
+       'slug',
+       'activation_state',
+       'logo',
+       'latitude',
+       'longitude',
+       'next_payment',
        'area_id',
        'sector_id'];
 
