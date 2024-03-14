@@ -18,9 +18,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('about')->nullable();
             $table->string('contact_info')->nullable();
-            $table->integer('display_order');
+            $table->integer('display_order')->default(0);
             $table->string('slug');
-            $table->boolean('activation_state');
+            $table->boolean('activation_state')->default(1);
             $table->string('logo')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();

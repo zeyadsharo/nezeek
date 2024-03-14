@@ -21,6 +21,9 @@ class RegisterTeam extends RegisterTenant
         return $form
             ->schema([
                 TextInput::make('arabic_title'),
+                TextInput::make('kurdish_title'),
+                //order display
+                TextInput::make('display_order'),
                 TextInput::make('slug'),
             ]);
     }

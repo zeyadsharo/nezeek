@@ -53,4 +53,9 @@ class Customer extends Model
     {
         return $this->hasMany(Subscription::class);
     }
+    //members
+    public function members()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
