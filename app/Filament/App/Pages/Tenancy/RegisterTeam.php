@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Filament\Pages\Tenancy;
+namespace App\Filament\App\Pages\Tenancy;
 
 use App\Models\Customer;
 use Filament\Forms\Components\TextInput;

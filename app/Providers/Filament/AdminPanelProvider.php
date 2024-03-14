@@ -63,8 +63,6 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->spa();
-            // ->tenant(Customer::class,ownershipRelationship:'customer')
-            // ->tenantRegistration(RegisterTeam::class)
-            // ->tenantProfile(EditTeamProfile::class);
+            
     }
 }
