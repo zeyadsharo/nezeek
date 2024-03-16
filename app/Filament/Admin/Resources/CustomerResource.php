@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
  use Filament\Forms\Components\Section;
                 use Filament\Forms\Components\Actions\Action;
                 use Filament\Support\Enums\Alignment;
+                 use Filament\Forms\Components\Wizard;
+                 use Illuminate\Support\HtmlString;
 class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
@@ -27,13 +29,15 @@ class CustomerResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-               
+   
 
-                Section::make('Customer Information')
-                    ->description('Basic customer information')
+    return $form
+        ->schema([
+            Wizard::make([
+                Wizard\Step::make('Customer Information')
+                    // ->description('Basic customer information')
                     ->icon('heroicon-m-user')
+                    ->columnSpan(6)
                     ->schema([
                         Forms\Components\TextInput::make('arabic_title')
                             ->required()
@@ -48,12 +52,11 @@ class CustomerResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('logo')
                             ->maxLength(255),
-                    ]),
-            
+                    ])
+                    ->columns(2),
 
-                Section::make('Location Information')
-                    ->description('Customer location details')
-                    // ->icon('heroicon-m-location-marker')
+                Wizard\Step::make('Location Information')
+                    // ->description('Customer location details')
                     ->schema([
                         Forms\Components\TextInput::make('area_id')
                             ->numeric(),
@@ -63,11 +66,10 @@ class CustomerResource extends Resource
                             ->numeric(),
                         Forms\Components\TextInput::make('longitude')
                             ->numeric(),
-                    ])
-                  ,
+                    ]),
 
-                Section::make('Additional Information')
-                    ->description('Additional details about the customer')
+                Wizard\Step::make('Additional Information')
+                    // ->description('Additional details about the customer')
                     ->icon('heroicon-m-information-circle')
                     ->schema([
                         Forms\Components\Textarea::make('description')
@@ -83,8 +85,9 @@ class CustomerResource extends Resource
                             ->required(),
                         Forms\Components\DatePicker::make('next_payment'),
                     ])
-                    
-            ]);
+            ])->submitAction(new HtmlString('<button type="submit">Submit</button>'))
+            ->columnSpanFull(),
+        ]);
     }
 
     public static function table(Table $table): Table
