@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\minResources\AreaResource\Pages;
+namespace App\Filament\Admin\Resources\AreaResource\Pages;
 
 use App\Filament\Admin\Resources\AreaResource;
 use Filament\Resources\Pages\CreateRecord;

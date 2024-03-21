@@ -2,8 +2,6 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\minResources\AreaResource\Pages\CreateArea;
-use App\Filament\Admin\Resources\AreaResource\Pages;
 use App\Filament\Admin\Resources\AreaResource\Pages\EditArea;
 use App\Filament\Admin\Resources\AreaResource\Pages\ListAreas;
 use App\Models\Area;
@@ -82,7 +80,7 @@ class AreaResource extends Resource
     {
         return [
             'index' => ListAreas::route('/'),
-            'create' => CreateArea::route('/create'),
+            'create' => \App\Filament\Admin\Resources\AreaResource\Pages\CreateArea::route('/create'),
             'edit' => EditArea::route('/{record}/edit'),
         ];
     }

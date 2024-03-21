@@ -10,12 +10,14 @@
     "require": {
         "php": "^8.1",
         "bezhansalleh/filament-language-switch": "^3.0",
+        "cheesegrits/filament-google-maps": "^3.0",
         "codewithdennis/filament-select-tree": "^3.1",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "ryangjchandler/blade-capture-directive": "^0.3"
     },
     "require-dev": {
         "doctrine/dbal": "^3.8",
