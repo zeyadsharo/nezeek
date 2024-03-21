@@ -8,6 +8,7 @@ use App\Filament\Admin\Resources\CustomerResource\Pages\EditCustomer;
 use App\Filament\Admin\Resources\CustomerResource\RelationManagers;
 use App\Filament\Resources\Admin\CustomerResource\Pages\ListCustomers;
 use App\Models\Customer;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
@@ -64,10 +65,15 @@ class CustomerResource extends Resource
                     Wizard\Step::make('Location Information')
                         // ->description('Customer location details')
                         ->schema([
-                            Forms\Components\TextInput::make('area_id')
-                                ->numeric(),
-                            Forms\Components\TextInput::make('sector_id')
-                                ->numeric(),
+                           
+                    SelectTree::make('area_id')
+                    ->relationship('area', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title', 'parent_id')
+                    ->placeholder(__('Please select a Area'))
+                    ->label('Area')
+                    ->required(),
+                           Forms\Components\Select::make('sector_id')
+                            ->relationship('sector', app()->getLocale()=='ar'?'arabic_title':'kurdish_title')
+                                ->required(),
                             Forms\Components\TextInput::make('latitude')
                                 ->numeric(),
                             Forms\Components\TextInput::make('longitude')
