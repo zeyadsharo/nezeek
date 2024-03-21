@@ -127,6 +127,6 @@ class Customer extends Model
     //members
     public function members()
     {
-        return $this->hasMany(User::class, 'customer_id');
+        return $this->belongsTo(User::class, 'customer_id');
     }
 }
