@@ -8,6 +8,7 @@ use App\Filament\Admin\Resources\CustomerResource\Pages\EditCustomer;
 use App\Filament\Admin\Resources\CustomerResource\RelationManagers;
 use App\Filament\Resources\Admin\CustomerResource\Pages\ListCustomers;
 use App\Models\Customer;
+use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -17,6 +18,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Actions\Action;
@@ -74,16 +76,46 @@ class CustomerResource extends Resource
                            Forms\Components\Select::make('sector_id')
                             ->relationship('sector', app()->getLocale()=='ar'?'arabic_title':'kurdish_title')
                                 ->required(),
-                            Forms\Components\TextInput::make('latitude')
-                                ->numeric(),
-                            Forms\Components\TextInput::make('longitude')
-                                ->numeric(),
+                                Map::make('location')
+                        // ->mapControls([
+                        //     'mapTypeControl'    => true,
+                        //     'scaleControl'      => true,
+                        //     'streetViewControl' => true,
+                        //     'rotateControl'     => true,
+                        //     'fullscreenControl' => true,
+                        //     'searchBoxControl'  => false, // creates geocomplete field inside map
+                        //     'zoomControl'       => false,
+                        // ])
+                        // ->height(fn () => '400px') // map height (width is controlled by Filament options)
+                        // ->defaultZoom(10) // default zoom level when opening form
+                        // ->autocomplete('full_address') // field on form to use as Places geocompletion field
+                        // ->autocompleteReverse(true) // reverse geocode marker location to autocomplete field
+                        // ->reverseGeocode([
+                        //     'street' => '%n %S',
+                        //     'city' => '%L',
+                        //     'state' => '%A1',
+                        //     'zip' => '%z',
+                        // ]) // reverse geocode marker location to form fields, see notes below
+                        //->debug() // prints reverse geocode format strings to the debug console 
+                        ->defaultLocation([36.8663, 42.9884]) // default for new forms
+                        // ->draggable() // allow dragging to move marker
+                        // ->clickable(false) // allow clicking to move marker
+                        // ->geolocate() // adds a button to request device location and set map marker accordingly
+                        // ->geolocateLabel('Duhok') // overrides the default label for geolocate button
+                        // ->geolocateOnLoad(true, false) // geolocate on load, second arg 'always' (default false, only for new form),
                         ]),
                     //step for add admin for customer
                     Wizard\Step::make('Admin Information')
-                        // ->description('Admin details for the customer')
+                        
                         ->icon('heroicon-m-user-plus')
-                        ->schema([]),
+                        ->schema([
+
+                    Relation::make('admin_id')
+                    ->title('Admin')
+                    ->placeholder('Select an admin')
+                    ->relation('members', 'id', 'name')
+
+                        ]),
 
                     //step for add subscription for customer
                     Wizard\Step::make('Subscription Information')
