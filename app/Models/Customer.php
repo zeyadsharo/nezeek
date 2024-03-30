@@ -129,4 +129,8 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class, 'customer_id');
     }
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
 }

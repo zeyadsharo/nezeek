@@ -114,7 +114,7 @@ class CustomerResource extends Resource
                         ->schema([
                             // add admin for customer from relation members
                             Fieldset::make('admin_id')
-                                ->relationship('members')
+                                ->relationship('admin')
                                 ->schema([
                                     TextInput::make('name')
                                         ->columnSpan(4),

@@ -27,8 +27,10 @@ return new class extends Migration
             $table->date('next_payment')->nullable();
             $table->unsignedBigInteger('area_id')->nullable();
             $table->unsignedBigInteger('sector_id')->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
             $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
 
 
