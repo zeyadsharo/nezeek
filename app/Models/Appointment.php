@@ -14,5 +14,15 @@ class Appointment extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    // add observer to set customer_id on create 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->customer_id = auth()->user()->id;
+        });
+    }
     
 }

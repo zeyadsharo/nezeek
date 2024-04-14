@@ -32,11 +32,10 @@ class AppointmentResource extends Resource
                 Forms\Components\DatePicker::make('end_date')
                     ->required(),
                 Forms\Components\DatePicker::make('auto_delete_at'),
-                Forms\Components\TextInput::make('color')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('customer_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\ColorPicker::make('color'),
+                // Forms\Components\TextInput::make('customer_id')
+                //     ->required()
+                //     ->numeric(),
                 Forms\Components\Toggle::make('is_private')
                     ->required(),
             ]);
@@ -59,11 +58,8 @@ class AppointmentResource extends Resource
                 Tables\Columns\TextColumn::make('auto_delete_at')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('color')
+                Tables\Columns\ColorColumn::make('color')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('customer_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_private')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
