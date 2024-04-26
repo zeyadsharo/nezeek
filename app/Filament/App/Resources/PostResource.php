@@ -28,7 +28,8 @@ class PostResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Post Title'),
                 FileUpload::make('cover_image')->disk('public')
                     ->directory('posts')
                     ->image()
@@ -58,7 +59,13 @@ class PostResource extends Resource
                         'underline',
                         'undo',
                     ])->columnSpanFull(),
-                Forms\Components\DatePicker::make('auto_delete_at'),
+                Forms\Components\DatePicker::make('auto_delete_at')
+
+                    ->prefix('Starts')
+                    ->minDate(now())
+                    ->suffix('at midnight')
+                    ->default(now()->addMonths(3))
+                    ->weekStartsOnSunday(),
             ]);
     }
 
@@ -68,14 +75,18 @@ class PostResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('cover_image')
+                    ->disk('public')
+                    ->width('50px')->height('50px')
+                    ->label('Cover Image'),
                 Tables\Columns\TextColumn::make('post_date')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('display_order')
-                    ->numeric()
-                    ->sortable(),
+                    ->numeric()  
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                  
                 Tables\Columns\TextColumn::make('customer_id')
                     ->numeric()
                     ->sortable(),

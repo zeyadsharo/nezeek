@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'icon', 'post_date', 'display_order', 'content', 'customer_id', 'auto_delete_at'];
+    protected $fillable = ['title', 'cover_image', 'post_date', 'display_order', 'content', 'customer_id', 'auto_delete_at'];
 
     public function customer()
     {
@@ -19,7 +19,7 @@ class Post extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->customer_id = auth()->user()->id;
+            $model->customer_id = 2;
         });
     }
 }
