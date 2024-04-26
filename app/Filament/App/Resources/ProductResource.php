@@ -6,7 +6,13 @@ use App\Filament\App\Resources\ProductResource\Pages;
 use App\Filament\App\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -26,30 +32,53 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('model')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\TextInput::make('currency')
-                    ->required()
-                    ->maxLength(3),
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('category_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('customer_id')
-                    ->required()
-                    ->numeric(),
+                Fieldset::make('Price Details')->schema([
+                    TextInput::make('price')
+                        ->required()
+                        ->numeric(),
+
+                    Select::make('currency')
+                        ->options([
+                            'USD' => 'USD',
+                            'IQD' => 'IQD',
+                        ])
+                        ->default('IQD')
+
+
+                        ->selectablePlaceholder(true),
+                ]),
+
+            
+            FileUpload::make('product_image')->disk('public')
+                ->directory('products')
+                ->image()
+                ->disk('public')
+                ->imageEditor()
+                ->label('Cover Image'),
+                Select::make('category_id')
+                    ->placeholder(__('Select Category'))
+                    ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title'),
                 Forms\Components\TextInput::make('display_order')
                     ->required()
                     ->numeric(),
-                Forms\Components\DatePicker::make('display_to'),
-                Forms\Components\DatePicker::make('auto_delete_at'),
+
+            Forms\Components\DatePicker::make('display_to')
+                ->minDate(now())
+                ->default(now()->addYears(1))
+                ->weekStartsOnSunday(),
+                
+                
+                Forms\Components\DatePicker::make('auto_delete_at')
+                ->minDate(now())
+                ->default(now()->addYears(1))
+                ->weekStartsOnSunday(),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull()
+                ->minLength(2)
+                ->maxLength(1024),
             ]);
     }
 
@@ -66,12 +95,9 @@ class ProductResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('currency')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
+                Tables\Columns\TextColumn::make('product_image')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('customer_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('display_order')

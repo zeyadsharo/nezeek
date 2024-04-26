@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->decimal('price', 10, 2);
             $table->string('currency', 3);
-            $table->string('icon')->nullable();
+            $table->string('product_image')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('category_id')->references('id')->on('product_categories')->onDelete('cascade');

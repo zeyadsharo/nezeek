@@ -19,7 +19,7 @@ class ProductCategory extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->customer_id = auth()->user()->id;
+            $model->customer_id = 2;
         });
     }
 }

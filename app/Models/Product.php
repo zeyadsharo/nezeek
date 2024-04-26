@@ -8,7 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-     protected $fillable = ['title', 'description', 'model', 'price', 'currency', 'cover_image', 'category_id', 'customer_id', 'display_order', 'display_to', 'auto_delete_at'];
+    protected $fillable = [
+        'title',
+        'description',
+        'model',
+        'price', 'currency',
+        'product_image',
+        'category_id',
+        'customer_id',
+        'display_order',
+        'display_to',
+        'auto_delete_at'
+    ];
 
     public function category()
     {
@@ -19,5 +30,12 @@ class Product extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+    public static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($model) {
+            $model->customer_id = 2;
+        });
+    }
 }

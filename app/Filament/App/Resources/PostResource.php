@@ -60,11 +60,8 @@ class PostResource extends Resource
                         'undo',
                     ])->columnSpanFull(),
                 Forms\Components\DatePicker::make('auto_delete_at')
-
-                    ->prefix('Starts')
                     ->minDate(now())
-                    ->suffix('at midnight')
-                    ->default(now()->addMonths(3))
+                    ->default(now()->addYear())
                     ->weekStartsOnSunday(),
             ]);
     }

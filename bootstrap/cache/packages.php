@@ -1,9 +1,27 @@
 <?php return array (
+  'akaunting/laravel-money' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Akaunting\\Money\\Provider',
+    ),
+  ),
   'anourvalar/eloquent-serialize' => 
   array (
     'aliases' => 
     array (
       'EloquentSerialize' => 'AnourValar\\EloquentSerialize\\Facades\\EloquentSerializeFacade',
+    ),
+  ),
+  'ariaieboy/filament-currency' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Ariaieboy\\FilamentCurrency\\FilamentCurrencyServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'FilamentCurrency' => 'Ariaieboy\\FilamentCurrency\\Facades\\FilamentCurrency',
     ),
   ),
   'bezhansalleh/filament-language-switch' => 
