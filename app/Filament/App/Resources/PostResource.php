@@ -6,6 +6,7 @@ use App\Filament\App\Resources\PostResource\Pages;
 use App\Filament\App\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,19 +27,32 @@ class PostResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255),
+                Forms\Components\TextInput::ImageColumn('cover_image')
+                    ->disk('public')
+                    ->path('posts')
+                    ,
                 Forms\Components\DatePicker::make('post_date')
                     ->required(),
                 Forms\Components\TextInput::make('display_order')
                     ->required()
                     ->numeric(),
-                Forms\Components\Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('customer_id')
-                    ->required()
-                    ->numeric(),
+                RichEditor::make('content')
+                    ->toolbarButtons([
+                        'attachFiles',
+                        'blockquote',
+                        'bold',
+                        'bulletList',
+                        'codeBlock',
+                        'h2',
+                        'h3',
+                        'italic',
+                        'link',
+                        'orderedList',
+                        'redo',
+                        'strike',
+                        'underline',
+                        'undo',
+                    ])->columnSpanFull(),
                 Forms\Components\DatePicker::make('auto_delete_at'),
             ]);
     }

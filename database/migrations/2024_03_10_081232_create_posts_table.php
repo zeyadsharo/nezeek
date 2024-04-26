@@ -14,7 +14,7 @@ return new class extends Migration
          Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('icon')->nullable();
+            $table->string('cover_image')->nullable();
             $table->date('post_date');
             $table->integer('display_order');
             $table->text('content');
