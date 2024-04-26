@@ -14,4 +14,12 @@ class Post extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->customer_id = auth()->user()->id;
+        });
+    }
 }

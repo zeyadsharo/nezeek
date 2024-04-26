@@ -6,10 +6,12 @@ use App\Filament\App\Resources\PostResource\Pages;
 use App\Filament\App\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -27,10 +29,13 @@ class PostResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::ImageColumn('cover_image')
+                FileUpload::make('cover_image')->disk('public')
+                    ->directory('posts')
+                    ->image()
                     ->disk('public')
-                    ->path('posts')
-                    ,
+                    ->imageEditor()
+                    ->label('Cover Image'),
+
                 Forms\Components\DatePicker::make('post_date')
                     ->required(),
                 Forms\Components\TextInput::make('display_order')
