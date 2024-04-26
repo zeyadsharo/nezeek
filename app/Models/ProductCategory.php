@@ -19,7 +19,7 @@ class ProductCategory extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->customer_id = 2;
+            $model->customer_id = 1;
         });
     }
 }

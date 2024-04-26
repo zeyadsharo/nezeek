@@ -57,7 +57,7 @@ class ProductResource extends Resource
                 ->image()
                 ->disk('public')
                 ->imageEditor()
-                ->label('Cover Image'),
+                ->label('Product image'),
                 Select::make('category_id')
                     ->placeholder(__('Select Category'))
                     ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title'),
@@ -86,6 +86,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+            Tables\Columns\ImageColumn::make('product_image')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('model')
@@ -94,21 +96,17 @@ class ProductResource extends Resource
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('currency')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('product_image')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->searchable() ,
                 Tables\Columns\TextColumn::make('display_order')
                     ->numeric()
-                    ->sortable(),
+                ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('display_to')
                     ->date()
-                    ->sortable(),
+                ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('auto_delete_at')
                     ->date()
-                    ->sortable(),
+                  
+                ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
