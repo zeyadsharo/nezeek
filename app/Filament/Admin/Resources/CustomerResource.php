@@ -33,7 +33,7 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-users';
     protected static ?string $navigationGroup = 'Admin';
 
     public static function form(Form $form): Form

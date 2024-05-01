@@ -23,7 +23,7 @@ class UserResource extends Resource
 
     protected static ?string $label = 'Users';
 
-    protected static string $icon = 'heroicon-o-user';
+    protected static string $icon = 'heroicon-c-user';
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 

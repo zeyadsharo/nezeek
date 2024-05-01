@@ -20,7 +20,7 @@ class AreaResource extends Resource
 {
     protected static ?string $model = Area::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    protected static ?string $navigationIcon = 'heroicon-c-cube';
 
     public static function form(Form $form): Form
     {
