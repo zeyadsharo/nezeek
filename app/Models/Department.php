@@ -13,7 +13,14 @@ class Department extends Model
         'title_ku',
         'category_id',
     ];
+    public static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($model) {
+            $model->customer_id = 1;
+        });
+    }
     public function category()
     {
         return $this->belongsTo(DepartmentCategory::class, 'category_id');

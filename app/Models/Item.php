@@ -14,7 +14,7 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'details', 'imageable_id', 'imageable_type'
+        'title', 'details', 'images', 'customer_id', 'department_id'
     ];
 
     protected $casts = [
@@ -35,4 +35,16 @@ class Item extends Model
     // {
     //     return $this->morphMany(Image::class, 'imageable');
     // }
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->customer_id = 1;
+        });
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 }

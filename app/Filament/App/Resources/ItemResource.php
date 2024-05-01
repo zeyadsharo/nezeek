@@ -8,12 +8,14 @@ use App\Models\Item;
 use Filament\Forms;
 use Filament\Forms\Components\HasManyRepeater;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use GalleryJsonMedia\Form\JsonMediaGallery;
+use GalleryJsonMedia\Tables\Columns\JsonMediaColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\FileUpload;
@@ -33,17 +35,21 @@ class ItemResource extends Resource
                     TextInput::make('title')
                         ->required()
                         ->maxLength(255),
+                    Select::make('department_id')
+                        ->placeholder(__('Select Department'))
+                        ->relationship(name: 'department', titleAttribute: app()->getLocale() == 'ar' ? 'title_ar' : 'title_ku'),
+
                     KeyValue::make('details')
-                        ->default(fn($state) => [
-                            "username" => 'xx',
-                            "password" => 'yy',
+                        ->default(fn ($state) => [
+                            "Model" => '',
+                            "Type" => 'yy',
                         ])
                         ->keyLabel('Property name')
                         ->valueLabel('Property value')
 
                         ->columnSpanFull(),
 
-                        
+
 
                     JsonMediaGallery::make('images')
                         ->directory('page')
@@ -63,7 +69,12 @@ class ItemResource extends Resource
     {
         return $table
             ->columns([
-                //
+            JsonMediaColumn::make('images')
+                ->avatars(),
+                Tables\Columns\TextColumn::make('title')->label('Title'),
+                Tables\Columns\TextColumn::make("department.title_ar")->label('Department'),
+
+
             ])
             ->filters([
                 //

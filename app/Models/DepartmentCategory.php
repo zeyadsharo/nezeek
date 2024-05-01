@@ -23,4 +23,12 @@ class DepartmentCategory extends Model
     {
         return $this->hasMany(Department::class);
     }
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->customer_id = 1;
+        });
+    }
 }
