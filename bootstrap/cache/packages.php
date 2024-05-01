@@ -208,4 +208,15 @@
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
+  'webplusm/gallery-json-media' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'GalleryJsonMedia\\JsonMediaServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'FilamentJsonMedia' => 'GalleryJsonMedia\\Facades\\GalleryJsonMedia',
+    ),
+  ),
 );

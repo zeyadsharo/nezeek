@@ -18,7 +18,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "ryangjchandler/blade-capture-directive": "^0.3"
+        "ryangjchandler/blade-capture-directive": "^0.3",
+        "webplusm/gallery-json-media": "^2.2"
     },
     "require-dev": {
         "doctrine/dbal": "^3.8",

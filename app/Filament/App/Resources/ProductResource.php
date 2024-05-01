@@ -18,6 +18,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\ToggleButtons;
 
 class ProductResource extends Resource
 {
@@ -40,24 +41,21 @@ class ProductResource extends Resource
                         ->required()
                         ->numeric(),
 
-                    Select::make('currency')
+
+                    ToggleButtons::make('currency')
                         ->options([
-                            'USD' => 'USD',
-                            'IQD' => 'IQD',
-                        ])
-                        ->default('IQD')
-
-
-                        ->selectablePlaceholder(true),
+                            'USD' => __('USD'),
+                            'IQD' => __('IQD'),
+                        ])->inline()
                 ]),
 
-            
-            FileUpload::make('product_image')->disk('public')
-                ->directory('products')
-                ->image()
-                ->disk('public')
-                ->imageEditor()
-                ->label('Product image'),
+
+                FileUpload::make('product_image')->disk('public')
+                    ->directory('products')
+                    ->image()
+                    ->disk('public')
+                    ->imageEditor()
+                    ->label('Product image'),
                 Select::make('category_id')
                     ->placeholder(__('Select Category'))
                     ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title'),
@@ -65,20 +63,20 @@ class ProductResource extends Resource
                     ->required()
                     ->numeric(),
 
-            Forms\Components\DatePicker::make('display_to')
-                ->minDate(now())
-                ->default(now()->addYears(1))
-                ->weekStartsOnSunday(),
-                
-                
+                Forms\Components\DatePicker::make('display_to')
+                    ->minDate(now())
+                    ->default(now()->addYears(1))
+                    ->weekStartsOnSunday(),
+
+
                 Forms\Components\DatePicker::make('auto_delete_at')
-                ->minDate(now())
-                ->default(now()->addYears(1))
-                ->weekStartsOnSunday(),
+                    ->minDate(now())
+                    ->default(now()->addYears(1))
+                    ->weekStartsOnSunday(),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
-                ->minLength(2)
-                ->maxLength(1024),
+                    ->minLength(2)
+                    ->maxLength(1024),
             ]);
     }
 
@@ -86,8 +84,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-            Tables\Columns\ImageColumn::make('product_image')
-                ->searchable(),
+                Tables\Columns\ImageColumn::make('product_image')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('model')
@@ -96,17 +94,17 @@ class ProductResource extends Resource
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('currency')
-                    ->searchable() ,
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('display_order')
                     ->numeric()
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('display_to')
                     ->date()
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('auto_delete_at')
                     ->date()
-                  
-                ->toggleable(isToggledHiddenByDefault: true),
+
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
