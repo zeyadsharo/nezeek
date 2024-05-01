@@ -28,13 +28,7 @@ class Item extends Model
     {
         return ['images'];
     }
-    /**
-     * Get all of the item's images.
-    //  */
-    // public function images()
-    // {
-    //     return $this->morphMany(Image::class, 'imageable');
-    // }
+
     public static function boot()
     {
         parent::boot();

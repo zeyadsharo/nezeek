@@ -18,7 +18,7 @@ class DepartmentCategoryResource extends Resource
 {
     protected static ?string $model = DepartmentCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-c-archive-box';
     protected static ?string $navigationGroup = 'I Bazzar';
     public static function form(Form $form): Form
     {
