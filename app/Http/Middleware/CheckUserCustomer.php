@@ -15,7 +15,12 @@ class CheckUserCustomer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->customer) {
+        $customer=auth()->user()->customer;
+        if(!$customer){
+            return redirect('/');
+        }
+        //check activation_state and next_payment date 
+        if ($customer->activation_state == 1 && $customer->next_payment > now()) {
             return $next($request);
         }
         return redirect('/');
