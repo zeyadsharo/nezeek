@@ -12,20 +12,15 @@ class SectorSeeder extends Seeder
      */
     public function run(): void
     {
-        // trancate the table
-        // \App\Models\Sector::truncate();
-
-    //     {
-    //     "SectorID": 1,
-    //     "ArabicTitle": "قاعات افراح",
-    //     "KurdishTitle": "هوليين شاهيانا",
-    //     "Description": "", 
-    //     "DisplayOrder": 1,
-    //     "DisplayState": 1,
-    //     "Icon": "1.svg",
-    //     "ActivationState": 1
-    // },
+       
         $sectors = json_decode(file_get_contents(base_path("database/data/sectors.json")));
+        
+        //check if the sector already exists
+        if (\App\Models\Sector::where('id', $sectors[0]->SectorID)->first()) {
+            return;
+        }
+        
+        
         foreach ($sectors as $sector) {
             \App\Models\Sector::create([
                 'id' => $sector->SectorID,

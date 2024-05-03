@@ -12,17 +12,14 @@ class AreaSeeder extends Seeder
      */
     public function run(): void
     {
-         // trancate the table
-    //      {
-    //     "AreaID": 1,
-    //     "ArabicTitle": "موصل",
-    //     "KurdishTitle": "ميسل",
-    //     "Parent": null,
-    //     "Latitude": 36.3544,
-    //     "Longitude": 43.1432
-    // },
-                //    \App\Models\Area::truncate();
                 $areas = json_decode(file_get_contents(base_path("database/data/areas.json")));
+               
+               //check if the area already exists
+                if (\App\Models\Area::where('id', $areas[0]->AreaID)->first()) {
+                    return;
+                }
+               
+               
                 foreach ($areas as $area) {
                     \App\Models\Area::create([
                         'id' => $area->AreaID,
