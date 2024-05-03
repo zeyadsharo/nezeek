@@ -51,22 +51,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    // public function getTenants(Panel $panel): Collection
-    // {
-    //     return $this->teams;
-    // }
-    
-    // public function teams(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Customer::class);
-    // }
- 
-    // public function canAccessTenant(Model $tenant): bool
-    // {
-    //     return $this->teams->contains($tenant);
-    // }
+
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class,'admin_id');
     }
 }

@@ -18,6 +18,6 @@ class CheckUserCustomer
         if (auth()->check() && auth()->user()->customer) {
             return $next($request);
         }
-        return redirect('home')->with('error', 'You do not belong to a customer');
+        return redirect('/');
     }
 }
