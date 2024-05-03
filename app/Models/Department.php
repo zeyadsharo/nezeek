@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Department extends Model
 {
@@ -19,6 +20,9 @@ class Department extends Model
 
         static::creating(function ($model) {
             $model->customer_id = 1;
+        });
+        static::addGlobalScope('customer', function (Builder $builder) {
+            $builder->where('customer_id', auth()->user()->customer_id);
         });
     }
     public function category()
