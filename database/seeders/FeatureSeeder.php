@@ -17,21 +17,25 @@ class FeatureSeeder extends Seeder
                 'arabic_title' => 'منشورات',
                 'kurdish_title' => 'پەڕەکان',
                 'description' => 'منشورات جميلة تجذب العملاء',
+                "key"=>"psots"
             ],
             [
                 'arabic_title' => 'المواعيد',
                 'kurdish_title' => 'کاتێکی',
                 'description' => 'مواعيد دقيقة',
+                "key"=>"appointments"
             ],
             [
                 'arabic_title' => 'المنتجات',
                 'kurdish_title' => 'پەڕەکان',
                 'description' => 'منتجات عالية الجودة',
+                "key"=>"products"
             ],
             [
                     'arabic_title' => 'فئة المنتجات',
                     'kurdish_title' => 'کەتێگۆریی پەڕەکان',
                     'description' => 'تصنيف المنتجات حسب الفئات',
+                    "key"=>"product_categories"
             ]
         ];
 

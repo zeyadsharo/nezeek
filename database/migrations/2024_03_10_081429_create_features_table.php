@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('arabic_title');
             $table->string('kurdish_title');
             $table->text('description')->nullable();
+            $table->string('key')->unique();
             $table->timestamps();
         });
     }
