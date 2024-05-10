@@ -42,113 +42,95 @@ class CustomerResource extends Resource
 
 
         return $form
-            ->schema([
-                Wizard::make([
-                    Wizard\Step::make('Customer Information')
-                        // ->description('Basic customer information')
-                        ->icon('heroicon-m-user')
-                        ->columnSpan(6)
-                        ->schema([
-                            Forms\Components\TextInput::make('arabic_title')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('kurdish_title')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('contact_info')
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('slug')
-                                ->required()
-                                ->maxLength(255),
-                            // Forms\Components\TextInput::make('logo')
-                            //     ->maxLength(255),
-                            FileUpload::make('logo')
-                                ->image()
-                                ->imageEditor()
-                        ])
-                        ->columns(2),
+        ->schema([
+            Wizard::make([
+                Wizard\Step::make('Customer Information')
+                ->icon('heroicon-m-user')
+                ->columnSpan(6)
+                    ->schema([
+                        Forms\Components\TextInput::make('arabic_title')
+                        ->required()
+                            ->maxLength(40)
+                            ->label(__('Arabic Title')),
+                        Forms\Components\TextInput::make('kurdish_title')
+                        ->required()
+                            ->maxLength(40)
+                            ->label(__('Kurdish Title')),
+                        Forms\Components\TextInput::make('contact_info')
+                        ->maxLength(60)
+                            ->label(__('Contact Info')),
+                        Forms\Components\TextInput::make('slug')
+                        ->required()
+                            ->maxLength(30)
+                            ->label(__('Slug')),
+                        Forms\Components\FileUpload::make('logo')
+                        ->image()
+                            ->imageEditor()
+                            ->label(__('Logo')),
+                    ])
+                    ->columns(2),
 
-                    Wizard\Step::make('Location Information')
-                        // ->description('Customer location details')
-                        ->schema([
+                Wizard\Step::make('Location Information')
+                ->schema([
+                    SelectTree::make('area_id')
+                    ->relationship('area', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title', 'parent_id')
+                    ->placeholder(__('Please select an Area'))
+                    ->required(),
+                    Forms\Components\Select::make('sector_id')
+                    ->relationship('sector', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
+                    ->label(__('Sector'))
+                    ->required(),
+                    Map::make('location')
+                    ->defaultLocation([36.8663, 42.9884]) // default coordinates
+                        ->label(__('Location')),
+                ]),
 
-                            SelectTree::make('area_id')
-                                ->relationship('area', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title', 'parent_id')
-                                ->placeholder(__('Please select a Area'))
-                                ->label('Area')
-                                ->required(),
-                            Forms\Components\Select::make('sector_id')
-                                ->relationship('sector', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
-                                ->required(),
-                            Map::make('location')
-                                // ->mapControls([
-                                //     'mapTypeControl'    => true,
-                                //     'scaleControl'      => true,
-                                //     'streetViewControl' => true,
-                                //     'rotateControl'     => true,
-                                //     'fullscreenControl' => true,
-                                //     'searchBoxControl'  => false, // creates geocomplete field inside map
-                                //     'zoomControl'       => false,
-                                // ])
-                                // ->height(fn () => '400px') // map height (width is controlled by Filament options)
-                                // ->defaultZoom(10) // default zoom level when opening form
-                                // ->autocomplete('full_address') // field on form to use as Places geocompletion field
-                                // ->autocompleteReverse(true) // reverse geocode marker location to autocomplete field
-                                // ->reverseGeocode([
-                                //     'street' => '%n %S',
-                                //     'city' => '%L',
-                                //     'state' => '%A1',
-                                //     'zip' => '%z',
-                                // ]) // reverse geocode marker location to form fields, see notes below
-                                //->debug() // prints reverse geocode format strings to the debug console 
-                                ->defaultLocation([36.8663, 42.9884]) // default for new forms
-                         
-                        ]),
-                    //step for add admin for customer
-                    Wizard\Step::make('Admin Information')
+                Wizard\Step::make('Admin Information')
+                ->icon('heroicon-m-user-plus')
+                ->schema([
+                    Forms\Components\Fieldset::make('admin_id')
+                    ->relationship('admin')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                        ->label(__('Name'))
+                        ->columnSpan(4),
+                        Forms\Components\TextInput::make('email')
+                        ->label(__('Email'))
+                        ->required()
+                        ->unique()
+                        ->columnSpan(4),
+                        Forms\Components\TextInput::make('password')
+                        ->label(__('Password'))
+                        ->required()
+                        ->columnSpan(4),
+                    ]),
+                ]),
 
-                        ->icon('heroicon-m-user-plus')
-                        ->schema([
-                            // add admin for customer from relation members
-                            Fieldset::make('admin_id')
-                                ->relationship('admin')
-                                ->schema([
-                                    TextInput::make('name')
-                                        ->columnSpan(4),
-                                    TextInput::make('email')
-                                        ->columnSpan(4),
-                                    TextInput::make('password')
-                                        ->columnSpan(4),
-                                ])
+                Wizard\Step::make('Additional Information')
+                ->icon('heroicon-m-information-circle')
+                ->schema([
+                    Forms\Components\Textarea::make('description')
+                    ->maxLength(65535)
+                        ->columnSpanFull()
+                        ->label(__('Description')),
+                    Forms\Components\Textarea::make('about')
+                    ->maxLength(65535)
+                        ->columnSpanFull()
+                        ->label(__('About')),
+                    Forms\Components\TextInput::make('display_order')
+                    ->required()
+                        ->numeric()
+                        ->label(__('Display Order')),
+                    Forms\Components\Toggle::make('activation_state')
+                    ->required()
+                        ->label(__('Activation State')),
+                    Forms\Components\DatePicker::make('next_payment')
+                    ->label(__('Next Payment Date')),
+                ])
+            ])->submitAction(new HtmlString('<button type="submit">Submit</button>'))
+            ->columnSpanFull(),
+        ]);
 
-                        ]),
-
-                    //step for add subscription for customer
-                    // Wizard\Step::make('Subscription Information')
-                    //     // ->description('Subscription details for the customer')
-                    //     ->icon('heroicon-m-currency-dollar')
-                    //     ->schema([]),
-
-                    Wizard\Step::make('Additional Information')
-                        // ->description('Additional details about the customer')
-                        ->icon('heroicon-m-information-circle')
-                        ->schema([
-                            Forms\Components\Textarea::make('description')
-                                ->maxLength(65535)
-                                ->columnSpanFull(),
-                            Forms\Components\Textarea::make('about')
-                                ->maxLength(65535)
-                                ->columnSpanFull(),
-                            Forms\Components\TextInput::make('display_order')
-                                ->required()
-                                ->numeric(),
-                            Forms\Components\Toggle::make('activation_state')
-                                ->required(),
-                            Forms\Components\DatePicker::make('next_payment'),
-                        ])
-                ])->submitAction(new HtmlString('<button type="submit">Submit</button>'))
-                    ->columnSpanFull(),
-            ]);
     }
 
     public static function table(Table $table): Table
