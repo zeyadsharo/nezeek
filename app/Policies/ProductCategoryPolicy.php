@@ -9,18 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProductCategoryPolicy
 {
-    private function features()
-    {
-        $features = DB::table('customers')
-        ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
-        ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
-        ->where('customers.admin_id', auth()->id())
-            ->select('features.key')
-            ->get();
-        if ($features) {
-            return $features->pluck('key');
-        }
-    }
+    private $key = 'product_categories';
+  
     /**
      * Determine whether the user can view any models.
      */
@@ -42,7 +32,7 @@ class ProductCategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $this->features()->contains('product_categories');
+        return hasModelPermission($this->key, ProductCategory::class);
     }
 
     /**

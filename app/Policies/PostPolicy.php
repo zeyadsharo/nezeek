@@ -9,18 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class PostPolicy
 {
-    private function features()
-    {
-        $features = DB::table('customers')
-        ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
-        ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
-        ->where('customers.admin_id', auth()->id())
-            ->select('features.key')
-            ->get();
-        if ($features) {
-            return $features->pluck('key');
-        }
-    }
+    private $key='posts';
     
     /**
      * Determine whether the user can view any models.
@@ -43,7 +32,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return $this->features()->contains('posts');
+        return hasModelPermission($this->key,Post::class);
     }
 
     /**

@@ -9,19 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class AppointmentPolicy
 {
-    private function features()
-    {
-         $features= DB::table('customers')
-        ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
-        ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
-        ->where('customers.admin_id', auth()->id())
-        ->select('features.key')
-        ->get();
-        if($features)
-        {
-            return $features->pluck('key');
-        }
-    }
+    private $key = "appointments";
     /**
      * Determine whether the user can view any models.
      */
@@ -43,7 +31,7 @@ class AppointmentPolicy
      */
     public function create(User $user): bool
     {
-        return $this->features()->contains('appointments');
+        return hasModelPermission($this->key, Appointment::class);
     }
 
     /**
