@@ -24,46 +24,56 @@ class PostResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Post Title'),
-                FileUpload::make('cover_image')->disk('public')
-                    ->directory('posts')
-                    ->image()
-                    ->disk('public')
-                    ->imageEditor()
-                    ->label('Cover Image'),
+        return $form->schema([
+            Forms\Components\TextInput::make('title')
+            ->required()
+                ->maxLength(50)
+                ->label('Post Title'),
 
-                Forms\Components\DatePicker::make('post_date')
-                    ->required(),
-                Forms\Components\TextInput::make('display_order')
-                    ->required()
-                    ->numeric(),
-                RichEditor::make('content')
-                    ->toolbarButtons([
-                        'attachFiles',
-                        'blockquote',
-                        'bold',
-                        'bulletList',
-                        'codeBlock',
-                        'h2',
-                        'h3',
-                        'italic',
-                        'link',
-                        'orderedList',
-                        'redo',
-                        'strike',
-                        'underline',
-                        'undo',
-                    ])->columnSpanFull(),
-                Forms\Components\DatePicker::make('auto_delete_at')
-                    ->minDate(now())
-                    ->default(now()->addYear())
-                    ->weekStartsOnSunday(),
-            ]);
+            FileUpload::make('cover_image')
+            ->disk('public')
+            ->directory('posts')
+            ->image()
+                ->imageEditor()
+                ->label('Cover Image'),
+
+            Forms\Components\DatePicker::make('post_date')
+            ->required()
+                ->default(now())
+                ->label('Post Date'),
+
+            Forms\Components\TextInput::make('display_order')
+            ->required()
+                ->numeric()
+                ->default(0)
+                ->label('Display Order'),
+
+            RichEditor::make('content')
+            ->toolbarButtons([
+                'attachFiles',
+                'blockquote',
+                'bold',
+                'bulletList',
+                'codeBlock',
+                'h2',
+                'h3',
+                'italic',
+                'link',
+                'orderedList',
+                'redo',
+                'strike',
+                'underline',
+                'undo',
+            ])
+                ->columnSpanFull(),
+
+            Forms\Components\DatePicker::make('auto_delete_at')
+            ->minDate(now())
+                ->default(now()->addYear())
+                ->weekStartsOnSunday()
+                ->label('Auto Delete At'),
+        ]);
+
     }
 
     public static function table(Table $table): Table
