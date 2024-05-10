@@ -21,21 +21,29 @@ class ProductCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('display_order')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('arabic_title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kurdish_title')
-                    ->required()
-                    ->maxLength(255),
-                // Forms\Components\TextInput::make('customer_id')
-                //     ->required()
-                //     ->numeric(),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('arabic_title')
+            ->required()
+                ->rules(['string'])
+                ->maxLength(40)
+                ->label(__('Arabic Title'))  // Translated label
+                ->placeholder(__('Enter Arabic Title')),  // Translated placeholder
+
+            Forms\Components\TextInput::make('kurdish_title')
+            ->required()
+                ->rules(['string'])
+                ->maxLength(40)
+                ->label(__('Kurdish Title'))  // Translated label
+                ->placeholder(__('Enter Kurdish Title')),  // Translated placeholder
+
+            Forms\Components\TextInput::make('display_order')
+            ->required()
+                ->default(0)
+                ->numeric()
+                ->label(__('Display Order'))  // Translated label
+                ->placeholder(__('Enter Display Order'))  // Translated placeholder
+        ]);
+
     }
 
     public static function table(Table $table): Table
