@@ -24,28 +24,41 @@ class DepartmentCategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('display_order')->label('Display Order'),
-                Forms\Components\TextInput::make('title_ar')->label('Title (Arabic)'),
-                Forms\Components\TextInput::make('title_ku')->label('Title (Kurdish)'),
-                FileUpload::make('icon')->disk('public')
+                Forms\Components\TextInput::make('title_ar')
+                    ->label(__('Title (Arabic)'))
+                    ->required()
+                    ->maxLength(40)
+                    ->rules(['string']),
+                Forms\Components\TextInput::make('title_ku')
+                    ->label(__('Title (Kurdish)'))
+                    ->required()
+                    ->maxLength(40)
+                    ->rules(['string']),
+                Forms\Components\TextInput::make('display_order')
+                    ->label(__('Display Order'))
+                    ->numeric()
+                    ->default(0)
+                    ->required(),
+
+                Forms\Components\FileUpload::make('icon')
+                    ->label(__('Icon'))
+                    ->disk('public')
                     ->directory('department_categories')
                     ->image()
-                    ->disk('public')
                     ->imageEditor()
-                    ->label('Icon'),
+                    ->required(),
             ]);
-            
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-               Tables\Columns\ImageColumn::make('icon')
-                ->disk('public')
-                ->width('50px')->height('50px')
-                ->label('Icon'),
-                 Tables\Columns\TextColumn::make('display_order')->label('Display Order'),
+                Tables\Columns\ImageColumn::make('icon')
+                    ->disk('public')
+                    ->width('50px')->height('50px')
+                    ->label('Icon'),
+                Tables\Columns\TextColumn::make('display_order')->label('Display Order'),
                 Tables\Columns\TextColumn::make('title_ar')->label('Title (Arabic)'),
                 Tables\Columns\TextColumn::make('title_ku')->label('Title (Kurdish)'),
             ])
