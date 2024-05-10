@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\CustomerResource\Pages;
 use App\Filament\Admin\Resources\CustomerResource\Pages\CreateCustomer;
 use App\Filament\Admin\Resources\CustomerResource\Pages\EditCustomer;
 use App\Filament\Admin\Resources\CustomerResource\RelationManagers;
+use App\Filament\Admin\Resources\CustomerResource\RelationManagers\SubscriptionsRelationManager;
 use App\Filament\Resources\Admin\CustomerResource\Pages\ListCustomers;
 use App\Models\Customer;
 use Cheesegrits\FilamentGoogleMaps\Fields\Map;
@@ -101,11 +102,7 @@ class CustomerResource extends Resource
                                 // ]) // reverse geocode marker location to form fields, see notes below
                                 //->debug() // prints reverse geocode format strings to the debug console 
                                 ->defaultLocation([36.8663, 42.9884]) // default for new forms
-                            // ->draggable() // allow dragging to move marker
-                            // ->clickable(false) // allow clicking to move marker
-                            // ->geolocate() // adds a button to request device location and set map marker accordingly
-                            // ->geolocateLabel('Duhok') // overrides the default label for geolocate button
-                            // ->geolocateOnLoad(true, false) // geolocate on load, second arg 'always' (default false, only for new form),
+                         
                         ]),
                     //step for add admin for customer
                     Wizard\Step::make('Admin Information')
@@ -127,10 +124,10 @@ class CustomerResource extends Resource
                         ]),
 
                     //step for add subscription for customer
-                    Wizard\Step::make('Subscription Information')
-                        // ->description('Subscription details for the customer')
-                        ->icon('heroicon-m-currency-dollar')
-                        ->schema([]),
+                    // Wizard\Step::make('Subscription Information')
+                    //     // ->description('Subscription details for the customer')
+                    //     ->icon('heroicon-m-currency-dollar')
+                    //     ->schema([]),
 
                     Wizard\Step::make('Additional Information')
                         // ->description('Additional details about the customer')
@@ -168,6 +165,7 @@ class CustomerResource extends Resource
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                    
 
 
 
@@ -222,7 +220,7 @@ class CustomerResource extends Resource
     public static function getRelations(): array
     {
         return [
-//RelationManagers\MembersRelationManager::class,
+            SubscriptionsRelationManager::class
         ];
     }
 
