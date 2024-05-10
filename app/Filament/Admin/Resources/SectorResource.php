@@ -21,30 +21,55 @@ class SectorResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('arabic_title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kurdish_title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('display_order')
-                    ->required()
-                    ->numeric(),
-               
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255), 
-                    Forms\Components\Toggle::make('display_state')
-                    ->required()
-                    ->inline(),
-                Forms\Components\Toggle::make('activation_state')
-                    ->required()
-                    ->inline(),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('arabic_title')
+                ->required()
+                ->maxLength(40)  // Adjusted as per your requirement
+                ->label(__('Arabic Title'))  // Translation for label
+                ->placeholder(__('Enter Arabic title'))  // Placeholder with translation
+                ->rules(['string']),  // Ensure the input is a string
+
+            Forms\Components\TextInput::make('kurdish_title')
+                ->required()
+                ->maxLength(40)
+                ->label(__('Kurdish Title'))  
+                ->placeholder(__('Enter Kurdish title')) 
+                ->rules(['string']),  
+
+            Forms\Components\Textarea::make('description')
+                ->maxLength(200)
+                ->columnSpanFull()
+                ->label(__('Description'))  
+                ->placeholder(__('Enter description')), 
+
+            Forms\Components\TextInput::make('display_order')
+                ->required()
+                ->numeric()
+                ->default(0)
+                ->label(__('Display Order'))  
+                ->placeholder(__('Enter display order')), 
+
+            Forms\Components\FileUpload::make('icon')
+                ->label(__('Icon'))
+                ->disk('public')
+                ->directory('sectors')
+                ->image()
+                ->imageEditor()
+                ->placeholder(__('Enter icon class or path'))
+                ->required(),
+
+            Forms\Components\Toggle::make('display_state')
+                ->required()
+                ->inline()
+                ->default(true)
+                ->label(__('Display State')), 
+
+            Forms\Components\Toggle::make('activation_state')
+                ->required()
+                ->inline()
+                ->default(true)
+                ->label(__('Activation State')) 
+        ]);
     }
 
     public static function table(Table $table): Table
