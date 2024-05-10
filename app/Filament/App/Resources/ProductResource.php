@@ -28,56 +28,72 @@ class ProductResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+        return $form->schema([
+            Forms\Components\TextInput::make('title')
+            ->required()
+                ->maxLength(50)
+                ->label(__('Title'))
+                ->placeholder(__('Enter product title')),
 
-                Forms\Components\TextInput::make('model')
-                    ->maxLength(255),
-                Fieldset::make('Price Details')->schema([
-                    TextInput::make('price')
-                        ->required()
-                        ->numeric(),
+            Forms\Components\TextInput::make('model')
+            ->maxLength(40)
+                ->label(__('Model'))
+                ->placeholder(__('Enter model number')),
 
+            Forms\Components\Fieldset::make('Price Details')->schema([
+                Forms\Components\TextInput::make('price')
+                ->required()
+                    ->numeric()
+                    ->label(__('Price'))
+                    ->placeholder(__('Enter price')),
 
-                    ToggleButtons::make('currency')
-                        ->options([
-                            'USD' => __('USD'),
-                            'IQD' => __('IQD'),
-                        ])->inline()
-                ]),
+                Forms\Components\ToggleButtons::make('currency')
+                ->options([
+                    'USD' => __('USD'),
+                    'IQD' => __('IQD'),
+                ])
+                    ->inline()
+                    ->label(__('Currency')),
+            ]),
 
+            Forms\Components\FileUpload::make('product_image')
+            ->disk('public')
+            ->directory('products')
+            ->image()
+                ->imageEditor()
+                ->label(__('Product Image')),
 
-                FileUpload::make('product_image')->disk('public')
-                    ->directory('products')
-                    ->image()
-                    ->disk('public')
-                    ->imageEditor()
-                    ->label('Product image'),
-                Select::make('category_id')
-                    ->placeholder(__('Select Category'))
-                    ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title'),
-                Forms\Components\TextInput::make('display_order')
-                    ->required()
-                    ->numeric(),
+            Forms\Components\Select::make('category_id')
+            ->placeholder(__('Select Category'))
+            ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
+            ->label(__('Category')),
 
-                Forms\Components\DatePicker::make('display_to')
-                    ->minDate(now())
-                    ->default(now()->addYears(1))
-                    ->weekStartsOnSunday(),
+            Forms\Components\TextInput::make('display_order')
+            ->required()
+                ->numeric()
+                ->label(__('Display Order'))
+                ->placeholder(__('Enter display order')),
 
+            Forms\Components\DatePicker::make('display_to')
+            ->minDate(now())
+                ->default(now()->addYears(1))
+                ->weekStartsOnSunday()
+                ->label(__('Display Until')),
 
-                Forms\Components\DatePicker::make('auto_delete_at')
-                    ->minDate(now())
-                    ->default(now()->addYears(1))
-                    ->weekStartsOnSunday(),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull()
-                    ->minLength(2)
-                    ->maxLength(1024),
-            ]);
+            Forms\Components\DatePicker::make('auto_delete_at')
+            ->minDate(now())
+                ->default(now()->addYears(1))
+                ->weekStartsOnSunday()
+                ->label(__('Auto Delete Date')),
+
+            Forms\Components\Textarea::make('description')
+            ->columnSpanFull()
+                ->minLength(2)
+                ->maxLength(1024)
+                ->label(__('Description'))
+                ->placeholder(__('Enter description')),
+        ]);
+
     }
 
     public static function table(Table $table): Table
