@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+//test route
+Route::get('/test', function () {
+    return DB::table('customers')
+        ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
+        ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
+        ->where('customers.admin_id', auth()->id())
+        ->select('features.key')
+        ->get()->pluck('key');
 });
