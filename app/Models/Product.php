@@ -36,10 +36,10 @@ class Product extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->customer_id = 1;
+            $model->customer_id = auth()->user()->customer->id;
         });
         static::addGlobalScope('customer', function (Builder $builder) {
-            $builder->where('customer_id', auth()->user()->customer_id);
+            $builder->where('customer_id', auth()->user()->customer->id);
         });
     }
 }
