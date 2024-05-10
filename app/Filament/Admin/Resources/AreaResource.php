@@ -25,22 +25,36 @@ class AreaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                TextInput::make('arabic_title')->required(),
-                TextInput::make('kurdish_title')->required(),
-              
-                SelectTree::make('parent_id')
-                     ->relationship('parentArea', 'arabic_title', 'parent_id')
-                     ->placeholder(__('Please select a Area'))
+            ->schema([TextInput::make('arabic_title')
+                ->required()
+                ->label(__('Arabic Title'))
+                ->rules(['string', 'max:40']),
+
+            TextInput::make('kurdish_title')
+                ->required()
+                ->label(__('Kurdish Title'))
+                ->rules(['string', 'max:40']),
+
+            SelectTree::make('parent_id')
+                ->relationship('parentArea', 'arabic_title', 'parent_id')
+                ->placeholder(__('Please select a Area'))
                 ->withCount()
-                ->direction('buttom')
-                     ->label(__('Parent Area'))->nullable(),
-                TextInput::make('latitude')
-                    ->required()
-                    ->rules('numeric'),
-                TextInput::make('longitude')
-                    ->required()
-                    ->rules('numeric'),
+                ->direction('bottom') // Corrected typo from 'buttom' to 'bottom'
+                ->label(__('Parent Area'))
+                ->nullable(),
+
+            TextInput::make('latitude')
+                ->required()
+                ->label(__('Latitude'))
+                ->rules(['numeric', 'regex:/^-?\d{1,4}\.\d{1,9}$/']),
+
+            TextInput::make('longitude')
+                ->required()
+                ->label(__('Longitude'))
+                ->rules(['numeric', 'regex:/^-?\d{1,3}\.\d{1,9}$/']),
+
+
+
             ]);
     }
 
