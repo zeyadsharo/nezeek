@@ -32,12 +32,17 @@ class ItemResource extends Resource
             ->schema(
 
                 [
-                    TextInput::make('title')
-                        ->required()
-                        ->maxLength(255),
-                    Select::make('department_id')
-                        ->placeholder(__('Select Department'))
-                        ->relationship(name: 'department', titleAttribute: app()->getLocale() == 'ar' ? 'title_ar' : 'title_ku'),
+                TextInput::make('title')
+                ->required()
+                    ->maxLength(40)
+                    ->label(__('Title'))  
+                    ->placeholder(__('Enter title')),  
+
+                Select::make('department_id')
+                ->required()  
+                    ->relationship(name: 'department', titleAttribute: app()->getLocale() == 'ar' ? 'title_ar' : 'title_ku')
+                    ->label(__('Department')) 
+                    ->placeholder(__('Select Department')), 
 
                     KeyValue::make('details')
                         ->default(fn ($state) => [
@@ -47,7 +52,8 @@ class ItemResource extends Resource
                         ->keyLabel('Property name')
                         ->valueLabel('Property value')
 
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                    ->rules(['json']),
 
 
 
@@ -55,11 +61,13 @@ class ItemResource extends Resource
                         ->directory('page')
                         ->reorderable()
                         ->preserveFilenames()
-                        ->replaceNameByTitle() // If you want to show title (alt customProperties) against file name
-                        ->image() // only images by default , u need to choose one (images or document)
-                        // only documents (eg: pdf, doc, xls,...)
+                        ->replaceNameByTitle()
+                        ->image()
                         ->downloadable()
+                        ->maxFiles(4)   
+                    ->maxSize(5120)
                         ->deletable()
+                        ->label(__('Images'))
 
                 ]
             );

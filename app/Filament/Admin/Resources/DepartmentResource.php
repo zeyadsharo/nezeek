@@ -24,20 +24,37 @@ class DepartmentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([Forms\Components\TextInput::make('title_ar')->label('Title (Arabic)'),
-            Forms\Components\TextInput::make('title_ku')->label('Title (Kurdish)'),
-                Forms\Components\TextInput::make('display_order')->label('Display Order'),
+            ->schema([
+                Forms\Components\TextInput::make('title_ar')
+                    ->label(__('Title (Arabic)'))
+                    ->required()
+                    ->maxLength(40)
+                    ->rules(['string']),
 
-                FileUpload::make('icon')->disk('public')
+                Forms\Components\TextInput::make('title_ku')
+                    ->label(__('Title (Kurdish)'))
+                    ->required()
+                    ->maxLength(40)
+                    ->rules(['string']),
+
+                Forms\Components\TextInput::make('display_order')
+                    ->label(__('Display Order'))
+                    ->numeric()
+                    ->required(),
+
+                Forms\Components\FileUpload::make('icon')
+                    ->label(__('Icon'))
+                    ->disk('public')
                     ->directory('department_categories')
                     ->image()
-                    ->disk('public')
                     ->imageEditor()
-                    ->label('Icon'),
-                Select::make('category_id')
-                    ->placeholder(__('Select Category'))
-                    ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'title_ar' : 'title_ku'),
+                    ->required(),
 
+                Forms\Components\Select::make('category_id')
+                    ->label(__('Select Category'))
+                    ->placeholder(__('Select Category'))
+                    ->relationship('category', app()->getLocale() == 'ar' ? 'title_ar' : 'title_ku')
+                    ->required(),
             ]);
     }
 
