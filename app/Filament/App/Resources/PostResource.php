@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\PostResource\Pages;
 use App\Filament\App\Resources\PostResource\RelationManagers;
+use App\Filament\App\Resources\PostResource\Widgets\PostState;
 use App\Models\Post;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -26,49 +27,49 @@ class PostResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('title')
-            ->required()
+                ->required()
                 ->maxLength(50)
                 ->label('Post Title'),
 
             FileUpload::make('cover_image')
-            ->disk('public')
-            ->directory('posts')
-            ->image()
+                ->disk('public')
+                ->directory('posts')
+                ->image()
                 ->imageEditor()
                 ->label('Cover Image'),
 
             Forms\Components\DatePicker::make('post_date')
-            ->required()
+                ->required()
                 ->default(now())
                 ->label('Post Date'),
 
             Forms\Components\TextInput::make('display_order')
-            ->required()
+                ->required()
                 ->numeric()
                 ->default(0)
                 ->label('Display Order'),
 
             RichEditor::make('content')
-            ->toolbarButtons([
-                'attachFiles',
-                'blockquote',
-                'bold',
-                'bulletList',
-                'codeBlock',
-                'h2',
-                'h3',
-                'italic',
-                'link',
-                'orderedList',
-                'redo',
-                'strike',
-                'underline',
-                'undo',
-            ])
+                ->toolbarButtons([
+                    'attachFiles',
+                    'blockquote',
+                    'bold',
+                    'bulletList',
+                    'codeBlock',
+                    'h2',
+                    'h3',
+                    'italic',
+                    'link',
+                    'orderedList',
+                    'redo',
+                    'strike',
+                    'underline',
+                    'undo',
+                ])
                 ->columnSpanFull(),
 
             Forms\Components\DatePicker::make('auto_delete_at')
-            ->minDate(now())
+                ->minDate(now())
                 ->default(now()->addYear())
                 ->weekStartsOnSunday()
                 ->label('Auto Delete At'),
@@ -90,10 +91,10 @@ class PostResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('display_order')
-                    ->numeric()  
+                    ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                  
+
                 Tables\Columns\TextColumn::make('customer_id')
                     ->numeric()
                     ->sortable(),
@@ -135,6 +136,19 @@ class PostResource extends Resource
             'index' => Pages\ListPosts::route('/'),
             'create' => Pages\CreatePost::route('/create'),
             'edit' => Pages\EditPost::route('/{record}/edit'),
+        ];
+    }
+    public static function getWidgets(): array
+    {
+        return [
+           PostState::class,
+        ];
+    }
+    //getHeaderWidgets
+    public static function getHeaderWidgets(): array
+    {
+        return [
+            PostState::class,
         ];
     }
 }

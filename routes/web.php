@@ -26,20 +26,10 @@ Route::get('/test', function () {
         ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
         ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
         ->where('customers.admin_id', auth()->id())
-        ->where('key', 'products') 
+        ->where('key', 'posts') 
         ->select('features.key', 'subscriptions.number_of_records','customers.id as customer_id')
         ->get()
         ->first();
-        //count Product key products
-     $productsCount= Product::where('customer_id',$features->customer_id)
-      ->count();
-      $keyPermistion='products';
-      //check if the number of records is less than the number of products
-        if($productsCount < $features->number_of_records){
-            //return true
-            return true;    
-        }else{
-            //return false
-            return false;
-        }
+       return $features;
+     
 });
