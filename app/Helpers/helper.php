@@ -1,10 +1,11 @@
 <?php
+
 use Illuminate\Support\Facades\DB;
 
 if (!function_exists('hasModelPermission')) {
     function hasModelPermission($key, $model)
     {
-        $post=DB::table('customers')
+        $post = DB::table('customers')
             ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
             ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
             ->where('customers.admin_id', auth()->id())
@@ -13,7 +14,7 @@ if (!function_exists('hasModelPermission')) {
             ->get()
             ->first();
 
-        if(!$post){
+        if (!$post) {
             return false;
         }
         $productsCount = $model::where('customer_id', $post->customer_id)
@@ -24,5 +25,25 @@ if (!function_exists('hasModelPermission')) {
         } else {
             return false;
         }
+    }
+}
+
+//get the number of records based on the model key
+if (!function_exists('getNumberOfModelRecords')) {
+    function getNumberOfModelRecords($Modelkey)
+    {
+        $post = DB::table('customers')
+            ->leftJoin('subscriptions', 'customers.id', '=', 'subscriptions.customer_id')
+            ->leftJoin('features', 'subscriptions.feature_id', '=', 'features.id')
+            ->where('customers.admin_id', auth()->id())
+            ->where('key', $Modelkey)
+            ->select('features.key', 'subscriptions.number_of_records', 'customers.id as customer_id')
+            ->get()
+            ->first();
+
+        if (!$post) {
+            return 0;
+        }
+        return $post->number_of_records;
     }
 }
