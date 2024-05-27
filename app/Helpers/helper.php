@@ -47,3 +47,14 @@ if (!function_exists('getNumberOfModelRecords')) {
         return $post->number_of_records;
     }
 }
+
+// format the number of records 1000 to 1k
+if (!function_exists('formatNumber')) {
+    function formatNumber($number)
+    {
+        if ($number >= 1000) {
+            return number_format($number / 1000, 1) . 'k';
+        }
+        return $number;
+    }
+}

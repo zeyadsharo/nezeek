@@ -8,6 +8,9 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class PostState extends BaseWidget
 {
+    protected static bool $isLazy = false;
+
+
     /**
      * Get the statistics for the widget.
      *
@@ -45,18 +48,18 @@ class PostState extends BaseWidget
     {
         $postCount = Post::count();
         return [
-            Stat::make('Total Posts', $numberOfRecord)
+            Stat::make('Total Posts', formatNumber($numberOfRecord) )
                 ->description('The total number of posts that can be created.')
                 ->descriptionIcon('heroicon-s-newspaper')
-                ->color('blue'),
-            Stat::make('Left Posts', $numberOfRecord - $postCount)
+            ->color('success'),
+            Stat::make('Left Posts', formatNumber($numberOfRecord - $postCount))
             ->description('The number of posts left to create.')
             ->descriptionIcon('heroicon-s-newspaper')
-            ->color('blue') ,
-            Stat::make('Created Posts', $postCount)
+            ->color('warning') ,
+            Stat::make('Created Posts', formatNumber($postCount) )
                 ->description('The number of posts that have been created.')
                 ->descriptionIcon('heroicon-s-newspaper')
-                ->color('blue'),
+                ->color('info'),
         ];
     }
 }
