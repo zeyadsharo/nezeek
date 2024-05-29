@@ -5,9 +5,10 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\CustomerResource\Pages;
 use App\Filament\Admin\Resources\CustomerResource\Pages\CreateCustomer;
 use App\Filament\Admin\Resources\CustomerResource\Pages\EditCustomer;
+use App\Filament\Admin\Resources\CustomerResource\Pages\ListCustomers;
 use App\Filament\Admin\Resources\CustomerResource\RelationManagers;
 use App\Filament\Admin\Resources\CustomerResource\RelationManagers\SubscriptionsRelationManager;
-use App\Filament\Resources\Admin\CustomerResource\Pages\ListCustomers;
+
 use App\Models\Customer;
 use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
