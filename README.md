@@ -63,40 +63,4 @@ php artisan serve
 You can now access the server at http://localhost:8000
 
 <br><br>
-
-| Web Screens                         |
-|-------------------------------------|
-| ![Project Screenshot 2](scs/3.png)  |
-| ![Project Screenshot 2](scs/12.png) |
-| ![Project Screenshot 2](scs/13.png) |
-| ![Project Screenshot 2](scs/14.png) |
-| ![Project Screenshot 2](scs/15.png) |
-| ![Project Screenshot 2](scs/16.png) |
-| ![Project Screenshot 2](scs/17.png) |
-| ![Project Screenshot 2](scs/18.png) |
-| ![Project Screenshot 2](scs/1.png)  |
-| ![Project Screenshot 2](scs/19.png) |
-| ![Project Screenshot 2](scs/20.png) |
-| ![Project Screenshot 2](scs/21.png) |
-| ![Project Screenshot 2](scs/22.png) |
-| ![Project Screenshot 2](scs/23.png) |
-| ![Project Screenshot 2](scs/24.png) |
-| ![Project Screenshot 2](scs/25.png) |
-| ![Project Screenshot 2](scs/26.png) |
-| ![Project Screenshot 2](scs/4.png)  |
-| ![Project Screenshot 2](scs/5.png)  |
-| ![Project Screenshot 2](scs/6.png)  |
-| ![Project Screenshot 2](scs/7.png)  |
-| ![Project Screenshot 2](scs/8.png)  |
-| ![Project Screenshot 2](scs/9.png)  |
-| ![Project Screenshot 2](scs/10.png) |
-| ![Project Screenshot 2](scs/11.png) |
-| ![Project Screenshot 2](scs/2.png)  |
-| ![Project Screenshot 2](scs/27.png) |
-| ![Project Screenshot 2](scs/28.png) |
-| ![Project Screenshot 2](scs/29.png) |
-| ![Project Screenshot 2](scs/30.png) |
-| ![Project Screenshot 2](scs/31.png) |
-| ![Project Screenshot 2](scs/32.png) |
-| ![Project Screenshot 2](scs/33.png) |
   
