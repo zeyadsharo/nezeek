@@ -20,6 +20,8 @@ use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 class CalendarWidget extends FullCalendarWidget
 {
     public Model | string | null $model = Appointment::class;
+    //change title
+    public string $title = 'Appointments';
 
     public function fetchEvents(array $fetchInfo): array
     {
@@ -59,7 +61,35 @@ class CalendarWidget extends FullCalendarWidget
     protected function modalActions(): array
     {
         return [
-            EditAction::make(),
+            EditAction::make()
+                ->mountUsing(
+                    function (Appointment $record, Form $form, array $arguments) {
+                        //check arguments if not null
+                        if ($arguments != null) {
+                            $type = $arguments['type']; // drop or click
+                            if ($type == 'drop') {
+                                $form->fill([
+                                    'start_date' => $arguments['event']['start'],
+                                    'end_date' => $arguments['event']['start'],
+                                    'color' =>  $arguments['event']['backgroundColor'],
+                                    'public_label' => $record->public_label,
+                                    'private_label' => $record->private_label,
+                                ]);
+                            }
+                        }
+                        else
+                        {
+                            $form->fill([
+                                'start_date' => $record->start_date,
+                                'end_date' => $record->end_date,
+                                'color' => $record->color,
+                                'public_label' => $record->public_label,
+                                'private_label' => $record->private_label,
+                            ]);
+                        
+                        }
+                    }
+                ),
             DeleteAction::make(),
         ];
     }
@@ -70,17 +100,17 @@ class CalendarWidget extends FullCalendarWidget
             CreateAction::make()
                 ->modal()
                 ->label(__('Create Appointment'))
-            ->mountUsing(
-                function (Form $form, array $arguments) {
-                    $form->fill([
-                        'start_date' => $arguments['start'] ?? null, 
-                        'end_date' => $arguments['end'] ?? null,
-                        'allDay' => true,
-                        'color' => fake()->hexColor,
+                ->mountUsing(
+                    function (Form $form, array $arguments) {
+                        $form->fill([
+                            'start_date' => $arguments['start'] ?? null,
+                            'end_date' => $arguments['end'] ?? null,
+                            'allDay' => true,
+                            'color' => fake()->hexColor,
 
-                    ]);
-                }
-            )
+                        ]);
+                    }
+                )
         ];
     }
 
