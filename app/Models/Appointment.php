@@ -12,7 +12,13 @@ class Appointment extends Model
 {
     use HasFactory;
      protected $fillable = ['private_label', 'public_label', 'start_date', 'end_date', 'auto_delete_at', 'color', 'customer_id', 'is_private'];
-    
+
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'auto_delete_at' => 'datetime'
+    ];
     public function customer()
     {
         return $this->belongsTo(Customer::class);

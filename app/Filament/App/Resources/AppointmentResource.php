@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\AppointmentResource\Pages;
 use App\Filament\App\Resources\AppointmentResource\RelationManagers;
+use App\Filament\App\Resources\AppointmentResource\Widgets\AppointmentState;
 use App\Models\Appointment;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -126,4 +127,12 @@ class AppointmentResource extends Resource
             'edit' => Pages\EditAppointment::route('/{record}/edit'),
         ];
     }
+    public static function getWidgets(): array
+    {
+        return [
+            AppointmentState::class,
+        ];
+    }
+    //getHeaderWidgets
+   
 }

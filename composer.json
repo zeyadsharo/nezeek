@@ -20,6 +20,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "ryangjchandler/blade-capture-directive": "^0.3",
+        "saade/filament-fullcalendar": "^3.0",
         "webplusm/gallery-json-media": "^2.2"
     },
     "require-dev": {
