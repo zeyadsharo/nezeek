@@ -3,26 +3,30 @@
 namespace App\Filament\App\Widgets;
 
 use App\Models\Appointment;
+use Saade\FilamentFullCalendar\Actions\DeleteAction;
+use Saade\FilamentFullCalendar\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Database\Eloquent\Model;
+use Saade\FilamentFullCalendar\Actions\CreateAction;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
+
 class CalendarWidget extends FullCalendarWidget
 {
     public Model | string | null $model = Appointment::class;
 
     public function fetchEvents(array $fetchInfo): array
     {
-
-       //"start" => "2024-04-28T00:00:00Z"
-  ///"end" => "2024-06-09T00:00:00Z"
-       return $data= Appointment::query()
+        return $data = Appointment::query()
             ->where('start_date', '>=', $fetchInfo['start'])
             ->where('end_date', '<=', $fetchInfo['end'])
-        ->get()
+            ->get()
             ->map(function (Appointment $task) {
                 return [
                     'id'    => $task->id,
@@ -34,13 +38,55 @@ class CalendarWidget extends FullCalendarWidget
             })
             ->toArray();
     }
+    public function config(): array
+    {
+        return [
+            'firstDay' => 1, 'eventDisplay' => 'block',
+            'headerToolbar' => [
+                'left' => 'dayGridMonth,timeGridWeek,timeGridDay',
+                'center' => 'title',
+                'right' => 'prev,next today',
+                // render a solid rectangle
 
+            ],
+        ];
+    }
     public static function canView(): bool
     {
         return true;
     }
+
+    protected function modalActions(): array
+    {
+        return [
+            EditAction::make(),
+            DeleteAction::make(),
+        ];
+    }
+
+    protected function headerActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->modal()
+                ->label(__('Create Appointment'))
+            ->mountUsing(
+                function (Form $form, array $arguments) {
+                    $form->fill([
+                        'start_date' => $arguments['start'] ?? null, 
+                        'end_date' => $arguments['end'] ?? null,
+                        'allDay' => true,
+                        'color' => fake()->hexColor,
+
+                    ]);
+                }
+            )
+        ];
+    }
+
     public function getFormSchema(): array
     {
+
         return [
             TextInput::make('private_label')
                 ->maxLength(40)
@@ -56,22 +102,22 @@ class CalendarWidget extends FullCalendarWidget
                 ->label(__('Public Label'))  // Translation for label
                 ->placeholder(__('Enter public label')),  // Placeholder with translation
 
-            DatePicker::make('start_date')
+            DateTimePicker::make('start_date')
                 ->required()
                 ->label(__('Start Date'))  // Translation for label
                 ->placeholder(__('Select start date'))  // Placeholder with translation
-                ->default(now())  // Set today's date as the default for the start date
+                ->default(now())  // Set default to today for the start date
                 ->rules(['date', 'after_or_equal:end_date']),  // Ensure start date is before or on the same day as end date
 
-            DatePicker::make('end_date')
+            DateTimePicker::make('end_date')
                 ->required()
                 ->label(__('End Date'))  // Translation for label
                 ->placeholder(__('Select end date'))  // Placeholder with translation
-                ->default(now()->addMonths(3))  // Set default to one week after today for the end date
+                ->default(now())  // Set default to one week after today for the end date
                 ->rules(['date', 'after_or_equal:start_date']),  // Ensure end date is after or on the same day as start date
 
 
-         ColorPicker::make('color')
+            ColorPicker::make('color')
                 ->label(__('Color'))  // Translation for label
                 ->placeholder(__('Select a color')),  // Placeholder with translation
 
@@ -79,7 +125,16 @@ class CalendarWidget extends FullCalendarWidget
                 ->required()
                 ->label(__('Is Private'))  // Translation for label
                 ->inline(),
-                
+
         ];
+    }
+    public function eventDidMount(): string
+    {
+        return <<<JS
+        function({ event, timeText, isStart, isEnd, isMirror, isPast, isFuture, isToday, el, view }){
+            el.setAttribute("x-tooltip", "tooltip");
+            el.setAttribute("x-data", "{ tooltip: '"+event.title+"', start: '"+event.start+"', end: '"+event.end+"' }");
+        }
+    JS;
     }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
            $table->id();
             $table->string('private_label')->nullable();
             $table->string('public_label')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->date('auto_delete_at')->nullable();
             $table->string('color')->nullable();
             $table->unsignedBigInteger('customer_id');
