@@ -1,0 +1,26 @@
+name: Run Git Pull and PHP Artisan Migrate
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: SSH and run commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DAST_CENTER_IP }}
+        username: ${{ secrets.DAST_CENTER_USER }}
+        password: ${{ secrets.DAST_CENTER_PASSWORD }}
+        port: 7822
+        script: |
+          cd customers_files/websites23/ilinkiraq
+          git pull
+          php artisan migrate --force
+          php artisan optimize
