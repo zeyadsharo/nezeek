@@ -17,10 +17,10 @@ class ListPosts extends ListRecords
         ];
     }
     // getHeaderWidgets
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            PostResource\Widgets\PostState::make(),
-        ];
-    }
+    // protected function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         PostResource\Widgets\PostState::make(),
+    //     ];
+    // }
 }
