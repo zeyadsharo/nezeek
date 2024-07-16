@@ -65,10 +65,6 @@ class AppPanelProvider extends PanelProvider
                  
             ])
             ->sidebarCollapsibleOnDesktop();
-            
-            
-            // ->tenant(Customer::class,ownershipRelationship:'customer')
-            // ->tenantRegistration(RegisterTeam::class)
-            // ->tenantProfile(EditTeamProfile::class);
+        
     }
 }
