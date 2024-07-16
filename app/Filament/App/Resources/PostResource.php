@@ -21,6 +21,8 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\Layout\Panel;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
@@ -116,8 +118,14 @@ class PostResource extends Resource
             // Define your filters here
         ])
          ->paginated(false)
+         ->searchable(true)
+
+         
         ->actions([
-            // Define your row actions here
+            
+          ViewAction::make()->slideOver(),
+            EditAction::make(),
+             
         ])
         ->bulkActions([
             // Define your bulk actions here
