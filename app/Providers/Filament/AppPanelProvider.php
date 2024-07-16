@@ -63,7 +63,9 @@ class AppPanelProvider extends PanelProvider
                     ->selectable()
                     ->editable()
                  
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop();
+            
             
             // ->tenant(Customer::class,ownershipRelationship:'customer')
             // ->tenantRegistration(RegisterTeam::class)
