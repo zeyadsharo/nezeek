@@ -16,7 +16,11 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Tables\Columns\TextColumn;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\Layout\Panel;
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
@@ -80,53 +84,48 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('cover_image')
-                    ->disk('public')
-                    ->width('50px')->height('50px')
-                    ->label('Cover Image'),
-                Tables\Columns\TextColumn::make('post_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('display_order')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\TextColumn::make('customer_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('auto_delete_at')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make()
-                ->slideOver(),
-                Tables\Actions\DeleteAction::make(),
-
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-
-                ]),
-            ])
-            ->recordUrl(null);
+        ->columns([
+            Panel::make([
+                Split::make([
+                    ImageColumn::make('cover_image')
+                    ->circular()
+                        ->disk('public')
+                        ->width('50px')
+                        ->height('50px')
+                        ->label('Cover Image')
+                        ->grow(false),
+                    Stack::make([
+                        TextColumn::make('title')
+                            ->weight(FontWeight::Bold)
+                            ->searchable()
+                            ->sortable(),
+                        TextColumn::make('post_date')
+                        ->date()
+                            ->sortable()
+                            ->label('Post Date'),
+                        TextColumn::make('created_at')
+                        ->dateTime()
+                            ->sortable()
+                            ->toggleable(isToggledHiddenByDefault: true)
+                            ->label('Created At'),
+                    ])->space(1)
+                ])->from('md'),
+            ]),
+        ])
+        ->filters([
+            // Define your filters here
+        ])
+         ->paginated(false)
+        ->actions([
+            // Define your row actions here
+        ])
+        ->bulkActions([
+            // Define your bulk actions here
+        ])
+        ->contentGrid([
+            'md' => 2,
+            'xl' => 3,
+        ]);
     }
 
     public static function getRelations(): array
