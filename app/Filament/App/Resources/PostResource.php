@@ -23,6 +23,7 @@ use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\Layout\Panel;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\EditAction;
+
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
@@ -80,18 +81,16 @@ class PostResource extends Resource
                 ->weekStartsOnSunday()
                 ->label('Auto Delete At'),
         ]);
-
     }
 
     public static function table(Table $table): Table
     {
         return $table
-        ->columns([
+            ->columns([
                 Split::make([
                     ImageColumn::make('cover_image')
-                    ->disk('public')
-                    
-                    ->circular()
+                        ->disk('public')
+                        ->circular()
                         ->disk('public')
                         ->width('50px')
                         ->height('50px')
@@ -103,38 +102,38 @@ class PostResource extends Resource
                             ->searchable()
                             ->sortable(),
                         TextColumn::make('post_date')
-                        ->date()
+                            ->date()
                             ->sortable()
                             ->label('Post Date'),
-                        TextColumn::make('created_at')
-                        ->dateTime()
-                            ->sortable()
-                            ->toggleable(isToggledHiddenByDefault: true)
-                            ->label('Created At'),
+                        // TextColumn::make('created_at')
+                        //     ->dateTime()
+                        //     ->sortable()
+                        //     ->toggleable(isToggledHiddenByDefault: true)
+                        //     ->label('Created At'),
                     ])->space(1)
                 ])->from('md'),
-            
-        ])
-        ->filters([
-            // Define your filters here
-        ])
-         ->paginated(false)
-         ->searchable(true)
 
-         
-        ->actions([
-            
-          ViewAction::make()->slideOver(),
-           EditAction::make(),
-             
-        ])
-        ->bulkActions([
-            // Define your bulk actions here
-        ])
-        ->contentGrid([
-            'md' => 2,
-            'xl' => 3,
-        ])->recordUrl(null);
+            ])
+            ->filters([
+                // Define your filters here
+            ])
+            ->paginated(false)
+            ->searchable(true)
+            ->paginatedWhileReordering()
+            ->deferLoading()
+            ->actions([
+
+                ViewAction::make()->slideOver(),
+                EditAction::make(),
+
+            ])
+            ->bulkActions([
+                // Define your bulk actions here
+            ])
+            ->contentGrid([
+                'md' => 2,
+                'xl' => 3,
+            ])->recordUrl(null);
     }
 
     public static function getRelations(): array
@@ -152,17 +151,17 @@ class PostResource extends Resource
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
-    public static function getWidgets(): array
-    {
-        return [
-           PostState::class,
-        ];
-    }
-    //getHeaderWidgets
-    public static function getHeaderWidgets(): array
-    {
-        return [
-            PostState::class,
-        ];
-    }
+    // public static function getWidgets(): array
+    // {
+    //     return [
+    //        // PostState::class,
+    //     ];
+    // }
+    // //getHeaderWidgets
+    // public static function getHeaderWidgets(): array
+    // {
+    //     return [
+    //        // PostState::class,
+    //     ];
+    // }
 }
