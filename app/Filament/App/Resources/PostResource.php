@@ -99,11 +99,9 @@ class PostResource extends Resource
                     Stack::make([
                         TextColumn::make('title')
                             ->weight(FontWeight::Bold)
-                            ->searchable()
-                            ->sortable(),
+                            ->searchable(),
                         TextColumn::make('post_date')
                             ->date()
-                            ->sortable()
                             ->label('Post Date'),
                         // TextColumn::make('created_at')
                         //     ->dateTime()
@@ -119,6 +117,7 @@ class PostResource extends Resource
             ])
             ->paginated(false)
             ->searchable(true)
+            ->defaultSort('post_date', 'desc')
             ->paginatedWhileReordering()
             ->deferLoading()
             ->actions([
