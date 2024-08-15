@@ -29,31 +29,44 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
     protected static ?string $navigationIcon = 'heroicon-s-newspaper';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Post.Post');
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Post.Post');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Post.Posts');
+    }
     public static function form(Form $form): Form
     {
         return $form->schema([
             Forms\Components\TextInput::make('title')
                 ->required()
                 ->maxLength(50)
-                ->label('Post Title'),
+                ->label(__('Post.Title')),
 
             FileUpload::make('cover_image')
                 ->disk('public')
                 ->directory('posts')
                 ->image()
                 ->imageEditor()
-                ->label('Cover Image'),
+                ->label(__('Post.Cover Image')),
 
             Forms\Components\DatePicker::make('post_date')
                 ->required()
                 ->default(now())
-                ->label('Post Date'),
+                ->label(__('Post.Post Date')),
 
             Forms\Components\TextInput::make('display_order')
                 ->required()
                 ->numeric()
                 ->default(0)
-                ->label('Display Order'),
+                ->label(__('Post.Display Order')),
 
             RichEditor::make('content')
                 ->toolbarButtons([
@@ -78,7 +91,7 @@ class PostResource extends Resource
                 ->minDate(now())
                 ->default(now()->addYear())
                 ->weekStartsOnSunday()
-                ->label('Auto Delete At'),
+                ->label(__('Post.Auto Delete At')),
         ]);
     }
 
@@ -94,7 +107,7 @@ class PostResource extends Resource
                         ->disk('public')
                         ->width('50px')
                         ->height('50px')
-                        ->label('Cover Image')
+                        ->label(__('Post.Cover Image'))
                         ->grow(false),
                     Stack::make([
                         TextColumn::make('title')
@@ -103,7 +116,7 @@ class PostResource extends Resource
                         TextColumn::make('post_date')
                             ->date()
                             ->icon('heroicon-m-calendar')
-                            ->label('Post Date'),
+                            ->label(__('Post.Post Date')),
                     ])->space(1)
                 ])->from('md'),
 
