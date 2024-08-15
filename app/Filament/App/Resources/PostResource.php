@@ -102,6 +102,7 @@ class PostResource extends Resource
                             ->searchable(),
                         TextColumn::make('post_date')
                             ->date()
+                            ->icon('heroicon-m-calendar')
                             ->label('Post Date'),
                         // TextColumn::make('created_at')
                         //     ->dateTime()
