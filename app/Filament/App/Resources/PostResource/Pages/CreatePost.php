@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources\PostResource\Pages;
 
 use App\Filament\App\Resources\PostResource;
+use Illuminate\Support\HtmlString;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -13,6 +14,4 @@ class CreatePost extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
-    // icon for the page
-    
 }
