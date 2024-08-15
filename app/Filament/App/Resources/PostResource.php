@@ -123,8 +123,9 @@ class PostResource extends Resource
             ->deferLoading()
             ->actions([
 
-                ViewAction::make()->slideOver(),
-                EditAction::make(),
+                ViewAction::make()->slideOver()->label(''),
+                EditAction::make()->label('')
+
 
             ])
             ->bulkActions([
