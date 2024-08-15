@@ -90,6 +90,8 @@ class PostResource extends Resource
             Panel::make([
                 Split::make([
                     ImageColumn::make('cover_image')
+                    ->disk('public')
+                    
                     ->circular()
                         ->disk('public')
                         ->width('50px')
