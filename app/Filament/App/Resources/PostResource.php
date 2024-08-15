@@ -27,7 +27,6 @@ use Filament\Tables\Actions\EditAction;
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
-
     protected static ?string $navigationIcon = 'heroicon-s-newspaper';
 
     public static function form(Form $form): Form
@@ -86,6 +85,7 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            
             ->columns([
                 Split::make([
                     ImageColumn::make('cover_image')
@@ -104,11 +104,6 @@ class PostResource extends Resource
                             ->date()
                             ->icon('heroicon-m-calendar')
                             ->label('Post Date'),
-                        // TextColumn::make('created_at')
-                        //     ->dateTime()
-                        //     ->sortable()
-                        //     ->toggleable(isToggledHiddenByDefault: true)
-                        //     ->label('Created At'),
                     ])->space(1)
                 ])->from('md'),
 
@@ -122,14 +117,11 @@ class PostResource extends Resource
             ->paginatedWhileReordering()
             ->deferLoading()
             ->actions([
-
                 ViewAction::make()->slideOver()->label(''),
-                EditAction::make()->label('')
-
+                EditAction::make()->label(''),
 
             ])
             ->bulkActions([
-                // Define your bulk actions here
             ])
             ->contentGrid([
                 'md' => 2,
@@ -152,17 +144,6 @@ class PostResource extends Resource
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
-    // public static function getWidgets(): array
-    // {
-    //     return [
-    //        // PostState::class,
-    //     ];
-    // }
-    // //getHeaderWidgets
-    // public static function getHeaderWidgets(): array
-    // {
-    //     return [
-    //        // PostState::class,
-    //     ];
+   
     // }
 }

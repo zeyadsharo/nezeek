@@ -9,6 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreatePost extends CreateRecord
 {
+    protected static bool $canCreateAnother = false;
     protected static string $resource = PostResource::class;
     public  function getRedirectUrl(): string
     {
