@@ -87,7 +87,6 @@ class PostResource extends Resource
     {
         return $table
         ->columns([
-            Panel::make([
                 Split::make([
                     ImageColumn::make('cover_image')
                     ->disk('public')
@@ -114,7 +113,7 @@ class PostResource extends Resource
                             ->label('Created At'),
                     ])->space(1)
                 ])->from('md'),
-            ]),
+            
         ])
         ->filters([
             // Define your filters here

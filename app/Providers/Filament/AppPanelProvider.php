@@ -64,7 +64,9 @@ class AppPanelProvider extends PanelProvider
                     ->editable()
                  
             ])
-            ->sidebarCollapsibleOnDesktop();
+             ->sidebarFullyCollapsibleOnDesktop()
+             ->collapsedSidebarWidth('64px');
+;
         
     }
 }
