@@ -126,7 +126,7 @@ class PostResource extends Resource
         ->actions([
             
           ViewAction::make()->slideOver(),
-            EditAction::make(),
+           EditAction::make(),
              
         ])
         ->bulkActions([
@@ -135,7 +135,7 @@ class PostResource extends Resource
         ->contentGrid([
             'md' => 2,
             'xl' => 3,
-        ]);
+        ])->recordUrl(null);
     }
 
     public static function getRelations(): array

@@ -20,7 +20,7 @@ jobs:
         password: ${{ secrets.DAST_CENTER_PASSWORD }}
         port: 7822
         script: |
-          cd customers_files/websites23/ilinkiraq
+          cd customers_files/websites24/nezeek
           git pull
           php artisan migrate --force
           php artisan optimize
