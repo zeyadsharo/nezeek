@@ -85,7 +85,9 @@ class PostResource extends Resource
                     'underline',
                     'undo',
                 ])
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->label(__('Post.Content'))
+                ->required(),
 
             Forms\Components\DatePicker::make('auto_delete_at')
                 ->minDate(now())
