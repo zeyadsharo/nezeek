@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 
+
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
@@ -111,22 +112,26 @@ class ProductResource extends Resource
                     ->label(__('Product.Image'))
                     ->searchable(),
                     Stack::make([
+
+                        Tables\Columns\TextColumn::make('category.arabic_title')
+                        ->label(__('Product.Category'))
+                        ->icon('heroicon-s-tag')
+                        ->searchable(),
                         Tables\Columns\TextColumn::make('title')
                         ->label(__('Product.Title'))
-                        ->searchable(),
+                        ->searchable()
+                        ->icon('heroicon-s-shopping-bag'),
                         Tables\Columns\TextColumn::make('model')
                         ->label(__('Product.Model'))
+                        ->icon('heroicon-s-cube')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('category.arabic_title')
-                        ->label(__('Product.Category'))
-                        ->searchable(),
+                   
                     ]),
                     Stack::make([
                         Tables\Columns\TextColumn::make('price')
                         ->numeric()
                        ->label(__('Product.Price'))
                         ->money(currency: 'IQD')
-                        ->sortable(),
                         // Tables\Columns\TextColumn::make('currency')
                         // ->label(__('Product.Currency'))
                         // ->searchable(),
@@ -145,13 +150,17 @@ class ProductResource extends Resource
                     ->label(__('Product.Created At'))
                     ->dateTime()
                     ->icon('heroicon-s-calendar')
-                        ->sortable()
                         ->toggleable(isToggledHiddenByDefault: true),
                 ])->from('md')
             ])
             ->filters([
                 //
             ])
+            ->paginated(false)
+            ->searchable(true)
+            ->defaultSort('created_at', 'desc')
+            ->paginatedWhileReordering()
+            ->deferLoading()
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
