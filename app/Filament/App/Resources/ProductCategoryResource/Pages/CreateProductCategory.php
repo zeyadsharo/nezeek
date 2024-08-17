@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateProductCategory extends CreateRecord
 {
+    protected static bool $canCreateAnother = false;
     protected static string $resource = ProductCategoryResource::class;
     public  function getRedirectUrl(): string
     {
