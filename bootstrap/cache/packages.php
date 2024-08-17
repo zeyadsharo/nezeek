@@ -94,6 +94,13 @@
       0 => 'Filament\\Notifications\\NotificationsServiceProvider',
     ),
   ),
+  'filament/spatie-laravel-settings-plugin' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Filament\\SpatieLaravelSettingsPluginServiceProvider',
+    ),
+  ),
   'filament/support' => 
   array (
     'providers' => 
@@ -224,6 +231,41 @@
     'aliases' => 
     array (
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
+    ),
+  ),
+  'spatie/laravel-settings' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
+    ),
+  ),
+  'spatie/laravel-sitemap' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Sitemap\\SitemapServiceProvider',
+    ),
+  ),
+  'tomatophp/console-helpers' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'TomatoPHP\\ConsoleHelpers\\ConsoleHelpersServiceProvider',
+    ),
+  ),
+  'tomatophp/filament-pwa' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'TomatoPHP\\FilamentPWA\\FilamentPwaServiceProvider',
+    ),
+  ),
+  'tomatophp/filament-settings-hub' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'TomatoPHP\\FilamentSettingsHub\\FilamentSettingsHubServiceProvider',
     ),
   ),
   'webplusm/gallery-json-media' => 

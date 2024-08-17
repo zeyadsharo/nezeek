@@ -64,6 +64,7 @@ class AppPanelProvider extends PanelProvider
                     ->editable()
                  
             ])
+            ->plugin(\TomatoPHP\FilamentPWA\FilamentPWAPlugin::make())
              ->sidebarFullyCollapsibleOnDesktop()
              ->collapsedSidebarWidth('64px');
 ;
