@@ -25,35 +25,49 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-m-cube';
+    public static function getNavigationLabel(): string
+    {
+        return __('Product.Products');
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Product.Product');
+    }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('Product.Products');
+    }
     public static function form(Form $form): Form
     {
         return $form->schema([
             Forms\Components\TextInput::make('title')
             ->required()
                 ->maxLength(50)
-                ->label(__('Title'))
-                ->placeholder(__('Enter product title')),
+                ->label(__('Product.title'))
+                ->placeholder( __('Product.Laptop, Mobile, etc')),
 
             Forms\Components\TextInput::make('model')
             ->maxLength(40)
-                ->label(__('Model'))
-                ->placeholder(__('Enter model number')),
+                ->label(__('Product.model'))
+                ->placeholder(__('Product.Hp, Samsung, etc')),
 
-            Forms\Components\Fieldset::make('Price Details')->schema([
+            Forms\Components\Fieldset::make('Price Details')
+             ->label(__('Product.Price Details'))
+            ->schema([
                 Forms\Components\TextInput::make('price')
                 ->required()
                     ->numeric()
-                    ->label(__('Price'))
-                    ->placeholder(__('Enter price')),
+                    ->label(__('Product.Price'))
+                    ->placeholder('600, 1000, etc'),
 
                 Forms\Components\ToggleButtons::make('currency')
                 ->options([
-                    'USD' => __('USD'),
-                    'IQD' => __('IQD'),
+                    'USD' => __('Product.USD'),
+                    'IQD' => __('Product.IQD'),
                 ])
                     ->inline()
-                    ->label(__('Currency')),
+                    ->label(__('Product.Currency')),
             ]),
 
             Forms\Components\FileUpload::make('product_image')
@@ -61,37 +75,36 @@ class ProductResource extends Resource
             ->directory('products')
             ->image()
                 ->imageEditor()
-                ->label(__('Product Image')),
+                ->label(__('Product.Image')),
 
             Forms\Components\Select::make('category_id')
-            ->placeholder(__('Select Category'))
+            ->placeholder(__('Product.Select Category'))
             ->relationship(name: 'category', titleAttribute: app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
-            ->label(__('Category')),
+            ->label(__('Product.Category')),
 
             Forms\Components\TextInput::make('display_order')
             ->required()
                 ->numeric()
-                ->label(__('Display Order'))
-                ->placeholder(__('Enter display order')),
-
+                ->label(__('Product.Display Order'))
+                ->placeholder('1, 2, 3, etc'),
             Forms\Components\DatePicker::make('display_to')
             ->minDate(now())
                 ->default(now()->addYears(1))
                 ->weekStartsOnSunday()
-                ->label(__('Display Until')),
+                ->label(__('Product.Display To')),
 
             Forms\Components\DatePicker::make('auto_delete_at')
             ->minDate(now())
                 ->default(now()->addYears(1))
                 ->weekStartsOnSunday()
-                ->label(__('Auto Delete Date')),
+                ->label(__('Product.Auto Delete At')),
 
             Forms\Components\Textarea::make('description')
             ->columnSpanFull()
                 ->minLength(2)
                 ->maxLength(1024)
-                ->label(__('Description'))
-                ->placeholder(__('Enter description')),
+                ->label(__('Product.Description'))
+                ->placeholder(__('Product.Description about the product')),
         ]);
 
     }
@@ -101,31 +114,34 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('product_image')
+                ->label(__('Product.Image'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
+                ->label(__('Product.Title'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('model')
+                ->label(__('Product.Model'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
+                    ->numeric()
+                    ->label(__('Product.Price'))
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('currency')
+                ->label(__('Product.Currency'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('display_order')
-                    ->numeric()
-                    ->toggleable(isToggledHiddenByDefault: true),
+              
                 Tables\Columns\TextColumn::make('display_to')
+                ->label(__('Product.Display To'))
                     ->date()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('auto_delete_at')
+                ->label(__('Product.Auto Delete At'))
                     ->date()
 
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                ->label(__('Product.Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -159,3 +175,5 @@ class ProductResource extends Resource
         ];
     }
 }
+
+
