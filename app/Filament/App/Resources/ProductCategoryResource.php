@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Grid;
+use Filament\Tables\Columns\Layout\Stack;
 
 class ProductCategoryResource extends Resource
 {
@@ -23,63 +26,67 @@ class ProductCategoryResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('arabic_title')
-            ->required()
+                ->required()
                 ->rules(['string'])
                 ->maxLength(40)
                 ->label(__('Arabic Title'))  // Translated label
                 ->placeholder(__('Enter Arabic Title')),  // Translated placeholder
 
             Forms\Components\TextInput::make('kurdish_title')
-            ->required()
+                ->required()
                 ->rules(['string'])
                 ->maxLength(40)
                 ->label(__('Kurdish Title'))  // Translated label
                 ->placeholder(__('Enter Kurdish Title')),  // Translated placeholder
 
             Forms\Components\TextInput::make('display_order')
-            ->required()
+                ->required()
                 ->default(0)
                 ->numeric()
                 ->label(__('Display Order'))  // Translated label
                 ->placeholder(__('Enter Display Order'))  // Translated placeholder
         ]);
-
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('display_order')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('arabic_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kurdish_title')
-                    ->searchable(),
-                // Tables\Columns\TextColumn::make('customer_id')
-                //     ->numeric()
-                //     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Split::make([
+                    Stack::make([
+                        Tables\Columns\TextColumn::make('arabic_title')
+                        ->label(__('Arabic Title')),
+                        Tables\Columns\TextColumn::make('kurdish_title')
+                        ->label('Kurdish Title')
+                    ]),
+                    Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->date()
+                    ->icon('heroicon-m-calendar')
+                ])->from('md')
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()->slideOver()->label(''),
+                Tables\Actions\EditAction::make()->label('Edit'),
             ])
+            ->paginated(false)
+            ->searchable(true)
+            ->defaultSort('created_at', 'desc')
+            ->paginatedWhileReordering()
+            ->deferLoading()
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
+            ])
+            ->contentGrid([
+                'md' => 2,
+                'xl' => 3,
+            ])
+            ->recordUrl(null);
     }
 
     public static function getRelations(): array
