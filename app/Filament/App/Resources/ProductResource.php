@@ -6,19 +6,12 @@ use App\Filament\App\Resources\ProductResource\Pages;
 use App\Filament\App\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\ToggleButtons;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 
 class ProductResource extends Resource
 {
@@ -113,38 +106,48 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('product_image')
-                ->label(__('Product.Image'))
+                Split::make([
+                    Tables\Columns\ImageColumn::make('product_image')
+                    ->label(__('Product.Image'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('title')
-                ->label(__('Product.Title'))
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('model')
-                ->label(__('Product.Model'))
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->numeric()
-                    ->label(__('Product.Price'))
-                    ->money()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('currency')
-                ->label(__('Product.Currency'))
-                    ->searchable(),
-              
-                Tables\Columns\TextColumn::make('display_to')
-                ->label(__('Product.Display To'))
-                    ->date()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('auto_delete_at')
-                ->label(__('Product.Auto Delete At'))
-                    ->date()
-
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                ->label(__('Product.Created At'))
+                    Stack::make([
+                        Tables\Columns\TextColumn::make('title')
+                        ->label(__('Product.Title'))
+                        ->searchable(),
+                        Tables\Columns\TextColumn::make('model')
+                        ->label(__('Product.Model'))
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('category.arabic_title')
+                        ->label(__('Product.Category'))
+                        ->searchable(),
+                    ]),
+                    Stack::make([
+                        Tables\Columns\TextColumn::make('price')
+                        ->numeric()
+                       ->label(__('Product.Price'))
+                        ->money(currency: 'IQD')
+                        ->sortable(),
+                        // Tables\Columns\TextColumn::make('currency')
+                        // ->label(__('Product.Currency'))
+                        // ->searchable(),
+                    ]),
+                    // Stack::make([
+                    //     Tables\Columns\TextColumn::make('display_to')
+                    //     ->label(__('Product.Display To'))
+                    //     ->date()
+                    //         ->toggleable(isToggledHiddenByDefault: true),
+                    //     Tables\Columns\TextColumn::make('auto_delete_at')
+                    //     ->label(__('Product.Auto Delete At'))
+                    //     ->date()
+                    //         ->toggleable(isToggledHiddenByDefault: true),
+                    // ]),
+                    Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Product.Created At'))
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->icon('heroicon-s-calendar')
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                ])->from('md')
             ])
             ->filters([
                 //
