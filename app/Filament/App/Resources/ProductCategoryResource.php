@@ -22,6 +22,21 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-c-tag';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('ProductCategory.ProductCategories');
+    }
+    public static function getModelLabel(): string
+    {
+        return __('ProductCategory.ProductCategory');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('ProductCategory.ProductCategories');
+    }
+
+
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -29,22 +44,18 @@ class ProductCategoryResource extends Resource
                 ->required()
                 ->rules(['string'])
                 ->maxLength(40)
-                ->label(__('Arabic Title'))  // Translated label
-                ->placeholder(__('Enter Arabic Title')),  // Translated placeholder
+                ->label(__('ProductCategory.Category Title(Ar)')) ,
 
             Forms\Components\TextInput::make('kurdish_title')
                 ->required()
                 ->rules(['string'])
                 ->maxLength(40)
-                ->label(__('Kurdish Title'))  // Translated label
-                ->placeholder(__('Enter Kurdish Title')),  // Translated placeholder
-
+                ->label(__('ProductCategory.Category Title(Ku)')) ,
             Forms\Components\TextInput::make('display_order')
                 ->required()
                 ->default(0)
                 ->numeric()
-                ->label(__('Display Order'))  // Translated label
-                ->placeholder(__('Enter Display Order'))  // Translated placeholder
+                ->label(__('ProductCategory.Display Order')),
         ]);
     }
 
@@ -55,12 +66,12 @@ class ProductCategoryResource extends Resource
                 Split::make([
                     Stack::make([
                         Tables\Columns\TextColumn::make('arabic_title')
-                        ->label(__('Arabic Title')),
+                        ->label(__('ProductCategory.Category Title(Ar)')),
                         Tables\Columns\TextColumn::make('kurdish_title')
-                        ->label('Kurdish Title')
+                        ->label(__('ProductCategory.Category Title(Ku)')),
                     ]),
                     Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created At')
+                     ->label(__('ProductCategory.Created At'))
                     ->date()
                     ->icon('heroicon-m-calendar')
                 ])->from('md')
