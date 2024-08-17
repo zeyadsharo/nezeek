@@ -31,7 +31,7 @@ class PostResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('Post.Post');
+        return __('Post.Posts');
     }
     public static function getModelLabel(): string
     {
@@ -159,6 +159,8 @@ class PostResource extends Resource
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
+     
+
    
     // }
 }
