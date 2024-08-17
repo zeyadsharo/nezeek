@@ -222,6 +222,13 @@
       0 => 'Saade\\FilamentFullCalendar\\FilamentFullCalendarServiceProvider',
     ),
   ),
+  'spatie/laravel-data' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelData\\LaravelDataServiceProvider',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 
@@ -245,6 +252,13 @@
     'providers' => 
     array (
       0 => 'Spatie\\Sitemap\\SitemapServiceProvider',
+    ),
+  ),
+  'spatie/php-structure-discoverer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\StructureDiscoverer\\StructureDiscovererServiceProvider',
     ),
   ),
   'tomatophp/console-helpers' => 
