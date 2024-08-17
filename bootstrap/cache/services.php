@@ -64,6 +64,7 @@
     60 => 'App\\Providers\\Filament\\AdminPanelProvider',
     61 => 'App\\Providers\\Filament\\AppPanelProvider',
     62 => 'App\\Providers\\RouteServiceProvider',
+    63 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
   ),
   'eager' => 
   array (
@@ -116,6 +117,7 @@
     46 => 'App\\Providers\\Filament\\AdminPanelProvider',
     47 => 'App\\Providers\\Filament\\AppPanelProvider',
     48 => 'App\\Providers\\RouteServiceProvider',
+    49 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
   ),
   'deferred' => 
   array (
