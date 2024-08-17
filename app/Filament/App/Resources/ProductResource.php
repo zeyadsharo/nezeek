@@ -107,59 +107,53 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Split::make([
+                    // Left: Product Image
                     Tables\Columns\ImageColumn::make('product_image')
                     ->label(__('Product.Image'))
-                    ->searchable(),
-                    Stack::make([
+                    ->circular(false) // Keep the image rectangular as in the example
+                        ->grow(false), // Prevent image from growing to occupy too much space
 
+                    // Right: Details in a Stack
+                    Stack::make([
+                        // Product Title
+                        Tables\Columns\TextColumn::make('title')
+                        ->label(__('Product.Title'))
+                        ->icon('heroicon-s-shopping-bag')
+                        ->searchable()
+                            ->weight('bold'), // Make the title stand out
+
+                        // Product Category
                         Tables\Columns\TextColumn::make('category.arabic_title')
                         ->label(__('Product.Category'))
                         ->icon('heroicon-s-tag')
                         ->searchable(),
-                        Tables\Columns\TextColumn::make('title')
-                        ->label(__('Product.Title'))
-                        ->searchable()
-                        ->icon('heroicon-s-shopping-bag'),
-                        Tables\Columns\TextColumn::make('model')
-                        ->label(__('Product.Model'))
-                        ->icon('heroicon-s-cube')
-                        ->searchable(),
-                   
-                    ]),
-                    Stack::make([
+
+                        // Price and Currency
                         Tables\Columns\TextColumn::make('price')
                         ->numeric()
-                       ->label(__('Product.Price'))
-                    ->money(
-                        currency: function ( $column ,Product $record) {
-                            $currency = $record->currency;
-                            return $currency === 'USD' ? 'USD' : 'IQD';
-                        },
-                        locale: function ( $column ,Product $record) {
-                            $currency = $record->currency;
-                            return $currency === 'USD' ? 'en_US' : 'ar_IQ';
-                        }
-                    )
+                            ->label(__('Product.Price'))
+                            ->money(
+                                currency: function ($column, Product $record) {
+                                    return $record->currency === 'USD' ? 'USD' : 'IQD';
+                                },
+                                locale: function ($column, Product $record) {
+                                    return $record->currency === 'USD' ? 'en_US' : 'ar_IQ';
+                                }
+                            )
+                            ->size('xl') // Make the price more prominent
+                            ->extraAttributes(['class' => 'text-red-600']), // Style the price in red
+
+                        // Created At
+                        Tables\Columns\TextColumn::make('created_at')
+                        ->label(__('Product.Created At'))
+                        ->dateTime('Y-m-d H:i') // Format the datetime
+                        ->icon('heroicon-s-calendar')
+                        ->extraAttributes(['class' => 'text-gray-500 text-sm']), // Smaller, less prominent text
                     ]),
-                    // Stack::make([
-                    //     Tables\Columns\TextColumn::make('display_to')
-                    //     ->label(__('Product.Display To'))
-                    //     ->date()
-                    //         ->toggleable(isToggledHiddenByDefault: true),
-                    //     Tables\Columns\TextColumn::make('auto_delete_at')
-                    //     ->label(__('Product.Auto Delete At'))
-                    //     ->date()
-                    //         ->toggleable(isToggledHiddenByDefault: true),
-                    // ]),
-                    Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('Product.Created At'))
-                    ->dateTime()
-                    ->icon('heroicon-s-calendar')
-                        ->toggleable(isToggledHiddenByDefault: true),
-                ])->from('md')
+                ])->from('md') // Stack the layout starting from medium screens and above
             ])
             ->filters([
-                //
+                // Add any filters here if needed
             ])
             ->paginated(false)
             ->searchable(true)
@@ -167,13 +161,15 @@ class ProductResource extends Resource
             ->paginatedWhileReordering()
             ->deferLoading()
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label(''),
+                Tables\Actions\ViewAction::make()->label('')->slideOver(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(null);
     }
 
     public static function getRelations(): array
