@@ -3,7 +3,6 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\ProductResource\Pages;
-use App\Filament\App\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -131,10 +130,16 @@ class ProductResource extends Resource
                         Tables\Columns\TextColumn::make('price')
                         ->numeric()
                        ->label(__('Product.Price'))
-                        ->money(currency: 'IQD')
-                        // Tables\Columns\TextColumn::make('currency')
-                        // ->label(__('Product.Currency'))
-                        // ->searchable(),
+                    ->money(
+                        currency: function ( $column ,Product $record) {
+                            $currency = $record->currency;
+                            return $currency === 'USD' ? 'USD' : 'IQD';
+                        },
+                        locale: function ( $column ,Product $record) {
+                            $currency = $record->currency;
+                            return $currency === 'USD' ? 'en_US' : 'ar_IQ';
+                        }
+                    )
                     ]),
                     // Stack::make([
                     //     Tables\Columns\TextColumn::make('display_to')
