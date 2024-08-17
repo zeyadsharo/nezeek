@@ -26,4 +26,3 @@ jobs:
           php artisan optimize
           composer install
           composer dump-autoload
-          php artisan storage:link
