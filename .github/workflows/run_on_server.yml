@@ -24,4 +24,6 @@ jobs:
           git pull
           php artisan migrate --force
           php artisan optimize
+          composer install
+          composer dump-autoload
           php artisan storage:link
