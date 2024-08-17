@@ -23,6 +23,5 @@ jobs:
           cd customers_files/websites24/nezeek
           git pull
           php artisan migrate --force
+          composer update
           php artisan optimize
-          composer install
-          composer dump-autoload
