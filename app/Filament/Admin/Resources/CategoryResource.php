@@ -37,7 +37,7 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('sector_id')
-                    ->relationship('sector', 'arabic_title')
+                    ->relationship('sector', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
                     ->required()
                     ->searchable()
                     ->preload()
@@ -56,7 +56,7 @@ class CategoryResource extends Resource
                     ->rules(['string']),
 
                 SelectTree::make('parent_id')
-                    ->relationship('parent', 'arabic_title', 'parent_id')
+                    ->relationship('parent', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title', 'parent_id')
                     ->placeholder(__('Please select a Category'))
                     ->withCount()
                     ->direction('bottom')
@@ -78,7 +78,7 @@ class CategoryResource extends Resource
                     ->nullable(),
 
                 CheckboxList::make('properties')
-                    ->relationship('properties', 'arabic_title')
+                    ->relationship('properties', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
                     ->pivotData([
                         'display_order' => 0,
                     ])
@@ -90,7 +90,7 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sector.arabic_title')
+                Tables\Columns\TextColumn::make(app()->getLocale() == 'ar' ? 'sector.arabic_title' : 'sector.kurdish_title')
                     ->label(__('Category.Sector'))
                     ->searchable()
                     ->sortable(),
@@ -105,7 +105,7 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('parent.arabic_title')
+                Tables\Columns\TextColumn::make( app()->getLocale() == 'ar' ? 'parent.arabic_title' : 'parent.kurdish_title')
                     ->label(__('Category.Parent Category')),
 
                 Tables\Columns\TextColumn::make('display_order')
