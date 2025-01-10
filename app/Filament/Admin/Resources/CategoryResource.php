@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms\Components\CheckboxList;
+use Illuminate\Database\Eloquent\Model;
 
 class CategoryResource extends Resource
 {
@@ -79,6 +80,11 @@ class CategoryResource extends Resource
 
                 CheckboxList::make('properties')
                     ->relationship('properties', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => sprintf(
+                        '%s (%s)', 
+                        app()->getLocale() == 'ar' ? $record->arabic_title : $record->kurdish_title, 
+                        $record->type
+                    ))
                     ->pivotData([
                         'display_order' => 0,
                     ])
