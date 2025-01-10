@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'Customer' => 'Customer',
+    'Customers' => 'Customers',
+    'submit' => 'Submit',
+    'get_location' => 'Get Location',
     'step' => [
         'customer_information' => 'Customer Information',
         'location_information' => 'Location Information',

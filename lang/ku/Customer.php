@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'Customer' => 'کڕیار',
+    'Customers' => 'کڕیارەکان',
+    'submit' => 'پاشەکەوت',
+    'get_location' => 'دیاریکردنی شوێن',
     'step' => [
         'customer_information' => 'زانیاری کڕیار',
         'location_information' => 'زانیاری شوێن',

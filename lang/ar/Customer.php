@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'Customer' => 'عميل',
+    'Customers' => 'العملاء',
+    'submit' => 'حفظ',
+    'get_location' => 'تحديد الموقع',
     'step' => [
         'customer_information' => 'معلومات العميل',
         'location_information' => 'معلومات الموقع',

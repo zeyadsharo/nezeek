@@ -127,7 +127,7 @@ class CustomerResource extends Resource
                                 ->defaultZoom(5)
                                 ->defaultLocation([36.8663, 42.9884])
                                 ->geolocate() // adds a button to request device location and set map marker accordingly
-                                ->geolocateLabel('Get Location') // overrides the default label for geolocate button
+                                ->geolocateLabel(__('Customer.get_location')) // overrides the default label for geolocate button
                                 ->geolocateOnLoad(true, false) // geolocate on load, second arg 'always' (default false, only for new form))
                                 ->layers([
                                     'https://googlearchive.github.io/js-v2-samples/ggeoxml/cta.kml',
@@ -182,7 +182,7 @@ class CustomerResource extends Resource
                                 ->default(now()->addMonths(3))
                                 ->label(__('Customer.label.next_payment')),
                         ])
-                ])->submitAction(new HtmlString('<button type="submit">Submit</button>'))
+                ])->submitAction(new HtmlString('<button type="submit">' . __('Customer.submit') . '</button>'))
                     ->columnSpanFull(),
             ]);
     }
