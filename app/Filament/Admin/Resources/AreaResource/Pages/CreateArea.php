@@ -8,4 +8,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateArea extends CreateRecord
 {
     protected static string $resource = AreaResource::class;
+    protected static bool $canCreateAnother = false;
 }
