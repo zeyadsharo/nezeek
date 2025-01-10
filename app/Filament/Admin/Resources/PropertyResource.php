@@ -20,6 +20,8 @@ class PropertyResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
+    protected static ?int $navigationSort = 3;
+
     public static function getNavigationLabel(): string
     {
         return __('Property.Properties');
