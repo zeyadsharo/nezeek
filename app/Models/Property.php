@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Property extends Model
 {
@@ -24,5 +25,10 @@ class Property extends Model
     {
         return $this->belongsToMany(Category::class, 'category_properties')
             ->withPivot('display_order');
+    }
+
+    public function getIconUrlAttribute()
+    {
+        return $this->icon ? Storage::disk('public')->url(  $this->icon) : null;
     }
 }

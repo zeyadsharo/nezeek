@@ -82,18 +82,18 @@ class CategoryResource extends Resource
 
                 CheckboxList::make('properties')
                     ->searchable()
-                ->bulkToggleable()
+                    ->bulkToggleable()
                     ->relationship('properties', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
-                    ->getOptionLabelFromRecordUsing(fn(Model $record) => sprintf(
-                        '%s (%s)',
-                        app()->getLocale() == 'ar' ? $record->arabic_title : $record->kurdish_title,
-                        __('Property.' . ucfirst($record->type))
-                    ))
+                    ->getOptionLabelFromRecordUsing(fn(Model $record) => view('components.property-checkbox-label', [
+                        'title' => app()->getLocale() == 'ar' ? $record->arabic_title : $record->kurdish_title,
+                        'type' => __('Property.' . ucfirst($record->type)),
+                        'iconUrl' => $record->icon,
+                    ]))
                     ->pivotData([
                         'display_order' => 0,
                     ])
-                ->columns(3)
-                ->gridDirection('row')
+                    ->columns(3)
+                    ->gridDirection('row')
                     ->label(__('Category.Properties')),
             ]);
     }
