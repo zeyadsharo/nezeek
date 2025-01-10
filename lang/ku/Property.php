@@ -18,5 +18,6 @@ return [
     'Date' => 'بەروار',
     'Enter values separated by comma' => 'بەهاکان بە کۆما جیابکەرەوە',
     'Created At' => 'دروستکراوە لە',
-    'Updated At' => 'نوێکراوەتەوە لە'
+    'Updated At' => 'نوێکراوەتەوە لە',
+     "Textbox" => "سندوقی دەق",
 ];

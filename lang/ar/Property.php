@@ -18,5 +18,6 @@ return [
     'Date' => 'تاريخ',
     'Enter values separated by comma' => 'أدخل القيم مفصولة بفواصل',
     'Created At' => 'تاريخ الإنشاء',
-    'Updated At' => 'تاريخ التحديث'
+    'Updated At' => 'تاريخ التحديث',
+    "Textbox" => "صندوق نص",
 ];

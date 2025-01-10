@@ -18,5 +18,6 @@ return [
     'Date' => 'Date',
     'Enter values separated by comma' => 'Enter values separated by comma',
     'Created At' => 'Created At',
-    'Updated At' => 'Updated At'
+    'Updated At' => 'Updated At',
+     "Textbox" => "Textbox",
 ];

@@ -81,15 +81,19 @@ class CategoryResource extends Resource
                     ->nullable(),
 
                 CheckboxList::make('properties')
+                    ->searchable()
+                ->bulkToggleable()
                     ->relationship('properties', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => sprintf(
-                        '%s (%s)', 
-                        app()->getLocale() == 'ar' ? $record->arabic_title : $record->kurdish_title, 
-                       __('Property.'. ucfirst($record->type))
+                    ->getOptionLabelFromRecordUsing(fn(Model $record) => sprintf(
+                        '%s (%s)',
+                        app()->getLocale() == 'ar' ? $record->arabic_title : $record->kurdish_title,
+                        __('Property.' . ucfirst($record->type))
                     ))
                     ->pivotData([
                         'display_order' => 0,
                     ])
+                ->columns(3)
+                ->gridDirection('row')
                     ->label(__('Category.Properties')),
             ]);
     }
@@ -113,7 +117,7 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make( app()->getLocale() == 'ar' ? 'parent.arabic_title' : 'parent.kurdish_title')
+                Tables\Columns\TextColumn::make(app()->getLocale() == 'ar' ? 'parent.arabic_title' : 'parent.kurdish_title')
                     ->label(__('Category.Parent Category')),
 
                 Tables\Columns\TextColumn::make('display_order')
@@ -150,7 +154,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-          //  PropertiesRelationManager::class,
+            //  PropertiesRelationManager::class,
         ];
     }
 
