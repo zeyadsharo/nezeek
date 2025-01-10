@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSector extends CreateRecord
 {
     protected static string $resource = SectorResource::class;
+    protected static bool $canCreateAnother = false;
 }

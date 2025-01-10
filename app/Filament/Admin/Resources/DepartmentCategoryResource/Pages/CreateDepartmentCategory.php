@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateDepartmentCategory extends CreateRecord
 {
     protected static string $resource = DepartmentCategoryResource::class;
+    protected static bool $canCreateAnother = false;
 }

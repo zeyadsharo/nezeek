@@ -1,66 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Name 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## This project built with Laravel 10 + Livewire 3 + Filament 3  <br>
+This project is a Laravel application that includes various models to manage different entities such as Users, Posts, Products, Appointments, and more. Below is a brief overview of the key models and their functionalities.
 
-- Support Light & Dark theme
-- Support permission and roles for users
-- Support Arabic & English language 
-- Changing filament theme
-- Support SPA (Single Page Application)
-- If you like this work you can <a href="https://github.com/akramghaleb">see more here</a>
+## Models
+
+### User
+
+The `User` model represents the users of the application. It includes attributes like `name`, `email`, `password`, `customer_id`, and `role`.
+
+- **File:** [app/Models/User.php](app/Models/User.php)
+- **Policies:** [app/Policies/UserPolicy.php](app/Policies/UserPolicy.php)
+
+### Post
+
+The `Post` model represents the posts created by users. It includes attributes like `title`, `content`, and `author_id`.
+
+- **File:** [app/Models/Post.php](app/Models/Post.php)
+- **Resource:** [app/Filament/App/Resources/PostResource.php](app/Filament/App/Resources/PostResource.php)
+- **Policies:** [app/Policies/PostPolicy.php](app/Policies/PostPolicy.php)
+
+### Product
+
+The `Product` model represents the products available in the application. It includes attributes like `name`, `description`, `price`, and `stock`.
+
+- **File:** [app/Models/Product.php](app/Models/Product.php)
+- **Policies:** [app/Policies/ProductPolicy.php](app/Policies/ProductPolicy.php)
+
+### Appointment
+
+The `Appointment` model represents the appointments scheduled in the application. It includes attributes like `date`, `time`, `user_id`, and `status`.
+
+- **File:** [app/Models/Appointment.php](app/Models/Appointment.php)
+- **Policies:** [app/Policies/AppointmentPolicy.php](app/Policies/AppointmentPolicy.php)
+
+### ProductCategory
+
+The `ProductCategory` model represents the categories for products. It includes attributes like `name` and `description`.
+
+- **File:** [app/Models/ProductCategory.php](app/Models/ProductCategory.php)
+- **Policies:** [app/Policies/ProductCategoryPolicy.php](app/Policies/ProductCategoryPolicy.php)
+
+## Seeders
+
+### SectorSeeder
+
+The `SectorSeeder` seeds the database with initial data for sectors.
+
+- **File:** [database/seeders/SectorSeeder.php](database/seeders/SectorSeeder.php)
+
+## Widgets
+
+### StatsOverview
+
+The `StatsOverview` widget provides an overview of various statistics like the count of appointments, posts, and products.
+
+- **File:** [app/Filament/App/Widgets/StatsOverview.php](app/Filament/App/Widgets/StatsOverview.php)
+
+## Helpers
+
+### hasModelPermission
+
+The `hasModelPermission` function checks if a user has permission to perform actions on a model.
+
+- **File:** [app/Helpers/helper.php](app/Helpers/helper.php)
+
+## Environment Configuration
+
+The environment variables are configured in the `.env` file. An example configuration is provided in the `.env.example` file.
+
+- **File:** [.env.example](.env.example)
 
 ## Installation
 
-Clone the repository
+1. Clone the repository.
+2. Run `composer install` to install PHP dependencies.
+3. Run `npm install` to install JavaScript dependencies.
+4. Copy `.env.example` to `.env` and configure your environment variables.
+5. Run `php artisan migrate` to run the database migrations.
+6. Run `php artisan db:seed` to seed the database.
 
-```
-git clone https://github.com/akramghaleb/permissions-roles-filament-admin-panel.git
-```
+## Running the Application
 
-Switch to the repo folder
+To start the application, run:
 
-```
-cd permissions-roles-filament-admin-panel
-```
-
-Install all the dependencies using composer
-
-```
-composer install
-```
-
-Copy the example env file and make the required configuration changes in the .env file
-
-```
-cp .env.example .env
-```
-
-Generate a new application key
-
-```
-php artisan key:generate
-```
-
-Run the database migrations (**Set the database connection in .env before migrating**)
-
-```
-php artisan migrate
-```
-
-Start the local development server
-
-```
+```sh
 php artisan serve
-```
-
-You can now access the server at http://localhost:8000
-
-<br><br>
-  
