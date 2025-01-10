@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\CategoryResource\Pages;
+use App\Filament\Admin\Resources\CategoryResource\RelationManagers\PropertiesRelationManager;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
+use Filament\Forms\Components\CheckboxList;
 
 class CategoryResource extends Resource
 {
@@ -74,6 +76,13 @@ class CategoryResource extends Resource
                     ->image()
                     ->imageEditor()
                     ->nullable(),
+
+                CheckboxList::make('properties')
+                    ->relationship('properties', 'arabic_title')
+                    ->pivotData([
+                        'display_order' => 0,
+                    ])
+                    ->label(__('Properties')),
             ]);
     }
 
@@ -133,7 +142,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+          //  PropertiesRelationManager::class,
         ];
     }
 

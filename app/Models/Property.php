@@ -20,4 +20,9 @@ class Property extends Model
         'icon',
         'validation_rule'
     ];
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_properties')
+            ->withPivot('display_order');
+    }
 }

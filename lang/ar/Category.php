@@ -1,6 +1,5 @@
 <?php
 return [
-    'Categories' => 'الفئات',
     'Category' => 'فئة',
     'Sector' => 'قطاع',
     'Arabic Title' => 'العنوان العربي',

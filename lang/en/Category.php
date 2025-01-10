@@ -1,6 +1,5 @@
 <?php
 return [
-    'Categories' => 'Categories',
     'Category' => 'Category',
     'Sector' => 'Sector',
     'Arabic Title' => 'Arabic Title',

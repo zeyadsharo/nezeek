@@ -24,4 +24,13 @@ class CategoryProperty extends Model
     {
         return $this->belongsTo(Property::class);
     }
+    // handle display_order when creating record 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->display_order = 1;
+        });
+    }
 }

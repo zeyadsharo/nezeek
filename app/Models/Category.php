@@ -32,4 +32,10 @@ class Category extends Model
     {
         return $this->hasMany(self::class, 'parent_id');
     }
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'category_properties')
+        ->withPivot('display_order')
+        ->orderByPivot('display_order');
+    }
 }
