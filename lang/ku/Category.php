@@ -1,5 +1,6 @@
 <?php
 return [
+    'Categories' =>'پۆلەکان',
     'Category' => 'پۆل',
     'Sector' => 'بەش',
     'Arabic Title' => 'ناونیشانی عەرەبی',
