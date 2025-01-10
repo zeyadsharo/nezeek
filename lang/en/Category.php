@@ -1,5 +1,6 @@
 <?php
 return [
+     'Properties' => 'Properties',
     'Categories' =>'Categories',
     'Category' => 'Category',
     'Sector' => 'Sector',

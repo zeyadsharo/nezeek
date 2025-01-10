@@ -251,7 +251,7 @@ class CustomerResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('sector_id')
-                    ->label(__('Sector.ModelLabel'))
+                    ->label(__('Customer.filter.sector'))
                     ->relationship('sector', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title'),
                 Tables\Filters\Filter::make('area_tree')
                     ->form([
@@ -261,6 +261,7 @@ class CustomerResource extends Resource
                                 app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title',
                                 'parent_id'
                             )
+                            ->label(__('Customer.filter.area'))
                             ->independent(false)
                             ->enableBranchNode(),
                     ])

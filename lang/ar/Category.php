@@ -1,5 +1,6 @@
 <?php
 return [
+    'Properties' => 'الخصائص',
     'Categories' => 'الفئات',
     'Category' => 'فئة',
     'Sector' => 'قطاع',

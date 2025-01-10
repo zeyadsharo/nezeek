@@ -85,12 +85,12 @@ class CategoryResource extends Resource
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => sprintf(
                         '%s (%s)', 
                         app()->getLocale() == 'ar' ? $record->arabic_title : $record->kurdish_title, 
-                        $record->type
+                       __('Property.'. ucfirst($record->type))
                     ))
                     ->pivotData([
                         'display_order' => 0,
                     ])
-                    ->label(__('Properties')),
+                    ->label(__('Category.Properties')),
             ]);
     }
 

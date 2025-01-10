@@ -1,5 +1,6 @@
 <?php
 return [
+     'Properties' => 'خصائص',
     'Categories' =>'پۆلەکان',
     'Category' => 'پۆل',
     'Sector' => 'بەش',
