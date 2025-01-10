@@ -25,25 +25,56 @@ class PropertyResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(40)
+                    ->label(__('Name')),
+
                 Forms\Components\TextInput::make('arabic_title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(40)
+                    ->label(__('Arabic Title')),
+
                 Forms\Components\TextInput::make('kurdish_title')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('is_required')
-                    ->required(),
-                Forms\Components\TextInput::make('type')
-                    ->required(),
+                    ->maxLength(40)
+                    ->label(__('Kurdish Title')),
+
+                Forms\Components\Select::make('type')
+                    ->required()
+                    ->options([
+                        'textbox' => __('Text Box'),
+                        'number' => __('Number'),
+                        'select' => __('Select'),
+                        'checkbox' => __('Checkbox'),
+                        'date' => __('Date'),
+                    ])
+                    ->live(),
+
                 Forms\Components\Textarea::make('values')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->visible(fn(Forms\Get $get) => $get('type') === 'select')
+                    ->helperText(__('Enter values separated by comma')),
+
                 Forms\Components\TextInput::make('unit')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255),
+                    ->maxLength(20)
+                    ->visible(fn(Forms\Get $get) => in_array($get('type'), ['number'])),
+
+                Forms\Components\Toggle::make('is_required')
+                    ->default(false)
+                    ->label(__('Required')),
+
+                Forms\Components\FileUpload::make('icon')
+                    ->label(__('Icon'))
+                    ->disk('public')
+                    ->directory('properties')
+                    ->image()
+                    ->imageEditor()
+                    ->nullable(),
+
                 Forms\Components\TextInput::make('validation_rule')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label(__('Validation Rule'))
+                    ->nullable(),
             ]);
     }
 
@@ -51,6 +82,28 @@ class PropertyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('arabic_title')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('kurdish_title')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->sortable(),
+
+                Tables\Columns\IconColumn::make('is_required')
+                    ->boolean(),
+
+                Tables\Columns\ImageColumn::make('icon')
+                    ->circular(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -59,21 +112,6 @@ class PropertyResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('arabic_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kurdish_title')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('is_required')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('unit')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('validation_rule')
-                    ->searchable(),
             ])
             ->filters([
                 //

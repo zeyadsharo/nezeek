@@ -3,15 +3,13 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\CategoryResource\Pages;
-use App\Filament\Admin\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 
 class CategoryResource extends Resource
 {
@@ -19,26 +17,63 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Category.Categories');
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Category.Category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Category.Category');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sector_id')
+                Forms\Components\Select::make('sector_id')
+                    ->relationship('sector', 'arabic_title')
                     ->required()
-                    ->numeric(),
+                    ->searchable()
+                    ->preload()
+                    ->label(__('Category.Sector')),
+
                 Forms\Components\TextInput::make('arabic_title')
                     ->required()
-                    ->maxLength(255),
+                    ->label(__('Category.Arabic Title'))
+                    ->maxLength(40)
+                    ->rules(['string']),
+
                 Forms\Components\TextInput::make('kurdish_title')
                     ->required()
-                    ->maxLength(255),
+                    ->label(__('Category.Kurdish Title'))
+                    ->maxLength(40)
+                    ->rules(['string']),
+
+                SelectTree::make('parent_id')
+                    ->relationship('parent', 'arabic_title', 'parent_id')
+                    ->placeholder(__('Please select a Category'))
+                    ->withCount()
+                    ->direction('bottom')
+                    ->label(__('Category.Parent Category'))
+                    ->nullable(),
+
                 Forms\Components\TextInput::make('display_order')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('parent_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255),
+                    ->numeric()
+                    ->default(0)
+                    ->label(__('Category.Display Order')),
+
+                Forms\Components\FileUpload::make('icon')
+                    ->label(__('Category.Icon'))
+                    ->disk('public')
+                    ->directory('categories')
+                    ->image()
+                    ->imageEditor()
+                    ->nullable(),
             ]);
     }
 
@@ -46,6 +81,33 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('sector.arabic_title')
+                    ->label(__('Category.Sector'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('arabic_title')
+                    ->label(__('Category.Arabic Title'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('kurdish_title')
+                    ->label(__('Category.Kurdish Title'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('parent.arabic_title')
+                    ->label(__('Category.Parent Category')),
+
+                Tables\Columns\TextColumn::make('display_order')
+                    ->label(__('Category.Display Order'))
+                    ->numeric()
+                    ->sortable(),
+
+                Tables\Columns\ImageColumn::make('icon')
+                    ->label(__('Category.Icon'))
+                    ->circular(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -54,21 +116,6 @@ class CategoryResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('sector_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('arabic_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kurdish_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('display_order')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('parent_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
             ])
             ->filters([
                 //
