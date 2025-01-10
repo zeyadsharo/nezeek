@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'step' => [
+        'customer_information' => 'معلومات العميل',
+        'location_information' => 'معلومات الموقع',
+        'admin_information' => 'معلومات المسؤول',
+        'additional_information' => 'معلومات إضافية',
+    ],
+    'label' => [
+        'arabic_title' => 'الاسم بالعربية',
+        'kurdish_title' => 'الاسم بالكردية',
+        'contact_info' => 'معلومات الاتصال',
+        'slug' => 'الرابط المختصر',
+        'logo' => 'الشعار',
+        'select_area' => 'الرجاء اختيار المنطقة',
+        'sector' => 'القطاع',
+        'area' => 'المنطقة',
+        'location' => 'الموقع',
+        'admin_name' => 'اسم المسؤول',
+        'admin_email' => 'البريد الإلكتروني للمسؤول',
+        'admin_password' => 'كلمة المرور للمسؤول',
+        'description' => 'الوصف',
+        'about' => 'عن الشركة',
+        'display_order' => 'ترتيب العرض',
+        'activation_state' => 'حالة التفعيل',
+        'next_payment' => 'تاريخ الدفع القادم',
+        'latitude' => 'خط العرض',
+        'longitude' => 'خط الطول',
+        'created_at' => 'تاريخ الإنشاء',
+    ],
+];

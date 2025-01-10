@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'step' => [
+        'customer_information' => 'Customer Information',
+        'location_information' => 'Location Information',
+        'admin_information' => 'Admin Information',
+        'additional_information' => 'Additional Information',
+    ],
+    'label' => [
+        'arabic_title' => 'Arabic Title',
+        'kurdish_title' => 'Kurdish Title',
+        'contact_info' => 'Contact Information',
+        'slug' => 'Slug',
+        'logo' => 'Logo',
+        'select_area' => 'Please select an Area',
+        'sector' => 'Sector',
+        'area' => 'Area',
+        'location' => 'Location',
+        'admin_name' => 'Admin Name',
+        'admin_email' => 'Admin Email',
+        'admin_password' => 'Admin Password',
+        'description' => 'Description',
+        'about' => 'About',
+        'display_order' => 'Display Order',
+        'activation_state' => 'Activation State',
+        'next_payment' => 'Next Payment Date',
+        'latitude' => 'Latitude',
+        'longitude' => 'Longitude',
+        'created_at' => 'Created At',
+    ],
+];

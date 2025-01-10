@@ -28,7 +28,19 @@ class CustomerResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
     protected static ?int $navigationSort = 1;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Customer.Customers');
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Customer.Customer');
+    }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('Customer.Customers');
+    }
     public static function form(Form $form): Form
     {
 
@@ -36,38 +48,38 @@ class CustomerResource extends Resource
         return $form
             ->schema([
                 Wizard::make([
-                    Wizard\Step::make('Customer Information')
+                    Wizard\Step::make(__('Customer.step.customer_information'))
                         ->icon('heroicon-m-user')
                         ->columnSpan(6)
                         ->schema([
                             Forms\Components\TextInput::make('arabic_title')
                                 ->required()
                                 ->maxLength(40)
-                                ->label(__('Arabic Title')),
+                                ->label(__('Customer.label.arabic_title')),
                             Forms\Components\TextInput::make('kurdish_title')
                                 ->required()
                                 ->maxLength(40)
-                                ->label(__('Kurdish Title')),
+                                ->label(__('Customer.label.kurdish_title')),
                             Forms\Components\TextInput::make('contact_info')
                                 ->maxLength(60)
-                                ->label(__('Contact Info')),
+                                ->label(__('Customer.label.contact_info')),
                             Forms\Components\TextInput::make('slug')
                                 ->required()
                                 ->maxLength(30)
-                                ->label(__('Slug')),
+                                ->label(__('Customer.label.slug')),
                             Forms\Components\FileUpload::make('logo')
                                 ->image()
                                 ->imageEditor()
-                                ->label(__('Logo')),
+                                ->label(__('Customer.label.logo')),
                         ])
                         ->columns(2),
 
-                    Wizard\Step::make('Location Information')
+                    Wizard\Step::make(__('Customer.step.location_information'))
                         ->schema([
                             SelectTree::make('area_id')
                                 ->reactive()
                                 ->relationship('area', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title', 'parent_id')
-                                ->placeholder(__('Please select an Area'))
+                                ->placeholder(__('Customer.label.select_area'))
                                 ->afterStateUpdated(function ($state, callable $get, callable $set) {
                                     $parentArea = Area::find($state);
                                     if ($parentArea) {
@@ -86,7 +98,7 @@ class CustomerResource extends Resource
                                 ->required(),
                             Forms\Components\Select::make('sector_id')
                                 ->relationship('sector', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
-                                ->label(__('Sector'))
+                                ->label(__('Customer.label.sector'))
                                 ->required(),
                             Map::make('location')
                                 ->mapControls([
@@ -122,53 +134,53 @@ class CustomerResource extends Resource
                                 ]) // array of KML layer URLs to add to the map
                                 ->geoJson('https://fgm.test/storage/AGEBS01.geojson') // GeoJSON file, URL or JSON
                                 ->geoJsonContainsField('geojson') // field to capture GeoJSON polygon(s) which contain the map marker // default coordinates
-                                ->label(__('Location')),
+                                ->label(__('Customer.label.location')),
                         ]),
 
-                    Wizard\Step::make('Admin Information')
+                    Wizard\Step::make(__('Customer.step.admin_information'))
                         ->icon('heroicon-m-user-plus')
                         ->schema([
                             Forms\Components\Fieldset::make('admin_id')
                                 ->relationship('admin')
                                 ->schema([
                                     Forms\Components\TextInput::make('name')
-                                        ->label(__('Name'))
+                                        ->label(__('Customer.label.admin_name'))
                                         ->columnSpan(4),
                                     Forms\Components\TextInput::make('email')
-                                        ->label(__('Email'))
+                                        ->label(__('Customer.label.admin_email'))
                                         ->required()
                                         ->unique()
                                         ->columnSpan(4),
                                     Forms\Components\TextInput::make('password')
-                                        ->label(__('Password'))
+                                        ->label(__('Customer.label.admin_password'))
                                         ->required()
                                         ->columnSpan(4),
                                 ]),
                         ]),
 
-                    Wizard\Step::make('Additional Information')
+                    Wizard\Step::make(__('Customer.step.additional_information'))
                         ->icon('heroicon-m-information-circle')
                         ->schema([
                             Forms\Components\Textarea::make('description')
                                 ->maxLength(65535)
                                 ->columnSpanFull()
-                                ->label(__('Description')),
+                                ->label(__('Customer.label.description')),
                             Forms\Components\Textarea::make('about')
                                 ->maxLength(65535)
                                 ->columnSpanFull()
-                                ->label(__('About')),
+                                ->label(__('Customer.label.about')),
                             Forms\Components\TextInput::make('display_order')
                                 ->required()
                                 ->default(1)
                                 ->numeric()
-                                ->label(__('Display Order')),
+                                ->label(__('Customer.label.display_order')),
                             Forms\Components\Toggle::make('activation_state')
                                 ->required()
                                 ->default(true)
-                                ->label(__('Activation State')),
+                                ->label(__('Customer.label.activation_state')),
                             Forms\Components\DatePicker::make('next_payment')
                                 ->default(now()->addMonths(3))
-                                ->label(__('Next Payment Date')),
+                                ->label(__('Customer.label.next_payment')),
                         ])
                 ])->submitAction(new HtmlString('<button type="submit">Submit</button>'))
                     ->columnSpanFull(),
@@ -181,11 +193,14 @@ class CustomerResource extends Resource
             ->columns([
 
                 Tables\Columns\TextColumn::make('arabic_title')
+                    ->label(__('Customer.label.arabic_title'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('kurdish_title')
+                    ->label(__('Customer.label.kurdish_title'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('display_order')
+                    ->label(__('Customer.label.display_order'))
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -194,36 +209,42 @@ class CustomerResource extends Resource
 
 
                 Tables\Columns\TextColumn::make(app()->getLocale() == 'ar' ? 'sector.arabic_title' : 'sector.kurdish_title')
-                    ->label('Sector'),
+                    ->label(__('Customer.label.sector')),
 
                 Tables\Columns\TextColumn::make(app()->getLocale() == 'ar' ? 'area.arabic_title' : 'area.kurdish_title')
-                    ->label('Area'),
-
+                    ->label(__('Customer.label.area')),
 
                 Tables\Columns\TextColumn::make('contact_info')
+                    ->label(__('Customer.label.contact_info'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('slug')
+                    ->label(__('Customer.label.slug'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\IconColumn::make('activation_state')
+                    ->label(__('Customer.label.activation_state'))
                     ->boolean(),
 
-                Tables\Columns\ImageColumn::make('logo')->disk('public')->width('50px')->height('50px')->toggleable(isToggledHiddenByDefault: true)->label('Logo'),
+                Tables\Columns\ImageColumn::make('logo')->disk('public')->width('50px')->height('50px')->toggleable(isToggledHiddenByDefault: true)->label(__('Customer.label.logo')),
 
                 Tables\Columns\TextColumn::make('latitude')
+                    ->label(__('Customer.label.latitude'))
                     ->numeric()
                     ->sortable()->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('longitude')
+                    ->label(__('Customer.label.longitude'))
                     ->numeric()
                     ->sortable()->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('next_payment')
+                    ->label(__('Customer.label.next_payment'))
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Customer.label.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
