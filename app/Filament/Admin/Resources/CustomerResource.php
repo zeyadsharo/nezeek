@@ -63,15 +63,63 @@ class CustomerResource extends Resource
                     Wizard\Step::make('Location Information')
                         ->schema([
                             SelectTree::make('area_id')
+                                ->reactive()
                                 ->relationship('area', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title', 'parent_id')
                                 ->placeholder(__('Please select an Area'))
+                                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                    $parentArea = Area::find($state);
+                                    if ($parentArea) {
+                                        $set('location', [
+                                            'lat' => floatval($parentArea->latitude),
+                                            'lng' => floatVal($parentArea->longitude),
+                                        ]);
+                                    }
+                                })
+                                // disable the parent id is null or o
+                                ->disabled(function ($record) {
+                                    if ($record) {
+                                        return $record->parent_id == null;
+                                    }
+                                })
                                 ->required(),
                             Forms\Components\Select::make('sector_id')
                                 ->relationship('sector', app()->getLocale() == 'ar' ? 'arabic_title' : 'kurdish_title')
                                 ->label(__('Sector'))
                                 ->required(),
                             Map::make('location')
-                                ->defaultLocation([36.8663, 42.9884]) // default coordinates
+                                ->mapControls([
+                                    'mapTypeControl'    => true,
+                                    'scaleControl'      => true,
+                                    'streetViewControl' => true,
+                                    'rotateControl'     => true,
+                                    'fullscreenControl' => true,
+                                    'searchBoxControl'  => false, // creates geocomplete field inside map
+                                    'zoomControl'       => true,
+
+                                ])
+                                ->draggable()
+                                ->reverseGeocode([
+                                    'city'   => '%L',
+                                    'zip'    => '%z',
+                                    'state'  => '%A1',
+                                    'street' => '%n %S',
+                                ])
+                                ->live()
+                                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                    $set('latitude', round($state['lat'], 6));
+                                    $set('longitude', round($state['lng'], precision: 6));
+                                })
+                                ->clickable(true)
+                                ->defaultZoom(5)
+                                ->defaultLocation([36.8663, 42.9884])
+                                ->geolocate() // adds a button to request device location and set map marker accordingly
+                                ->geolocateLabel('Get Location') // overrides the default label for geolocate button
+                                ->geolocateOnLoad(true, false) // geolocate on load, second arg 'always' (default false, only for new form))
+                                ->layers([
+                                    'https://googlearchive.github.io/js-v2-samples/ggeoxml/cta.kml',
+                                ]) // array of KML layer URLs to add to the map
+                                ->geoJson('https://fgm.test/storage/AGEBS01.geojson') // GeoJSON file, URL or JSON
+                                ->geoJsonContainsField('geojson') // field to capture GeoJSON polygon(s) which contain the map marker // default coordinates
                                 ->label(__('Location')),
                         ]),
 
@@ -109,12 +157,15 @@ class CustomerResource extends Resource
                                 ->label(__('About')),
                             Forms\Components\TextInput::make('display_order')
                                 ->required()
+                                ->default(1)
                                 ->numeric()
                                 ->label(__('Display Order')),
                             Forms\Components\Toggle::make('activation_state')
                                 ->required()
+                                ->default(true)
                                 ->label(__('Activation State')),
                             Forms\Components\DatePicker::make('next_payment')
+                                ->default(now()->addMonths(3))
                                 ->label(__('Next Payment Date')),
                         ])
                 ])->submitAction(new HtmlString('<button type="submit">Submit</button>'))

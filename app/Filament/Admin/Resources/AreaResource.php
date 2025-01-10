@@ -25,33 +25,34 @@ class AreaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([TextInput::make('arabic_title')
-                ->required()
-                ->label(__('Arabic Title'))
-                ->rules(['string', 'max:40']),
+            ->schema([
+                TextInput::make('arabic_title')
+                    ->required()
+                    ->label(__('Arabic Title'))
+                    ->rules(['string', 'max:40']),
 
-            TextInput::make('kurdish_title')
-                ->required()
-                ->label(__('Kurdish Title'))
-                ->rules(['string', 'max:40']),
+                TextInput::make('kurdish_title')
+                    ->required()
+                    ->label(__('Kurdish Title'))
+                    ->rules(['string', 'max:40']),
 
-            SelectTree::make('parent_id')
-                ->relationship('parentArea', 'arabic_title', 'parent_id')
-                ->placeholder(__('Please select a Area'))
-                ->withCount()
-                ->direction('bottom') // Corrected typo from 'buttom' to 'bottom'
-                ->label(__('Parent Area'))
-                ->nullable(),
+                SelectTree::make('parent_id')
+                    ->relationship('parentArea', 'arabic_title', 'parent_id')
+                    ->placeholder(__('Please select a Area'))
+                    ->withCount()
+                    ->direction('bottom') // Corrected typo from 'buttom' to 'bottom'
+                    ->label(__('Parent Area'))
+                    ->nullable(),
 
-            TextInput::make('latitude')
-                ->required()
-                ->label(__('Latitude'))
-                ->rules(['numeric', 'regex:/^-?\d{1,4}\.\d{1,9}$/']),
+                TextInput::make('latitude')
+                    ->required()
+                    ->label(__('Latitude'))
+                    ->rules(['numeric', 'regex:/^-?\d{1,4}\.\d{1,9}$/']),
 
-            TextInput::make('longitude')
-                ->required()
-                ->label(__('Longitude'))
-                ->rules(['numeric', 'regex:/^-?\d{1,3}\.\d{1,9}$/']),
+                TextInput::make('longitude')
+                    ->required()
+                    ->label(__('Longitude'))
+                    ->rules(['numeric', 'regex:/^-?\d{1,3}\.\d{1,9}$/']),
 
 
 
@@ -62,9 +63,9 @@ class AreaResource extends Resource
     {
         return $table
             ->columns([
-                 Tables\Columns\TextColumn::make('arabic_title')->searchable()->sortable(),
-               Tables\Columns\TextColumn::make('kurdish_title')->searchable()->sortable(),
-               
+                Tables\Columns\TextColumn::make('arabic_title')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('kurdish_title')->searchable()->sortable(),
+
                 Tables\Columns\TextColumn::make('parentArea.arabic_title')
                     ->label(__('Parent Area')),
                 Tables\Columns\TextColumn::make('latitude')->searchable()->sortable(),
@@ -98,7 +99,7 @@ class AreaResource extends Resource
             'edit' => EditArea::route('/{record}/edit'),
         ];
     }
-  public static function getLabel(): string
+    public static function getLabel(): string
     {
         return __('Area.ModelLabel');
     }
