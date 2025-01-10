@@ -33,4 +33,8 @@ return [
         'longitude' => 'Longitude',
         'created_at' => 'Created At',
     ],
+    'filter' => [
+        'sector' => 'Filter by Sector',
+        'area' => 'Filter by Area',
+    ],
 ];
