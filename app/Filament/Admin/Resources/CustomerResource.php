@@ -139,6 +139,8 @@ class CustomerResource extends Resource
 
                     Wizard\Step::make(__('Customer.step.admin_information'))
                         ->icon('heroicon-m-user-plus')
+                        ->visible(fn($livewire) => ! $livewire->getRecord())
+
                         ->schema([
                             Forms\Components\Fieldset::make('admin_id')
                                 ->relationship('admin')
