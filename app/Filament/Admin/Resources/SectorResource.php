@@ -85,8 +85,11 @@ class SectorResource extends Resource
                     ->sortable(),
                 Tables\Columns\IconColumn::make('display_state')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
+            Tables\Columns\ImageColumn::make('icon')
+            ->circular()
+                ->defaultImageUrl(url('/images/default-icon.png'))
+                ->visibility(fn($record) => $record->icon !== null)
+                ->searchable(),
                 Tables\Columns\IconColumn::make('activation_state')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
