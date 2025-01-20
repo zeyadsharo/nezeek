@@ -40,6 +40,7 @@ class AreaResource extends Resource
                     ->relationship('parentArea', 'arabic_title', 'parent_id')
                     ->placeholder(__('Please select a Area'))
                     ->withCount()
+                    ->enableBranchNode()
                     ->direction('bottom') // Corrected typo from 'buttom' to 'bottom'
                     ->label(__('Parent Area'))
                     ->nullable(),
