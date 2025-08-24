@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('arabic_title');
-            $table->string('kurdish_title');
+            $table->string(column: 'kurdish_title');
             $table->boolean('is_required')->default(false);
             $table->enum('type', ['textbox','number','select','checkbox','date']);
             $table->text('values')->nullable();
