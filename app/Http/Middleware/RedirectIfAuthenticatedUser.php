@@ -15,17 +15,17 @@ class RedirectIfAuthenticatedUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-      ;
+        ;
         if (auth()->check()) {
             if (auth()->user()->role == 'Super admin') {
                 return $next($request);
-            } else if (auth()->user()->customer) {
-
+            } else {
+                // Redirect non-admin users to app
                 return redirect('/app');
             }
         }
 
         return redirect('/');
-    
+
     }
 }
