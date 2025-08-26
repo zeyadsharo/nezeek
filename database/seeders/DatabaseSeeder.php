@@ -19,10 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AreaSeeder::class,
             SectorSeeder::class,
-            FeatureSeeder::class,
         ]);
 
-       // check if the user not exists
+        // check if the user not exists
         if (User::where('email', 'zeyad@gmail.com')->first()) {
             return;
         }

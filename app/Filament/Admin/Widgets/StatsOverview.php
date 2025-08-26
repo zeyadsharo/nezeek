@@ -2,10 +2,6 @@
 
 namespace App\Filament\Admin\Widgets;
 
-use App\Models\Contact;
-use App\Models\Portfolio;
-use App\Models\Product;
-use App\Models\Visit;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
 

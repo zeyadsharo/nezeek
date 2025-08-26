@@ -64,9 +64,8 @@
     60 => 'App\\Providers\\AuthServiceProvider',
     61 => 'App\\Providers\\EventServiceProvider',
     62 => 'App\\Providers\\Filament\\AdminPanelProvider',
-    63 => 'App\\Providers\\Filament\\AppPanelProvider',
-    64 => 'App\\Providers\\RouteServiceProvider',
-    65 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
+    63 => 'App\\Providers\\RouteServiceProvider',
+    64 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
   ),
   'eager' => 
   array (
@@ -119,9 +118,8 @@
     46 => 'App\\Providers\\AuthServiceProvider',
     47 => 'App\\Providers\\EventServiceProvider',
     48 => 'App\\Providers\\Filament\\AdminPanelProvider',
-    49 => 'App\\Providers\\Filament\\AppPanelProvider',
-    50 => 'App\\Providers\\RouteServiceProvider',
-    51 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
+    49 => 'App\\Providers\\RouteServiceProvider',
+    50 => 'Spatie\\LaravelSettings\\LaravelSettingsServiceProvider',
   ),
   'deferred' => 
   array (

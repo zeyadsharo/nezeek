@@ -9,6 +9,9 @@ class CategoryProperty extends Model
 {
     use HasFactory;
 
+
+
+
     protected $fillable = [
         'category_id',
         'property_id',

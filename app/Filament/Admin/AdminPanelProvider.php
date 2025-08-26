@@ -1,15 +1,19 @@
 <?php
 
-namespace App\Providers\Filament;
+namespace App\Filament\Admin;
 
+use App\Filament\Admin\Resources\AreaResource;
+use App\Filament\Admin\Resources\CategoryResource;
+use App\Filament\Admin\Resources\PropertyResource;
+use App\Filament\Admin\Resources\SectorResource;
+use App\Filament\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -32,13 +36,27 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+            ->pages([
+                // Add your custom pages here
+            ])
+            ->resources([
+                UserResource::class,
+                AreaResource::class,
+                SectorResource::class,
+                CategoryResource::class,
+                PropertyResource::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('User Management')
+                    ->icon('heroicon-o-users'),
+                NavigationGroup::make()
+                    ->label('Content Management')
+                    ->icon('heroicon-o-document-text'),
+                NavigationGroup::make()
+                    ->label('Settings')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ])
             ->middleware([
                 EncryptCookies::class,

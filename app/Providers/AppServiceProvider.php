@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Filament\Admin\AdminPanelProvider;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         //
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['ar','ku']); // also accepts a closure
+                ->locales(['ar', 'ku']); // also accepts a closure
         });
     }
 }

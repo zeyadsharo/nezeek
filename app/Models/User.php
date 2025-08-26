@@ -3,19 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Filament\Models\Contracts\HasTenants;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-class User extends Authenticatable 
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -52,8 +48,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function customer()
+    // Customer relationship removed - model was deleted
+
+    public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasOne(Customer::class,'admin_id');
+        return in_array($this->role, ['admin', 'super_admin', 'Super admin']);
     }
 }

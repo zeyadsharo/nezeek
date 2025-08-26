@@ -1,4 +1,3 @@
 <x-filament-panels::page>
-           @livewire(App\Filament\App\Resources\AppointmentResource\Widgets\AppointmentState::class)
-          @livewire(App\Filament\App\Widgets\CalendarWidget::class) 
+    <!-- Calendar widget removed - Appointment model was deleted -->
 </x-filament-panels::page>
