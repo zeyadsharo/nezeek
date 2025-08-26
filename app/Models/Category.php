@@ -53,6 +53,7 @@ class Category extends Model
     {
         return $this->belongsToMany(Property::class, 'category_properties')
             ->withPivot([
+                'property_group_id',
                 'display_order',
                 'is_visible',
                 'is_editable',
@@ -63,8 +64,7 @@ class Category extends Model
                 'custom_options',
                 'show_when',
                 'hide_when'
-            ])
-            ->orderByPivot('display_order');
+            ]);
     }
 
     public function propertyValues()

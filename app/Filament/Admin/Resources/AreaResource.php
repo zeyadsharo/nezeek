@@ -16,9 +16,12 @@ class AreaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static ?string $navigationGroup = 'Admin';
+    protected static ?string $navigationGroup = 'إدارة المحتوى';
 
     protected static ?int $navigationSort = 1;
+
+    //label
+    protected static ?string $navigationLabel = 'المناطق';
 
     public static function form(Form $form): Form
     {
@@ -27,25 +30,25 @@ class AreaResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
-                    ->label('Title'),
+                    ->label('العنوان'),
 
                 Forms\Components\TextInput::make('parent_id')
                     ->numeric()
-                    ->label('Parent ID'),
+                    ->label('معرف المنطقة الأب'),
 
                 Forms\Components\Select::make('parent_id')
                     ->relationship('parentArea', 'title', 'parent_id')
                     ->searchable()
                     ->preload()
-                    ->label('Parent Area'),
+                    ->label('المنطقة الأب'),
 
                 Forms\Components\TextInput::make('latitude')
                     ->numeric()
-                    ->label('Latitude'),
+                    ->label('خط العرض'),
 
                 Forms\Components\TextInput::make('longitude')
                     ->numeric()
-                    ->label('Longitude'),
+                    ->label('خط الطول'),
             ]);
     }
 
@@ -56,39 +59,39 @@ class AreaResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->numeric()
                     ->sortable()
-                    ->label('ID'),
+                    ->label('المعرف'),
 
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable()
-                    ->label('Title'),
+                    ->label('العنوان'),
 
                 Tables\Columns\TextColumn::make('parentArea.title')
                     ->searchable()
                     ->sortable()
-                    ->label('Parent Area'),
+                    ->label('المنطقة الأب'),
 
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
                     ->sortable()
-                    ->label('Latitude'),
+                    ->label('خط العرض'),
 
                 Tables\Columns\TextColumn::make('longitude')
                     ->numeric()
                     ->sortable()
-                    ->label('Longitude'),
+                    ->label('خط الطول'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->label('Created At'),
+                    ->label('تاريخ الإنشاء'),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->label('Updated At'),
+                    ->label('تاريخ التحديث'),
             ])
             ->filters([
                 //

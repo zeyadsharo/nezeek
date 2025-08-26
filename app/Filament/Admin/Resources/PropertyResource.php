@@ -18,98 +18,208 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?string $navigationGroup = 'إدارة المحتوى';
 
     protected static ?int $navigationSort = 2;
 
+    //label
+    protected static ?string $navigationLabel = 'الخصائص';
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Basic Information')
+                Forms\Components\Section::make('المعلومات الأساسية')
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('Property Identifier')
+                            ->label('معرف الخاصية')
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255)
-                            ->helperText('Unique identifier for the property (e.g., title, price, color)'),
+                            ->helperText('معرف فريد للخاصية (مثل العنوان، السعر، اللون)'),
 
                         Forms\Components\TextInput::make('title')
-                            ->label('Title')
+                            ->label('العنوان')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('Enter Arabic title'),
+                            ->placeholder('أدخل العنوان بالعربية'),
 
                         Forms\Components\Textarea::make('description')
-                            ->label('Description')
+                            ->label('الوصف')
                             ->maxLength(1000)
-                            ->placeholder('Enter Arabic description')
+                            ->placeholder('أدخل الوصف بالعربية')
                             ->rows(3),
 
                         Forms\Components\Select::make('type')
-                            ->label('Property Type')
+                            ->label('نوع الخاصية')
                             ->required()
                             ->options([
-                                'text' => 'Text (Single line)',
-                                'textarea' => 'Textarea (Multi-line)',
-                                'number' => 'Number',
-                                'decimal' => 'Decimal',
-                                'select' => 'Select (Single choice)',
-                                'multiselect' => 'Multi-select',
-                                'checkbox' => 'Checkbox',
-                                'radio' => 'Radio buttons',
-                                'date' => 'Date',
-                                'datetime' => 'Date & Time',
-                                'time' => 'Time',
-                                'file' => 'File upload',
-                                'image' => 'Image upload',
-                                'url' => 'URL',
-                                'email' => 'Email',
-                                'phone' => 'Phone number',
-                                'color' => 'Color picker',
-                                'range' => 'Range slider',
+                                'text' => 'نص (سطر واحد)',
+                                'textarea' => 'نص متعدد الأسطر',
+                                'number' => 'رقم',
+                                'decimal' => 'رقم عشري',
+                                'select' => 'قائمة منسدلة (اختيار واحد)',
+                                'multiselect' => 'قائمة متعددة الاختيارات',
+                                'checkbox' => 'صندوق اختيار',
+                                'radio' => 'أزرار راديو',
+                                'date' => 'تاريخ',
+                                'datetime' => 'تاريخ ووقت',
+                                'time' => 'وقت',
+                                'file' => 'رفع ملف',
+                                'image' => 'رفع صورة',
+                                'url' => 'رابط',
+                                'email' => 'بريد إلكتروني',
+                                'phone' => 'رقم هاتف',
+                                'color' => 'اختيار لون',
+                                'range' => 'شريط نطاق',
                             ])
                             ->reactive()
-                            ->helperText('Choose the input type for this property'),
+                            ->helperText('اختر نوع الإدخال لهذه الخاصية'),
 
                         Forms\Components\Select::make('group')
-                            ->label('Property Group')
+                            ->label('مجموعة الخصائص')
                             ->options(PropertyGroup::pluck('title', 'name'))
                             ->searchable()
                             ->preload()
-                            ->helperText('Group properties together for better organization'),
+                            ->helperText('جمّع الخصائص معاً لتنظيم أفضل'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Values & Options')
+                Forms\Components\Section::make('القيم والخيارات')
                     ->schema([
+                        // Options for select, multiselect, radio, checkbox
                         Forms\Components\KeyValue::make('options')
-                            ->label('Options')
-                            ->keyLabel('Value')
-                            ->valueLabel('Label')
-                            ->addActionLabel('Add Option')
+                            ->label('الخيارات')
+                            ->keyLabel('القيمة')
+                            ->valueLabel('التسمية')
+                            ->addActionLabel('إضافة خيار')
                             ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['select', 'multiselect', 'radio', 'checkbox']))
-                            ->helperText('Add options for select, radio, or checkbox properties'),
+                            ->helperText('أضف خيارات للقوائم المنسدلة أو أزرار الراديو أو صناديق الاختيار'),
 
-                        Forms\Components\KeyValue::make('default_value')
-                            ->label('Default Value')
-                            ->keyLabel('Key')
-                            ->valueLabel('Value')
-                            ->addActionLabel('Add Default')
-                            ->helperText('Set default values for this property'),
+                        // Default value - different behavior based on type
+                        Forms\Components\TextInput::make('default_value_text')
+                            ->label('القيمة الافتراضية')
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['text', 'textarea', 'number', 'decimal', 'url', 'email', 'phone']))
+                            ->helperText('القيمة الافتراضية لهذه الخاصية'),
 
+                        Forms\Components\Select::make('default_value_select')
+                            ->label('القيمة الافتراضية')
+                            ->options(function (Forms\Get $get): array {
+                                $options = $get('options');
+                                if (!$options || !is_array($options)) {
+                                    return [];
+                                }
+
+                                try {
+                                    return collect($options)->pluck('value', 'key')->filter()->toArray();
+                                } catch (\Exception $e) {
+                                    return [];
+                                }
+                            })
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['select', 'radio']))
+                            ->helperText('اختر القيمة الافتراضية من الخيارات المتاحة')
+                            ->searchable(),
+
+                        Forms\Components\CheckboxList::make('default_value_multiselect')
+                            ->label('القيم الافتراضية')
+                            ->options(function (Forms\Get $get): array {
+                                $options = $get('options');
+                                if (!$options || !is_array($options)) {
+                                    return [];
+                                }
+
+                                try {
+                                    return collect($options)->pluck('value', 'key')->filter()->toArray();
+                                } catch (\Exception $e) {
+                                    return [];
+                                }
+                            })
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['multiselect', 'checkbox']))
+                            ->helperText('اختر القيم الافتراضية من الخيارات المتاحة'),
+
+                        Forms\Components\Toggle::make('default_value_checkbox')
+                            ->label('القيمة الافتراضية')
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'checkbox')
+                            ->helperText('هل هذه الخاصية مفعلة افتراضياً؟'),
+
+                        Forms\Components\DatePicker::make('default_value_date')
+                            ->label('التاريخ الافتراضي')
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['date', 'datetime']))
+                            ->helperText('التاريخ الافتراضي لهذه الخاصية'),
+
+                        Forms\Components\TimePicker::make('default_value_time')
+                            ->label('الوقت الافتراضي')
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'time')
+                            ->helperText('الوقت الافتراضي لهذه الخاصية'),
+
+                        Forms\Components\ColorPicker::make('default_value_color')
+                            ->label('اللون الافتراضي')
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'color')
+                            ->helperText('اللون الافتراضي لهذه الخاصية'),
+
+                        // Unit field - only for numeric types
                         Forms\Components\TextInput::make('unit')
-                            ->label('Unit of Measurement')
+                            ->label('وحدة القياس')
                             ->maxLength(50)
-                            ->placeholder('cm, kg, USD, etc.')
-                            ->helperText('Unit for numeric properties'),
+                            ->placeholder('سم، كجم، دولار، إلخ')
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['number', 'decimal', 'range']))
+                            ->helperText('وحدة للخصائص الرقمية'),
 
+                        // Placeholder text - only for text-based types
                         Forms\Components\TextInput::make('placeholder')
-                            ->label('Placeholder Text')
+                            ->label('نص النموذج')
                             ->maxLength(255)
-                            ->placeholder('Enter Arabic placeholder text')
-                            ->helperText('Hint text shown in the input field'),
-                    ])->columns(2),
+                            ->placeholder('أدخل نص النموذج بالعربية')
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['text', 'textarea', 'number', 'decimal', 'url', 'email', 'phone']))
+                            ->helperText('نص تلميحي يظهر في حقل الإدخال'),
+
+                        // File upload specific options
+                        Forms\Components\TextInput::make('file_types')
+                            ->label('أنواع الملفات المسموحة')
+                            ->placeholder('pdf,doc,docx,jpg,png')
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['file', 'image']))
+                            ->helperText('أنواع الملفات المسموح رفعها (مفصولة بفواصل)'),
+
+                        Forms\Components\TextInput::make('max_file_size')
+                            ->label('الحد الأقصى لحجم الملف (ميجابايت)')
+                            ->numeric()
+                            ->minValue(1)
+                            ->visible(fn(Forms\Get $get): bool => in_array($get('type'), ['file', 'image']))
+                            ->helperText('الحد الأقصى لحجم الملف المسموح رفعه'),
+
+                        // Range slider specific options
+                        Forms\Components\TextInput::make('step')
+                            ->label('خطوة النطاق')
+                            ->numeric()
+                            ->minValue(0.1)
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'range')
+                            ->helperText('الخطوة بين القيم في شريط النطاق'),
+
+                        // URL specific options
+                        Forms\Components\TextInput::make('url_pattern')
+                            ->label('نمط الرابط')
+                            ->placeholder('https://example.com/*')
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'url')
+                            ->helperText('نمط الرابط المسموح (اختياري)'),
+
+                        // Email specific options
+                        Forms\Components\Toggle::make('send_verification')
+                            ->label('إرسال رسالة تأكيد')
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'email')
+                            ->helperText('إرسال رسالة تأكيد عند إدخال البريد الإلكتروني'),
+
+                        // Phone specific options
+                        Forms\Components\Select::make('phone_format')
+                            ->label('تنسيق الهاتف')
+                            ->options([
+                                'international' => 'دولي (+966)',
+                                'local' => 'محلي (05xxxxxxxx)',
+                                'custom' => 'مخصص',
+                            ])
+                            ->visible(fn(Forms\Get $get): bool => $get('type') === 'phone')
+                            ->helperText('تنسيق رقم الهاتف المتوقع'),
+                    ])->columns(2)
+                    ->visible(fn(Forms\Get $get): bool => $get('type') !== null)
+                    ->collapsible()
+                    ->collapsed(fn(Forms\Get $get): bool => !in_array($get('type'), ['select', 'multiselect', 'radio', 'checkbox', 'file', 'image', 'range'])),
 
                 Forms\Components\Section::make('Validation & Constraints')
                     ->schema([
@@ -226,19 +336,19 @@ class PropertyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Identifier')
+                    ->label('المعرف')
                     ->searchable()
                     ->sortable()
                     ->copyable(),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Title')
+                    ->label('العنوان')
                     ->searchable()
                     ->sortable()
                     ->limit(30),
 
                 Tables\Columns\BadgeColumn::make('type')
-                    ->label('Type')
+                    ->label('النوع')
                     ->colors([
                         'primary' => 'text',
                         'secondary' => 'textarea',
@@ -250,87 +360,87 @@ class PropertyResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('group')
-                    ->label('Group')
+                    ->label('المجموعة')
                     ->searchable()
                     ->sortable()
                     ->placeholder('—'),
 
                 Tables\Columns\IconColumn::make('is_required')
-                    ->label('Required')
+                    ->label('مطلوب')
                     ->boolean()
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_searchable')
-                    ->label('Searchable')
+                    ->label('قابل للبحث')
                     ->boolean()
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_filterable')
-                    ->label('Filterable')
+                    ->label('قابل للتصفية')
                     ->boolean()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('categories_count')
-                    ->label('Categories')
+                    ->label('الفئات')
                     ->counts('categories')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('display_order')
-                    ->label('Order')
+                    ->label('الترتيب')
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
-                    ->label('Filter by Type')
+                    ->label('تصفية حسب النوع')
                     ->options([
-                        'text' => 'Text',
-                        'textarea' => 'Textarea',
-                        'number' => 'Number',
-                        'decimal' => 'Decimal',
-                        'select' => 'Select',
-                        'multiselect' => 'Multi-select',
-                        'checkbox' => 'Checkbox',
-                        'radio' => 'Radio',
-                        'date' => 'Date',
-                        'datetime' => 'Date & Time',
-                        'time' => 'Time',
-                        'file' => 'File',
-                        'image' => 'Image',
-                        'url' => 'URL',
-                        'email' => 'Email',
-                        'phone' => 'Phone',
-                        'color' => 'Color',
-                        'range' => 'Range',
+                        'text' => 'نص',
+                        'textarea' => 'نص متعدد الأسطر',
+                        'number' => 'رقم',
+                        'decimal' => 'رقم عشري',
+                        'select' => 'قائمة منسدلة',
+                        'multiselect' => 'قائمة متعددة الاختيارات',
+                        'checkbox' => 'صندوق اختيار',
+                        'radio' => 'أزرار راديو',
+                        'date' => 'تاريخ',
+                        'datetime' => 'تاريخ ووقت',
+                        'time' => 'وقت',
+                        'file' => 'ملف',
+                        'image' => 'صورة',
+                        'url' => 'رابط',
+                        'email' => 'بريد إلكتروني',
+                        'phone' => 'هاتف',
+                        'color' => 'لون',
+                        'range' => 'نطاق',
                     ]),
 
                 Tables\Filters\SelectFilter::make('group')
-                    ->label('Filter by Group')
+                    ->label('تصفية حسب المجموعة')
                     ->options(PropertyGroup::pluck('title', 'name')),
 
                 Tables\Filters\TernaryFilter::make('is_required')
-                    ->label('Required Status'),
+                    ->label('حالة المطلوب'),
 
                 Tables\Filters\TernaryFilter::make('is_searchable')
-                    ->label('Searchable Status'),
+                    ->label('حالة قابلية البحث'),
 
                 Tables\Filters\TernaryFilter::make('is_filterable')
-                    ->label('Filterable Status'),
+                    ->label('حالة قابلية التصفية'),
 
                 Tables\Filters\TernaryFilter::make('is_sortable')
-                    ->label('Sortable Status'),
+                    ->label('حالة قابلية الترتيب'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('manage_categories')
-                    ->label('Categories')
+                    ->label('الفئات')
                     ->icon('heroicon-o-rectangle-stack')
                     ->url(fn(Property $record): string => route('filament.admin.resources.properties.edit', $record) . '?activeTab=categories'),
             ])

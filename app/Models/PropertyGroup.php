@@ -31,7 +31,15 @@ class PropertyGroup extends Model
     // Relationships
     public function properties()
     {
-        return $this->hasMany(Property::class, 'group', 'name');
+        return $this->belongsToMany(Property::class, 'property_group_properties')
+            ->withPivot([
+                'custom_label',
+                'custom_help_text',
+                'display_order',
+                'is_visible',
+                'is_editable',
+                'is_required'
+            ]);
     }
 
     // Scopes

@@ -19,7 +19,10 @@ class PropertyValueResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?string $navigationGroup = 'إدارة المحتوى';
+
+    //label
+    protected static ?string $navigationLabel = 'قيم الخصائص';
 
     protected static ?int $navigationSort = 4;
 
@@ -27,96 +30,96 @@ class PropertyValueResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Basic Information')
+                Forms\Components\Section::make('المعلومات الأساسية')
                     ->schema([
                         Forms\Components\Select::make('category_id')
-                            ->label('Category')
+                            ->label('الفئة')
                             ->relationship('category', 'title')
                             ->required()
                             ->searchable()
                             ->preload(),
 
                         Forms\Components\Select::make('property_id')
-                            ->label('Property')
+                            ->label('الخاصية')
                             ->relationship('property', 'title')
                             ->required()
                             ->searchable()
                             ->preload()
                             ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('value', null)),
+                            ->afterStateUpdated(fn($state, callable $set) => $set('value', null)),
 
                         Forms\Components\TextInput::make('item_id')
-                            ->label('Item ID')
+                            ->label('معرف العنصر')
                             ->required()
                             ->numeric()
-                            ->helperText('ID of the item this value belongs to'),
+                            ->helperText('معرف العنصر الذي تنتمي إليه هذه القيمة'),
 
                         Forms\Components\TextInput::make('item_type')
-                            ->label('Item Type')
+                            ->label('نوع العنصر')
                             ->required()
                             ->maxLength(255)
                             ->placeholder('App\Models\Product')
-                            ->helperText('Full class name of the item model'),
+                            ->helperText('اسم الفئة الكامل لنموذج العنصر'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Value Storage')
+                Forms\Components\Section::make('تخزين القيمة')
                     ->schema([
                         Forms\Components\TextInput::make('value')
-                            ->label('Text Value')
+                            ->label('القيمة النصية')
                             ->maxLength(1000)
-                            ->placeholder('Enter text value')
-                            ->helperText('For simple text values'),
+                            ->placeholder('أدخل القيمة النصية')
+                            ->helperText('للنصوص البسيطة'),
 
                         Forms\Components\KeyValue::make('json_value')
-                            ->label('JSON Value')
-                            ->keyLabel('Key')
-                            ->valueLabel('Value')
-                            ->addActionLabel('Add Item')
-                            ->helperText('For complex values (arrays, objects)'),
+                            ->label('قيمة JSON')
+                            ->keyLabel('المفتاح')
+                            ->valueLabel('القيمة')
+                            ->addActionLabel('إضافة عنصر')
+                            ->helperText('للقيّم المعقدة (مصفوفات، كائنات)'),
 
                         Forms\Components\TextInput::make('numeric_value')
-                            ->label('Numeric Value')
+                            ->label('القيمة الرقمية')
                             ->numeric()
                             ->step(0.000001)
-                            ->helperText('For numeric values'),
+                            ->helperText('للقيّم الرقمية'),
 
                         Forms\Components\Toggle::make('boolean_value')
-                            ->label('Boolean Value')
-                            ->helperText('For true/false values'),
+                            ->label('القيمة المنطقية')
+                            ->helperText('للقيم صحيح/خطأ'),
 
                         Forms\Components\DatePicker::make('date_value')
-                            ->label('Date Value')
-                            ->helperText('For date values'),
+                            ->label('قيمة التاريخ')
+                            ->helperText('لقيّم التاريخ'),
 
                         Forms\Components\DateTimePicker::make('datetime_value')
-                            ->label('Date & Time Value')
-                            ->helperText('For date and time values'),
+                            ->label('قيمة التاريخ والوقت')
+                            ->helperText('لقيّم التاريخ والوقت'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Additional Information')
+                Forms\Components\Section::make('معلومات إضافية')
                     ->schema([
                         Forms\Components\TextInput::make('unit')
-                            ->label('Unit')
+                            ->label('الوحدة')
                             ->maxLength(50)
-                            ->placeholder('cm, kg, USD, etc.')
-                            ->helperText('Unit of measurement'),
+                            ->placeholder('سم، كجم، دولار، إلخ')
+                            ->helperText('وحدة القياس'),
 
                         Forms\Components\Textarea::make('notes')
-                            ->label('Notes')
+                            ->label('ملاحظات')
                             ->maxLength(1000)
                             ->rows(3)
-                            ->placeholder('Additional notes about this value'),
+                            ->placeholder('ملاحظات إضافية حول هذه القيمة'),
 
                         Forms\Components\TextInput::make('source')
-                            ->label('Source')
+                            ->label('المصدر')
                             ->maxLength(255)
-                            ->placeholder('Where this value came from')
-                            ->helperText('Source of this value'),
+                            ->placeholder('من أين جاءت هذه القيمة')
+                            ->helperText('مصدر هذه القيمة'),
 
                         Forms\Components\Toggle::make('is_verified')
-                            ->label('Verified')
+                            ->label('مؤكد')
                             ->default(false)
-                            ->helperText('Whether this value has been verified'),
+                            ->helperText('ما إذا كانت هذه القيمة مؤكدة'),
                     ])->columns(2),
             ]);
     }
@@ -126,55 +129,55 @@ class PropertyValueResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category.title')
-                    ->label('Category')
+                    ->label('الفئة')
                     ->searchable()
                     ->sortable()
                     ->limit(20),
 
                 Tables\Columns\TextColumn::make('property.title')
-                    ->label('Property')
+                    ->label('الخاصية')
                     ->searchable()
                     ->sortable()
                     ->limit(20),
 
                 Tables\Columns\TextColumn::make('item_id')
-                    ->label('Item ID')
+                    ->label('معرف العنصر')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('item_type')
-                    ->label('Item Type')
+                    ->label('نوع العنصر')
                     ->searchable()
                     ->sortable()
                     ->limit(20)
                     ->copyable(),
 
                 Tables\Columns\TextColumn::make('formatted_value')
-                    ->label('Value')
+                    ->label('القيمة')
                     ->limit(30)
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('unit')
-                    ->label('Unit')
+                    ->label('الوحدة')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\IconColumn::make('is_verified')
-                    ->label('Verified')
+                    ->label('مؤكد')
                     ->boolean()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('source')
-                    ->label('Source')
+                    ->label('المصدر')
                     ->searchable()
                     ->sortable()
                     ->limit(20)
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created')
+                    ->label('تم الإنشاء')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -182,26 +185,26 @@ class PropertyValueResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('category')
                     ->relationship('category', 'title')
-                    ->label('Filter by Category'),
+                    ->label('تصفية حسب الفئة'),
 
                 Tables\Filters\SelectFilter::make('property')
                     ->relationship('property', 'title')
-                    ->label('Filter by Property'),
+                    ->label('تصفية حسب الخاصية'),
 
                 Tables\Filters\SelectFilter::make('item_type')
-                    ->label('Filter by Item Type')
+                    ->label('تصفية حسب نوع العنصر')
                     ->options([
-                        'App\Models\Product' => 'Product',
-                        'App\Models\Service' => 'Service',
-                        'App\Models\Item' => 'Item',
+                        'App\Models\Product' => 'المنتج',
+                        'App\Models\Service' => 'الخدمة',
+                        'App\Models\Item' => 'العنصر',
                     ]),
 
                 Tables\Filters\TernaryFilter::make('is_verified')
-                    ->label('Verification Status'),
+                    ->label('حالة التأكيد'),
 
                 Tables\Filters\Filter::make('has_value')
-                    ->label('Has Value')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('value')
+                    ->label('لديها قيمة')
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('value')
                         ->orWhereNotNull('json_value')
                         ->orWhereNotNull('numeric_value')
                         ->orWhereNotNull('boolean_value')
@@ -209,8 +212,8 @@ class PropertyValueResource extends Resource
                         ->orWhereNotNull('datetime_value')),
 
                 Tables\Filters\Filter::make('no_value')
-                    ->label('No Value')
-                    ->query(fn (Builder $query): Builder => $query->whereNull('value')
+                    ->label('ليس لديها قيمة')
+                    ->query(fn(Builder $query): Builder => $query->whereNull('value')
                         ->whereNull('json_value')
                         ->whereNull('numeric_value')
                         ->whereNull('boolean_value')
@@ -221,22 +224,22 @@ class PropertyValueResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('verify')
-                    ->label('Verify')
+                    ->label('تأكيد')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->action(function (PropertyValue $record) {
                         $record->update(['is_verified' => true]);
                     })
-                    ->visible(fn (PropertyValue $record): bool => !$record->is_verified),
+                    ->visible(fn(PropertyValue $record): bool => !$record->is_verified),
 
                 Tables\Actions\Action::make('unverify')
-                    ->label('Unverify')
+                    ->label('إلغاء التأكيد')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->action(function (PropertyValue $record) {
                         $record->update(['is_verified' => false]);
                     })
-                    ->visible(fn (PropertyValue $record): bool => $record->is_verified),
+                    ->visible(fn(PropertyValue $record): bool => $record->is_verified),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -246,7 +249,7 @@ class PropertyValueResource extends Resource
                 ]),
 
                 Tables\Actions\BulkAction::make('verify_selected')
-                    ->label('Verify Selected')
+                    ->label('تأكيد المحدد')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->action(function ($records) {
@@ -256,7 +259,7 @@ class PropertyValueResource extends Resource
                     }),
 
                 Tables\Actions\BulkAction::make('unverify_selected')
-                    ->label('Unverify Selected')
+                    ->label('إلغاء التأكيد للمحدد')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->action(function ($records) {

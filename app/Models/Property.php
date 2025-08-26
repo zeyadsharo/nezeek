@@ -73,6 +73,19 @@ class Property extends Model
             ]);
     }
 
+    public function propertyGroups()
+    {
+        return $this->belongsToMany(PropertyGroup::class, 'property_group_properties')
+            ->withPivot([
+                'custom_label',
+                'custom_help_text',
+                'display_order',
+                'is_visible',
+                'is_editable',
+                'is_required'
+            ]);
+    }
+
     public function propertyGroup()
     {
         return $this->belongsTo(PropertyGroup::class, 'group', 'name');

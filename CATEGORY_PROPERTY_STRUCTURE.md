@@ -102,7 +102,7 @@ Links categories to properties with customization options.
 ```sql
 category_properties
 ├── id (Primary Key)
-├── category_id, property_id (Foreign Keys)
+├── category_id, property_id ,property_group_id (Foreign Keys)
 ├── display_order, is_visible, is_editable, is_required
 ├── custom_label
 ├── custom_help_text
