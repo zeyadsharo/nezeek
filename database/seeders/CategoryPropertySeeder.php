@@ -18,8 +18,7 @@ class CategoryPropertySeeder extends Seeder
         // Create Property Groups
         $basicInfo = PropertyGroup::create([
             'name' => 'basic_info',
-            'arabic_title' => 'المعلومات الأساسية',
-            'title' => 'Basic Information',
+            'title' => 'المعلومات الأساسية',
             'description' => 'Basic information about the item',
             'display_order' => 1,
             'icon' => 'info-circle',
@@ -30,8 +29,7 @@ class CategoryPropertySeeder extends Seeder
 
         $specifications = PropertyGroup::create([
             'name' => 'specifications',
-            'arabic_title' => 'المواصفات',
-            'title' => 'Specifications',
+            'title' => 'المواصفات',
             'description' => 'Technical specifications and details',
             'display_order' => 2,
             'icon' => 'cog',
@@ -42,8 +40,7 @@ class CategoryPropertySeeder extends Seeder
 
         $dimensions = PropertyGroup::create([
             'name' => 'dimensions',
-            'arabic_title' => 'الأبعاد',
-            'title' => 'Dimensions',
+            'title' => 'الأبعاد',
             'description' => 'Physical dimensions and measurements',
             'display_order' => 3,
             'icon' => 'ruler',
@@ -54,8 +51,7 @@ class CategoryPropertySeeder extends Seeder
 
         $pricing = PropertyGroup::create([
             'name' => 'pricing',
-            'arabic_title' => 'التسعير',
-            'title' => 'Pricing',
+            'title' => 'التسعير',
             'description' => 'Pricing and cost information',
             'display_order' => 4,
             'icon' => 'currency-dollar',
@@ -69,8 +65,7 @@ class CategoryPropertySeeder extends Seeder
             // Basic Info Group
             [
                 'name' => 'title',
-                'arabic_title' => 'العنوان',
-                'title' => 'Title',
+                'title' => 'العنوان',
                 'description' => 'Main title of the item',
                 'type' => 'text',
                 'is_required' => true,
@@ -86,8 +81,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'description',
-                'arabic_title' => 'الوصف',
-                'title' => 'Description',
+                'title' => 'الوصف',
                 'description' => 'Detailed description of the item',
                 'type' => 'textarea',
                 'is_required' => false,
@@ -103,8 +97,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'brand',
-                'arabic_title' => 'العلامة التجارية',
-                'title' => 'Brand',
+                'title' => 'العلامة التجارية',
                 'description' => 'Brand or manufacturer name',
                 'type' => 'select',
                 'options' => ['Apple', 'Samsung', 'Sony', 'LG', 'Other'],
@@ -119,8 +112,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'model',
-                'arabic_title' => 'الموديل',
-                'title' => 'Model',
+                'title' => 'الموديل',
                 'description' => 'Model number or name',
                 'type' => 'text',
                 'is_required' => false,
@@ -138,8 +130,7 @@ class CategoryPropertySeeder extends Seeder
             // Specifications Group
             [
                 'name' => 'color',
-                'arabic_title' => 'اللون',
-                'title' => 'Color',
+                'title' => 'اللون',
                 'description' => 'Available colors',
                 'type' => 'multiselect',
                 'options' => ['Black', 'White', 'Red', 'Blue', 'Green', 'Yellow', 'Silver', 'Gold'],
@@ -156,8 +147,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'material',
-                'arabic_title' => 'المادة',
-                'title' => 'Material',
+                'title' => 'المادة',
                 'description' => 'Primary material used',
                 'type' => 'select',
                 'options' => ['Plastic', 'Metal', 'Glass', 'Wood', 'Fabric', 'Leather', 'Ceramic'],
@@ -172,8 +162,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'warranty',
-                'arabic_title' => 'الضمان',
-                'title' => 'Warranty',
+                'title' => 'الضمان',
                 'description' => 'Warranty period in months',
                 'type' => 'number',
                 'is_required' => false,
@@ -190,8 +179,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'in_stock',
-                'arabic_title' => 'متوفر في المخزون',
-                'title' => 'In Stock',
+                'title' => 'متوفر في المخزون',
                 'description' => 'Availability status',
                 'type' => 'checkbox',
                 'is_required' => false,
@@ -206,8 +194,7 @@ class CategoryPropertySeeder extends Seeder
             // Dimensions Group
             [
                 'name' => 'length',
-                'arabic_title' => 'الطول',
-                'title' => 'Length',
+                'title' => 'الطول',
                 'description' => 'Length measurement',
                 'type' => 'decimal',
                 'is_required' => false,
@@ -224,8 +211,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'width',
-                'arabic_title' => 'العرض',
-                'title' => 'Width',
+                'title' => 'العرض',
                 'description' => 'Width measurement',
                 'type' => 'decimal',
                 'is_required' => false,
@@ -242,8 +228,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'height',
-                'arabic_title' => 'الارتفاع',
-                'title' => 'Height',
+                'title' => 'الارتفاع',
                 'description' => 'Height measurement',
                 'type' => 'decimal',
                 'is_required' => false,
@@ -260,8 +245,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'weight',
-                'arabic_title' => 'الوزن',
-                'title' => 'Weight',
+                'title' => 'الوزن',
                 'description' => 'Weight measurement',
                 'type' => 'decimal',
                 'is_required' => false,
@@ -280,8 +264,7 @@ class CategoryPropertySeeder extends Seeder
             // Pricing Group
             [
                 'name' => 'price',
-                'arabic_title' => 'السعر',
-                'title' => 'Price',
+                'title' => 'السعر',
                 'description' => 'Current selling price',
                 'type' => 'decimal',
                 'is_required' => true,
@@ -298,8 +281,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'original_price',
-                'arabic_title' => 'السعر الأصلي',
-                'title' => 'Original Price',
+                'title' => 'السعر الأصلي',
                 'description' => 'Original price before discount',
                 'type' => 'decimal',
                 'is_required' => false,
@@ -316,8 +298,7 @@ class CategoryPropertySeeder extends Seeder
             ],
             [
                 'name' => 'discount_percentage',
-                'arabic_title' => 'نسبة الخصم',
-                'title' => 'Discount Percentage',
+                'title' => 'نسبة الخصم',
                 'description' => 'Discount percentage',
                 'type' => 'number',
                 'is_required' => false,
@@ -345,8 +326,7 @@ class CategoryPropertySeeder extends Seeder
             $electronics = Category::create([
                 'name' => 'electronics',
                 'sector_id' => $sector->id,
-                'arabic_title' => 'الإلكترونيات',
-                'title' => 'Electronics',
+                'title' => 'الإلكترونيات',
                 'description' => 'Electronic devices and gadgets',
                 'slug' => 'electronics',
                 'display_order' => 1,
@@ -358,8 +338,7 @@ class CategoryPropertySeeder extends Seeder
                 'name' => 'phones',
                 'sector_id' => $sector->id,
                 'parent_id' => $electronics->id,
-                'arabic_title' => 'الهواتف',
-                'title' => 'Phones',
+                'title' => 'الهواتف',
                 'description' => 'Mobile phones and smartphones',
                 'slug' => 'phones',
                 'display_order' => 1,

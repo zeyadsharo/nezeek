@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sector extends Model
 {
-    use HasFactory;
-      protected $fillable = [
-       'arabic_title', 
-      'kurdish_title', 
-      'description',
-      'display_order',
-      'display_state', 
-      'icon', 
-      'activation_state'];
+  use HasFactory;
+
+  protected $fillable = [
+    'title',
+    'description',
+    'display_order',
+    'display_state',
+    'icon',
+    'activation_state'
+  ];
 }

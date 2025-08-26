@@ -40,8 +40,8 @@ return new class extends Migration {
 
             $table->index(['category_id', 'property_id']);
             $table->index(['item_id', 'item_type']);
-            $table->index(['property_id', 'value']);
             $table->index('is_verified');
+            // Note: Removed index on 'value' column as MySQL doesn't allow TEXT columns in indexes without key length
 
             // Ensure unique combination
             $table->unique(['category_id', 'property_id', 'item_id', 'item_type'], 'unique_property_value');

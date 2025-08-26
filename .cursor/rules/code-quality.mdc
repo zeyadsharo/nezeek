@@ -1,0 +1,31 @@
+---
+alwaysApply: true
+---
+# Code Quality and Refactoring Standards
+
+## Function and Class Limits
+- **Maximum 500 lines per file** - this is a hard requirement
+- **Maximum 20-30 lines per function** - keep functions focused
+- **Maximum 200 lines per class** - break down large classes
+- **Maximum 10 methods per class** - single responsibility principle
+
+## Refactoring Triggers
+- When a file approaches 400 lines, start planning refactoring
+- Extract utility functions when logic is repeated
+- Create separate modules for distinct functionality
+- Split large classes into smaller, focused components
+- Use composition over inheritance
+
+## Code Organization
+- Group related functions together
+- Separate concerns into different modules
+- Use clear, descriptive file and folder names
+- Maintain consistent file structure across the project
+- Keep related tests close to the code they test
+
+## Documentation
+- Every public function must have JSDoc comments
+- Include parameter types, return types, and examples
+- Document complex algorithms and business logic
+- Keep README files updated with project structure
+- Use inline comments for complex logic explanations

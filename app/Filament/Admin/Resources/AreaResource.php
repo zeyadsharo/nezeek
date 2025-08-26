@@ -2,61 +2,50 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\AreaResource\Pages\EditArea;
-use App\Filament\Admin\Resources\AreaResource\Pages\ListAreas;
+use App\Filament\Admin\Resources\AreaResource\Pages;
 use App\Models\Area;
-use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AreaResource extends Resource
 {
     protected static ?string $model = Area::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-cube';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
+    protected static ?string $navigationGroup = 'Admin';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('arabic_title')
+                Forms\Components\TextInput::make('title')
                     ->required()
-                    ->label(__('Arabic Title'))
-                    ->rules(['string', 'max:40']),
+                    ->maxLength(255)
+                    ->label('Title'),
 
-                TextInput::make('kurdish_title')
-                    ->required()
-                    ->label(__('Kurdish Title'))
-                    ->rules(['string', 'max:40']),
+                Forms\Components\TextInput::make('parent_id')
+                    ->numeric()
+                    ->label('Parent ID'),
 
-                SelectTree::make('parent_id')
-                    ->relationship('parentArea', 'arabic_title', 'parent_id')
-                    ->placeholder(__('Please select a Area'))
-                    ->withCount()
-                    ->enableBranchNode()
-                    ->direction('bottom') // Corrected typo from 'buttom' to 'bottom'
-                    ->label(__('Parent Area'))
-                    ->nullable(),
+                Forms\Components\Select::make('parent_id')
+                    ->relationship('parentArea', 'title', 'parent_id')
+                    ->searchable()
+                    ->preload()
+                    ->label('Parent Area'),
 
-                TextInput::make('latitude')
-                    ->required()
-                    ->label(__('Latitude'))
-                    ->rules(['numeric', 'regex:/^-?\d{1,4}\.\d{1,9}$/']),
+                Forms\Components\TextInput::make('latitude')
+                    ->numeric()
+                    ->label('Latitude'),
 
-                TextInput::make('longitude')
-                    ->required()
-                    ->label(__('Longitude'))
-                    ->rules(['numeric', 'regex:/^-?\d{1,3}\.\d{1,9}$/']),
-
-
-
+                Forms\Components\TextInput::make('longitude')
+                    ->numeric()
+                    ->label('Longitude'),
             ]);
     }
 
@@ -64,13 +53,42 @@ class AreaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('arabic_title')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('kurdish_title')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->numeric()
+                    ->sortable()
+                    ->label('ID'),
 
-                Tables\Columns\TextColumn::make('parentArea.arabic_title')
-                    ->label(__('Parent Area')),
-                Tables\Columns\TextColumn::make('latitude')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('longitude')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Title'),
+
+                Tables\Columns\TextColumn::make('parentArea.title')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Parent Area'),
+
+                Tables\Columns\TextColumn::make('latitude')
+                    ->numeric()
+                    ->sortable()
+                    ->label('Latitude'),
+
+                Tables\Columns\TextColumn::make('longitude')
+                    ->numeric()
+                    ->sortable()
+                    ->label('Longitude'),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Created At'),
+
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Updated At'),
             ])
             ->filters([
                 //
@@ -95,18 +113,9 @@ class AreaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListAreas::route('/'),
-            'create' => \App\Filament\Admin\Resources\AreaResource\Pages\CreateArea::route('/create'),
-            'edit' => EditArea::route('/{record}/edit'),
+            'index' => Pages\ListAreas::route('/'),
+            'create' => Pages\CreateArea::route('/create'),
+            'edit' => Pages\EditArea::route('/{record}/edit'),
         ];
-    }
-    public static function getLabel(): string
-    {
-        return __('Area.ModelLabel');
-    }
-    //PluralModelLabel
-    public static function getPluralLabel(): string
-    {
-        return __('Area.PluralModelLabel');
     }
 }

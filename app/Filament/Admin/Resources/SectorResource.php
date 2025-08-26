@@ -17,89 +17,95 @@ class SectorResource extends Resource
 {
     protected static ?string $model = Sector::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
+
+    protected static ?string $navigationGroup = 'Admin';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
-        return $form->schema([
-            Forms\Components\TextInput::make('arabic_title')
-                ->required()
-                ->maxLength(40)  // Adjusted as per your requirement
-                ->label(__('Arabic Title'))  // Translation for label
-                ->placeholder(__('Enter Arabic title'))  // Placeholder with translation
-                ->rules(['string']),  // Ensure the input is a string
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255)
+                    ->label('Title'),
 
-            Forms\Components\TextInput::make('kurdish_title')
-                ->required()
-                ->maxLength(40)
-                ->label(__('Kurdish Title'))  
-                ->placeholder(__('Enter Kurdish title')) 
-                ->rules(['string']),  
+                Forms\Components\Textarea::make('description')
+                    ->maxLength(1000)
+                    ->label('Description')
+                    ->rows(3),
 
-            Forms\Components\Textarea::make('description')
-                ->maxLength(200)
-                ->columnSpanFull()
-                ->label(__('Description'))  
-                ->placeholder(__('Enter description')), 
+                Forms\Components\TextInput::make('display_order')
+                    ->numeric()
+                    ->default(0)
+                    ->label('Display Order'),
 
-            Forms\Components\TextInput::make('display_order')
-                ->required()
-                ->numeric()
-                ->default(0)
-                ->label(__('Display Order'))  
-                ->placeholder(__('Enter display order')), 
+                Forms\Components\TextInput::make('display_state')
+                    ->numeric()
+                    ->default(1)
+                    ->label('Display State'),
 
-            Forms\Components\FileUpload::make('icon')
-                ->label(__('Icon'))
-                ->disk('public')
-                ->directory('sectors')
-                ->image()
-                ->imageEditor()
-                ->placeholder(__('Enter icon class or path'))
-                ->required(),
+                Forms\Components\TextInput::make('icon')
+                    ->maxLength(255)
+                    ->label('Icon'),
 
-            Forms\Components\Toggle::make('display_state')
-                ->required()
-                ->inline()
-                ->default(true)
-                ->label(__('Display State')), 
-
-            Forms\Components\Toggle::make('activation_state')
-                ->required()
-                ->inline()
-                ->default(true)
-                ->label(__('Activation State')) 
-        ]);
+                Forms\Components\TextInput::make('activation_state')
+                    ->numeric()
+                    ->default(1)
+                    ->label('Activation State'),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('arabic_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kurdish_title')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->numeric()
+                    ->sortable()
+                    ->label('ID'),
+
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Title'),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->limit(50)
+                    ->label('Description'),
+
                 Tables\Columns\TextColumn::make('display_order')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('display_state')
-                    ->boolean(),
-            Tables\Columns\ImageColumn::make('icon')
-            ->circular()
-                ->defaultImageUrl(url('/images/default-icon.png'))
-                ->visibility(fn($record) => $record->icon !== null)
-                ->searchable(),
-                Tables\Columns\IconColumn::make('activation_state')
-                    ->boolean(),
+                    ->sortable()
+                    ->label('Display Order'),
+
+                Tables\Columns\TextColumn::make('display_state')
+                    ->numeric()
+                    ->sortable()
+                    ->label('Display State'),
+
+                Tables\Columns\TextColumn::make('icon')
+                    ->searchable()
+                    ->label('Icon'),
+
+                Tables\Columns\TextColumn::make('activation_state')
+                    ->numeric()
+                    ->sortable()
+                    ->label('Activation State'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Created At'),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Updated At'),
             ])
             ->filters([
                 //
