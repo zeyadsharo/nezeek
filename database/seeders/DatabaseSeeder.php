@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Sector;
 use App\Models\Category;
-use App\Models\Property;
 use App\Models\CategoryProperty;
+use App\Models\Property;
+use App\Models\Sector;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AreaSeeder::class,
             SectorSeeder::class,
+            CategoryPropertySeeder::class,
         ]);
 
         // check if the user not exists
@@ -32,6 +33,34 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'role' => 'Super admin',
         ]);
+
+        // Create additional Arabic users for testing
+        $users = [
+            [
+                'name' => 'أحمد محمد',
+                'email' => 'ahmed@example.com',
+                'password' => bcrypt('12345678'),
+                'role' => 'مدير',
+            ],
+            [
+                'name' => 'فاطمة علي',
+                'email' => 'fatima@example.com',
+                'password' => bcrypt('12345678'),
+                'role' => 'مشرف',
+            ],
+            [
+                'name' => 'محمد حسن',
+                'email' => 'mohammed@example.com',
+                'password' => bcrypt('12345678'),
+                'role' => 'مستخدم',
+            ],
+        ];
+
+        foreach ($users as $userData) {
+            if (!User::where('email', $userData['email'])->first()) {
+                User::create($userData);
+            }
+        }
 
         // Seed sectors
         // $sectors = [

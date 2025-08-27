@@ -32,12 +32,8 @@ class AreaResource extends Resource
                     ->maxLength(255)
                     ->label('العنوان'),
 
-                Forms\Components\TextInput::make('parent_id')
-                    ->numeric()
-                    ->label('معرف المنطقة الأب'),
-
                 Forms\Components\Select::make('parent_id')
-                    ->relationship('parentArea', 'title', 'parent_id')
+                    ->relationship('parentArea', 'title')
                     ->searchable()
                     ->preload()
                     ->label('المنطقة الأب'),
